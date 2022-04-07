@@ -12,6 +12,11 @@ project "FrecklesEngine"
         "src/**.cpp",
         "src/**.hpp"
     }
+    includedirs
+    {
+        "src",
+        "%{IncludeDirs.spdlog}"
+    }
 
     filter "configurations:Debug"
         defines "DEBUG"

@@ -1,7 +1,7 @@
 project "TestApp"
     kind "ConsoleApp"
     language "C++"
-    cppdialect "c++17"
+    cppdialect "C++17"
 
     targetdir (bin_dir)
     objdir (bin_int_dir)
@@ -9,13 +9,15 @@ project "TestApp"
     files
     {
         "src/**.cpp",
-        "src/**.hpp"
+        "src/**.hpp",
+        
     }
     
     includedirs
     {
         "%{prj.location}/src",
-        "%{IncludeDirs.FE}"
+        "%{IncludeDirs.FE}",
+        "%{IncludeDirs.spdlog}"
     }
 
     links 
@@ -28,5 +30,5 @@ project "TestApp"
         symbols "On"
  
     filter "configurations:Release"
-       defines { "NDEBUG" }
+       defines  "NDEBUG" 
        optimize "On"

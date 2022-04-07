@@ -1,0 +1,3 @@
+[submodule "FrecklesEngine/vendor/spdlog"]
+	path = FrecklesEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog

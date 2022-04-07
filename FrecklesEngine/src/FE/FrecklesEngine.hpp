@@ -1,4 +1,6 @@
 
+#include "Core/Base.hpp"
+
 #include <string>
 
 namespace FE
