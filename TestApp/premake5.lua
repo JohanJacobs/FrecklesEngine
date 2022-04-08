@@ -9,8 +9,7 @@ project "TestApp"
     files
     {
         "src/**.cpp",
-        "src/**.hpp",
-        
+        "src/**.hpp"        
     }
     
     includedirs

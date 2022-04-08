@@ -1,12 +1,14 @@
-
+#pragma once
 #include "Core/Base.hpp"
+#include "Core/Application/Application.hpp"
 
-#include <string>
+#include "Core/Log/Log.hpp"
 
 namespace FE
 {
-    std::string WelcomeMSG()
+    Ref<CORE::Application> CreateApplication()
     {
-        return "Welcome to FE!\n";
+        LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+        return CreateRef<CORE::Application>();
     }
 }
