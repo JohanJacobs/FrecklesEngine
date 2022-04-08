@@ -26,12 +26,12 @@ namespace FE
     }
 }
 
-#define LOG_CORE_TRACE(x) ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->trace(x)
-#define LOG_CORE_INFO(x)  ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->info(x)
-#define LOG_CORE_WARN(x)  ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->warn(x)
-#define LOG_CORE_ERROR(x) ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->error(x)
+#define LOG_CORE_TRACE(...) ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->trace(__VA_ARGS__)
+#define LOG_CORE_INFO(...)  ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->info(__VA_ARGS__)
+#define LOG_CORE_WARN(...)  ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->warn(__VA_ARGS__)
+#define LOG_CORE_ERROR(...) ::FE::CORE::LOGGER::s_Logger->GetCoreLogger()->error(__VA_ARGS__)
 
-#define LOG_TRACE(x) ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->trace(x)
-#define LOG_INFO(x)  ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->info(x)
-#define LOG_WARN(x)  ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->warn(x)
-#define LOG_ERROR(x) ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->error(x)
+#define LOG_TRACE(...)      ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->trace(__VA_ARGS__)
+#define LOG_INFO(...)       ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->info(__VA_ARGS__)
+#define LOG_WARN(...)       ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->warn(__VA_ARGS__)
+#define LOG_ERROR(...)      ::FE::CORE::LOGGER::s_Logger->GetClientLogger()->error(__VA_ARGS__)
