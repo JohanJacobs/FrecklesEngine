@@ -15,7 +15,8 @@ project "FrecklesEngine"
     includedirs
     {
         "src",
-        "%{IncludeDirs.spdlog}"
+        "%{IncludeDirs.spdlog}",
+        "%{IncludeDirs.glfw}"
     }
 
     filter "configurations:Debug"
@@ -25,3 +26,7 @@ project "FrecklesEngine"
     filter "configurations:Release"
         defines { "NDEBUG" }
         optimize "On"
+
+group "Dependencies"
+    include "vendor/glfw"
+group ""

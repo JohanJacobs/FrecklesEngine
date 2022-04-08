@@ -8,6 +8,7 @@ workspace "FrecklesEngine"
     IncludeDirs = {}
     IncludeDirs["FE"] = "%{wks.location}/FrecklesEngine/src"
     IncludeDirs["spdlog"] = "%{wks.location}/FrecklesEngine/vendor/spdlog/include"
-    
+    IncludeDirs["glfw"] = "%{wks.location}/FrecklesEngine/vendor/glfw/include"
+
 include "TestApp"
 include "FrecklesEngine"
