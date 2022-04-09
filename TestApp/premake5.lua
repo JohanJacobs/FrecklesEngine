@@ -2,9 +2,10 @@ project "TestApp"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
-
+    staticruntime "on"
+    
     targetdir (bin_dir)
-    objdir (bin_int_dir)
+    objdir (int_dir)
     
     files
     {
@@ -21,8 +22,12 @@ project "TestApp"
 
     links 
     {
-        "FrecklesEngine"
+        "FrecklesEngine",
+        "GLFW"
     }
+
+    filter "system:linux"
+        pic "On"
 
     filter "configurations:Debug"
         defines "DEBUG"

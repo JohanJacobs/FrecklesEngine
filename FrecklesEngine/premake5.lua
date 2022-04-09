@@ -4,8 +4,9 @@ project "FrecklesEngine"
     cppdialect "C++17"
 
     targetdir(bin_dir)
-    objdir(bin_int_dir)
+    objdir(int_dir)
 
+    staticruntime "on"
 
     files
     {
@@ -15,9 +16,21 @@ project "FrecklesEngine"
     includedirs
     {
         "src",
-        "%{IncludeDirs.spdlog}",
-        "%{IncludeDirs.glfw}"
+        "%{IncludeDirs.glfw}",
+        "%{IncludeDirs.spdlog}"
     }
+
+    defines
+    {
+        "GLFW_INCLUDE_NONE"
+    }
+    links
+    {
+        "GLFW"
+    }
+
+    filter "system:linux"
+        pic "On"
 
     filter "configurations:Debug"
         defines "DEBUG"
@@ -27,6 +40,3 @@ project "FrecklesEngine"
         defines { "NDEBUG" }
         optimize "On"
 
-group "Dependencies"
-    include "vendor/glfw"
-group ""
