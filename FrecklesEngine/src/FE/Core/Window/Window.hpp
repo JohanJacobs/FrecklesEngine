@@ -1,3 +1,4 @@
+#pragma once
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Renderer/Context.hpp"
 
@@ -16,13 +17,14 @@ namespace FE
 
             bool ShouldClose() const;
 
-            static Ref<Window> CreateWindow();
-        private:
             void Init();
             void Shutdown();
+            Ref<RENDERER::Context>& GetGraphicsContext() { return GraphicsContext;}
+            static Ref<Window> CreateWindow();
+        private:
         private:
             GLFWwindow* WindowHandle;
-            Ref<FE::Renderer::Context> GraphicsContext;
+            Ref<RENDERER::Context> GraphicsContext;
         };
     }
 }

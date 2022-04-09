@@ -27,13 +27,7 @@ project "FrecklesEngine"
         "GLFW_INCLUDE_NONE",
         "_CRT_"
     }
-
-    links
-    {
-        "GLFW",
-        "Glad"
-    }
-
+    
     filter "system:linux"
         pic "On"
 

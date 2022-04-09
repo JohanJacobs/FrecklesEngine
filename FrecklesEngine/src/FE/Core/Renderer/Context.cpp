@@ -6,7 +6,7 @@
 
 namespace FE
 {    
-    namespace Renderer
+    namespace RENDERER
     {
         void APIENTRY glDebugOutput(GLenum source, 
                             GLenum type, 
@@ -104,10 +104,30 @@ namespace FE
             LOG_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
             LOG_INFO("  Version: {0}", glGetString(GL_VERSION));
         }
+        void Context::Shutdown()
+        {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+        }
 
         void Context::SwapBuffers() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glfwSwapBuffers(static_cast<GLFWwindow*>(WindowHandle));
         }
+
+        void Context::ClearColor(float red,float green,float blue, float alpha) const
+        {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            glClearColor(red, green, blue, alpha);
+        }
+
+        void Context::Clear() const
+        {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        }        
     }
 }

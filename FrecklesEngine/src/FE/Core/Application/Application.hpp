@@ -15,7 +15,7 @@ namespace FE
             ~Application();
 
         private:
-            Ref<Window> m_Window;
+            Ref<Window> MainWindow;
         };
     }
 }

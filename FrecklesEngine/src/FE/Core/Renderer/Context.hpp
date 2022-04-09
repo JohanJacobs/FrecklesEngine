@@ -1,8 +1,9 @@
+#pragma once 
 #include "FE/Core/Base.hpp"
 
 namespace FE
 {
-    namespace Renderer
+    namespace RENDERER
     {
         class Context
         {
@@ -10,7 +11,12 @@ namespace FE
                 Context();
                 ~Context();
                 void Init(void* windowHandle);
-                void SwapBuffers()const;
+                void Shutdown();
+
+                void SwapBuffers() const;
+
+                void ClearColor(float red,float green,float blue, float alpha) const;
+                void Clear() const;
                 static Ref<Context> Create();
             private:
                 void* WindowHandle;

@@ -16,8 +16,6 @@ namespace FE
         Window::Window()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
-            Init();    
         }   
         
         Window::~Window()
@@ -42,7 +40,7 @@ namespace FE
 
             // create glfw window
             
-            GraphicsContext = FE::Renderer::Context::Create();
+            GraphicsContext = RENDERER::Context::Create();
 
             WindowHandle = glfwCreateWindow(1024, 768, "FrecklesEngine", NULL, NULL);
             if (!WindowHandle)
@@ -57,6 +55,8 @@ namespace FE
         void Window::Shutdown()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            
+            GraphicsContext->Shutdown();
 
             if (WindowHandle)
                 glfwDestroyWindow(WindowHandle);
@@ -67,6 +67,7 @@ namespace FE
         void Window::Update()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             GraphicsContext->SwapBuffers();
             glfwPollEvents();
         }
