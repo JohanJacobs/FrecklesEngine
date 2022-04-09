@@ -1,4 +1,5 @@
 #include "FE/Core/Base.hpp"
+#include "FE/Core/Renderer/Context.hpp"
 
 class GLFWwindow;
 namespace FE
@@ -21,6 +22,7 @@ namespace FE
             void Shutdown();
         private:
             GLFWwindow* WindowHandle;
+            Ref<FE::Renderer::Context> GraphicsContext;
         };
     }
 }

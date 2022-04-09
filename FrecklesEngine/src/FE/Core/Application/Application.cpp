@@ -1,6 +1,10 @@
 
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Application/Application.hpp"
+
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
 namespace FE
 {
     namespace CORE
@@ -20,7 +24,10 @@ namespace FE
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
             while (!m_Window->ShouldClose())
-            {
+            {                
+                glClearColor(0.10f,0.10f,0.25f, 1.0f);
+                
+                glClear(GL_COLOR_BUFFER_BIT);
 
                 m_Window->Update();
             }

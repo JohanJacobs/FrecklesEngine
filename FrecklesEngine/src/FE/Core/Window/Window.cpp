@@ -1,6 +1,7 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Window/Window.hpp"
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace FE
@@ -40,6 +41,9 @@ namespace FE
             glfwSetErrorCallback(glfw_error_callback);
 
             // create glfw window
+            
+            GraphicsContext = FE::Renderer::Context::Create();
+
             WindowHandle = glfwCreateWindow(1024, 768, "FrecklesEngine", NULL, NULL);
             if (!WindowHandle)
             {
@@ -47,6 +51,7 @@ namespace FE
                 Shutdown();
                 exit(1);
             }
+            GraphicsContext->Init(WindowHandle);
         }
 
         void Window::Shutdown()
@@ -62,7 +67,7 @@ namespace FE
         void Window::Update()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
+            GraphicsContext->SwapBuffers();
             glfwPollEvents();
         }
 
