@@ -1,8 +1,8 @@
 #pragma once
-#include "Core/Base.hpp"
-#include "Core/Application/Application.hpp"
+#include "FE/Core/Base.hpp"
+#include "FE/Core/Application/Application.hpp"
 
-#include "Core/Log/Log.hpp"
+#include "FE/Core/Log/Log.hpp"
 
 namespace FE
 {

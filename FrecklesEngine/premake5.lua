@@ -17,7 +17,8 @@ project "FrecklesEngine"
     {
         "src",
         "%{IncludeDirs.glfw}",
-        "%{IncludeDirs.spdlog}"
+        "%{IncludeDirs.spdlog}",
+        "%{IncludeDirs.glad}"
     }
 
     defines
