@@ -8,6 +8,7 @@ namespace FE
         Application::Application()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            m_Window = Window::CreateWindow();
         }
 
         Application::~Application()
@@ -18,7 +19,11 @@ namespace FE
         void Application::Run()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            LOG_CORE_INFO(" App Run! ");
+            while (!m_Window->ShouldClose())
+            {
+
+                m_Window->Update();
+            }
         }
 
         void Application::Shutdown()

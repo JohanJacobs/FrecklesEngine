@@ -6,7 +6,7 @@ int main()
     auto App = FE::CreateApplication();
     
     App->Run();
-    App->Shutdown();
 
+    App->Shutdown();
     return 0;
 }

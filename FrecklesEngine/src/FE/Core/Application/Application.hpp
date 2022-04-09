@@ -1,4 +1,5 @@
 #include "FE/Core/Base.hpp"
+#include "FE/Core/Window/Window.hpp"
 
 namespace FE
 {
@@ -14,6 +15,7 @@ namespace FE
             ~Application();
 
         private:
+            Ref<Window> m_Window;
         };
     }
 }
