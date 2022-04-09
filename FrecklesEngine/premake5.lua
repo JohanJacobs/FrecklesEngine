@@ -13,6 +13,7 @@ project "FrecklesEngine"
         "src/**.cpp",
         "src/**.hpp"
     }
+
     includedirs
     {
         "src",
@@ -23,11 +24,14 @@ project "FrecklesEngine"
 
     defines
     {
-        "GLFW_INCLUDE_NONE"
+        "GLFW_INCLUDE_NONE",
+        "_CRT_"
     }
+
     links
     {
-        "GLFW"
+        "GLFW",
+        "Glad"
     }
 
     filter "system:linux"
@@ -38,6 +42,6 @@ project "FrecklesEngine"
         symbols "On"
 
     filter "configurations:Release"
-        defines { "NDEBUG" }
+        defines "NDEBUG"
         optimize "On"
 

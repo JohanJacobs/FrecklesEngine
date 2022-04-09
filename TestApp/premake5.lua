@@ -23,7 +23,8 @@ project "TestApp"
     links 
     {
         "FrecklesEngine",
-        "GLFW"
+        "GLFW",
+        "Glad"
     }
 
     filter "system:linux"

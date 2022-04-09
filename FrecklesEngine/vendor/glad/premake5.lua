@@ -4,7 +4,7 @@ project "Glad"
     staticruntime "on"
 
     targetdir (bin_dir)
-    objdir (obj_dir)
+    objdir (int_dir)
 
     files
     {
