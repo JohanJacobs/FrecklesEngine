@@ -70,8 +70,8 @@ namespace FE
 
         Context::~Context()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
+            // why does LOG_CORE_ seg fault here 
+            // LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         }
 
         void Context::Init(void* windowHandle)

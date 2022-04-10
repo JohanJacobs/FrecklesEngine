@@ -21,7 +21,6 @@ namespace FE
         Window::~Window()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             Shutdown();
         } 
 
