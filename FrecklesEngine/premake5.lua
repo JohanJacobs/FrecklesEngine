@@ -27,15 +27,30 @@ project "FrecklesEngine"
         "GLFW_INCLUDE_NONE",
         "_CRT_"
     }
-    
     filter "system:linux"
+        links
+        {
+            "Glad",
+            "GLFW"
+        }
         pic "On"
+    
+    filter "system:windows"
+        links
+        {
+            "Glad",   
+            "gdi32",
+            "opengl32",
+            "GLFW"
+        }
 
     filter "configurations:Debug"
         defines "DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "NDEBUG"
+        runtime "Release"
         optimize "On"
 

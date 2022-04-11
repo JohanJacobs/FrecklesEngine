@@ -22,18 +22,31 @@ project "TestApp"
 
     links 
     {
-        "FrecklesEngine",
-        "GLFW",
-        "Glad"
+        "FrecklesEngine"        
     }
 
     filter "system:linux"
+        links
+        {            
+            "GLFW",
+            "Glad"
+        }
         pic "On"
-
+    
+    filter "system:windows"
+        links
+        {
+            "GLFW",
+            "GLAD",
+            "gdi32"
+        }
+        
     filter "configurations:Debug"
+        runtime "Debug"
         defines "DEBUG"
         symbols "On"
  
     filter "configurations:Release"
-       defines  "NDEBUG" 
-       optimize "On"
+        runtime "Release"
+        defines  "NDEBUG" 
+        optimize "On"

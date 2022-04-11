@@ -18,10 +18,9 @@ workspace "FrecklesEngine"
     
     
 group "Dependencies"
-    include "FrecklesEngine/vendor/glad"
     include "FrecklesEngine/vendor/glfw"
+    include "FrecklesEngine/vendor/glad"
 group ""
     
 include "FrecklesEngine"
-
 include "TestApp"
