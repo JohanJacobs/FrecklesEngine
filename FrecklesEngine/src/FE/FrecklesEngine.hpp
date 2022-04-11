@@ -2,6 +2,11 @@
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Application/Application.hpp"
 
+// Renderer 
+#include "FE/Core/Renderer/Buffers.hpp"
+#include "FE/Core/Renderer/RenderCommand.hpp"
+
+// logger 
 #include "FE/Core/Log/Log.hpp"
 
 namespace FE

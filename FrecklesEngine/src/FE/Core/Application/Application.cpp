@@ -3,6 +3,9 @@
 #include "FE/Core/Application/Application.hpp"
 #include "FE/Core/Renderer/RenderCommand.hpp"
 
+
+// temp
+#include "FE/Core/Renderer/Buffers.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -27,11 +30,12 @@ namespace FE
 
         void Application::Run()
         {
+            using namespace RENDERER;
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
-            uint32_t vb,ib,vao;
+            uint32_t ib,vao;
+            // uint32_t vb
             glCreateVertexArrays(1,&vao);
-            glCreateBuffers(1,&vb);
+            //glCreateBuffers(1,&vb);
             glCreateBuffers(1,&ib);
 
 
@@ -42,7 +46,9 @@ namespace FE
                  1.0f,-1.0f, 0.0f // bottom right 
             };
             int vbSize = sizeof(vertData);
-            glNamedBufferStorage(vb, vbSize, vertData,GL_DYNAMIC_STORAGE_BIT);
+            auto vb = VertexBuffer::Create(vbSize);
+            vb->SetData(vertData,vbSize);
+            //glNamedBufferStorage(vb, vbSize, vertData,GL_DYNAMIC_STORAGE_BIT);
             // index buffer 
             uint32_t indexData[] = {
                 0,1,2
@@ -52,7 +58,7 @@ namespace FE
             glNamedBufferStorage(ib, ibSize, indexData, GL_DYNAMIC_STORAGE_BIT);
 
             // link to vao
-            glVertexArrayVertexBuffer(vao, 0, vb, 0,sizeof(float)*3); 
+            glVertexArrayVertexBuffer(vao, 0, vb->GetRenderID(), 0,sizeof(float)*3); 
             glVertexArrayAttribBinding(vao, 0, 0);
             glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
             glEnableVertexArrayAttrib(vao,0);
@@ -141,7 +147,7 @@ namespace FE
             }
 
             // delete             
-            glDeleteBuffers(1,&vb);
+            //glDeleteBuffers(1,&vb);
             glDeleteBuffers(1,&ib);
             glDeleteVertexArrays(1,&vao);
 
