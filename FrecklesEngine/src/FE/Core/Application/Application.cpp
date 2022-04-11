@@ -135,7 +135,7 @@ namespace FE
                 RenderCommand::ClearColor(0.1f,0.1f,0.15f,1.0f);                
                 RenderCommand::Clear();
                 
-                glDrawElements(GL_TRIANGLES,3, GL_UNSIGNED_INT,nullptr);
+                glDrawElements(GL_TRIANGLES,3, GL_UNSIGNED_INT, nullptr);
                 //glDrawArrays(GL_TRIANGLES, 0, 3);
                 MainWindow->Update();
             }

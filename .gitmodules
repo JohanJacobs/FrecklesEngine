@@ -4,3 +4,6 @@
 [submodule "FrecklesEngine/vendor/glfw"]
 	path = FrecklesEngine/vendor/glfw
 	url = https://github.com/JohanJacobs/glfw
+[submodule "FrecklesEngine/vendor/glm"]
+	path = FrecklesEngine/vendor/glm
+	url = https://github.com/g-truc/glm
