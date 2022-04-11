@@ -17,7 +17,8 @@ project "TestApp"
     {
         "%{prj.location}/src",
         "%{IncludeDirs.FE}",
-        "%{IncludeDirs.spdlog}"
+        "%{IncludeDirs.spdlog}",
+        "%{IncludeDirs.glm}"
     }
 
     links 

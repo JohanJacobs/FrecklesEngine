@@ -1,0 +1,12 @@
+[2022-04-11 21:29:37.355] [FE] [trace] Ref<FE::CORE::Application> FE::CreateApplication()
+[2022-04-11 21:29:37.355] [FE] [trace] FE::CORE::Application::Application()
+[2022-04-11 21:29:37.355] [FE] [trace] static Ref<FE::CORE::Window> FE::CORE::Window::Create()
+[2022-04-11 21:29:37.355] [FE] [trace] FE::CORE::Window::Window()
+[2022-04-11 21:29:37.355] [FE] [trace] void FE::CORE::Window::Init()
+[2022-04-11 21:29:37.401] [FE] [trace] FE::RENDERER::Context::Context()
+[2022-04-11 21:29:37.696] [FE] [trace] void FE::RENDERER::Context::Init(void*)
+[2022-04-11 21:29:49.715] [FE] [trace] void FE::CORE::Application::Run()
+[2022-04-11 21:29:49.715] [FE] [trace] static Ref<FE::RENDERER::VertexBuffer> FE::RENDERER::VertexBuffer::Create(uint32_t)
+[2022-04-11 21:29:49.715] [FE] [trace] FE::RENDERER::VertexBuffer::VertexBuffer(uint32_t)
+[2022-04-11 21:29:49.715] [FE] [trace] void FE::RENDERER::VertexBuffer::SetData(void*, uint32_t)
+[2022-04-11 21:30:18.001] [FE] [trace] uint32_t FE::RENDERER::VertexBuffer::GetRenderID() const

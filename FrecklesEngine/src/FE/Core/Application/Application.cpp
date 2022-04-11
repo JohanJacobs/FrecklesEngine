@@ -3,11 +3,18 @@
 #include "FE/Core/Application/Application.hpp"
 #include "FE/Core/Renderer/RenderCommand.hpp"
 
+
+// temp
+#include "FE/Core/Renderer/Buffers.hpp"
+#include "FE/Core/Renderer/VertexArray.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+  
 
 namespace FE
 {
+    
+
     namespace CORE
     {
         Application::Application()
@@ -27,13 +34,11 @@ namespace FE
 
         void Application::Run()
         {
+            using namespace RENDERER;
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
-            uint32_t vb,ib,vao;
-            glCreateVertexArrays(1,&vao);
-            glCreateBuffers(1,&vb);
-            glCreateBuffers(1,&ib);
-
+        
+            auto VAO = VertexArray::Create();
+            
 
             // vertex buffer
             float vertData[] = {
@@ -42,23 +47,23 @@ namespace FE
                  1.0f,-1.0f, 0.0f // bottom right 
             };
             int vbSize = sizeof(vertData);
-            glNamedBufferStorage(vb, vbSize, vertData,GL_DYNAMIC_STORAGE_BIT);
+            auto vb = VertexBuffer::Create(vbSize);
+            vb->SetData(vertData,vbSize);
+            
+            BufferLayout bufferLayout{
+                {"a_Position",BufferElementType::Float3}
+            };
+            vb->SetLayout(bufferLayout);
+
             // index buffer 
             uint32_t indexData[] = {
                 0,1,2
             };
             int ibCount = 3;
-            int ibSize = sizeof(indexData);
-            glNamedBufferStorage(ib, ibSize, indexData, GL_DYNAMIC_STORAGE_BIT);
+            auto ib = IndexBuffer::Create(indexData, ibCount);
 
-            // link to vao
-            glVertexArrayVertexBuffer(vao, 0, vb, 0,sizeof(float)*3); 
-            glVertexArrayAttribBinding(vao, 0, 0);
-            glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
-            glEnableVertexArrayAttrib(vao,0);
-
-            glVertexArrayElementBuffer(vao, ib);
-            glBindVertexArray(vao);
+            VAO->SetVertexBuffer(vb);
+            VAO->SetIndexBuffer(ib);
             // shader 
             std::string vertShaderCode = R"(
                 #version 460 core
@@ -128,22 +133,22 @@ namespace FE
             glUseProgram(shaderProgram);
             glDeleteShader(vertShader);
             glDeleteShader(fragShader);
+            glUseProgram(0);
 
             using namespace RENDERER;
             while (!MainWindow->ShouldClose())
             {                
                 RenderCommand::ClearColor(0.1f,0.1f,0.15f,1.0f);                
                 RenderCommand::Clear();
+                                
+                VAO->Bind();
+                glUseProgram(shaderProgram);
+                RenderCommand::DrawIndexed(VAO);                
+                glUseProgram(0);
+                VAO->Unbind();
                 
-                glDrawElements(GL_TRIANGLES,3, GL_UNSIGNED_INT,nullptr);
-                //glDrawArrays(GL_TRIANGLES, 0, 3);
                 MainWindow->Update();
             }
-
-            // delete             
-            glDeleteBuffers(1,&vb);
-            glDeleteBuffers(1,&ib);
-            glDeleteVertexArrays(1,&vao);
 
         }
 
