@@ -5,6 +5,7 @@
 // Renderer 
 #include "FE/Core/Renderer/Buffers.hpp"
 #include "FE/Core/Renderer/RenderCommand.hpp"
+#include "FE/Core/Renderer/VertexArray.hpp"
 
 // logger 
 #include "FE/Core/Log/Log.hpp"

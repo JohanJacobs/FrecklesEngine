@@ -6,26 +6,14 @@
 
 // temp
 #include "FE/Core/Renderer/Buffers.hpp"
+#include "FE/Core/Renderer/VertexArray.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-
-   
+  
 
 namespace FE
 {
-    GLenum BufferElementToOpenGLType(RENDERER::BufferElementType type )
-{
-    switch (type)
-    {
-        case RENDERER::BufferElementType::Float:  return GL_FLOAT;
-        case RENDERER::BufferElementType::Float2: return GL_FLOAT;
-        case RENDERER::BufferElementType::Float3: return GL_FLOAT;
-        case RENDERER::BufferElementType::Float4: return GL_FLOAT;
-    }
-    LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
-    return 0;
-};
+    
 
     namespace CORE
     {
@@ -48,9 +36,9 @@ namespace FE
         {
             using namespace RENDERER;
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            uint32_t vao;
-
-            glCreateVertexArrays(1,&vao);
+            //uint32_t vao;
+            auto VAO = VertexArray::Create();
+            //glCreateVertexArrays(1,&vao);
 
             // vertex buffer
             float vertData[] = {
@@ -75,26 +63,29 @@ namespace FE
             auto ib = IndexBuffer::Create(indexData, ibCount);
 
             // link to vao
-            glVertexArrayVertexBuffer(vao, 0, vb->GetRenderID(), 0,sizeof(float)*3); 
-            auto l  = vb->GetLayout();
-            {
-                int elementIndex = 0;
-                int bindingIndex = 0;
+            // glVertexArrayVertexBuffer(vao, 0, vb->GetRenderID(), 0,sizeof(float)*3); 
+            // auto l  = vb->GetLayout();
+            // {
+            //     int elementIndex = 0;
+            //     int bindingIndex = 0;
 
-                for (auto& element : l)
-                {
-                    glVertexArrayAttribBinding(vao, elementIndex, bindingIndex);
-                    glVertexArrayAttribFormat(vao, elementIndex, element.Count ,BufferElementToOpenGLType(element.Type), element.Normalized,element.Offset);
-                    glEnableVertexArrayAttrib(vao, elementIndex);
-                }
+            //     for (auto& element : l)
+            //     {
+            //         glVertexArrayAttribBinding(vao, elementIndex, bindingIndex);
+            //         glVertexArrayAttribFormat(vao, elementIndex, element.Count ,BufferElementToOpenGLType(element.Type), element.Normalized,element.Offset);
+            //         glEnableVertexArrayAttrib(vao, elementIndex);
+            //     }
 
-            }
-            glVertexArrayAttribBinding(vao, 0, 0);
-            glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
-            glEnableVertexArrayAttrib(vao,0);
+            // }
+            //glVertexArrayAttribBinding(vao, 0, 0);
+            //glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
+            //glEnableVertexArrayAttrib(vao,0);
 
-            glVertexArrayElementBuffer(vao, ib->GetRenderID());
-            glBindVertexArray(vao);
+            //glVertexArrayElementBuffer(vao, ib->GetRenderID());
+            //glBindVertexArray(vao);
+
+            VAO->SetVertexBuffer(vb);
+            VAO->SetIndexBuffer(ib);
             // shader 
             std::string vertShaderCode = R"(
                 #version 460 core
@@ -164,6 +155,7 @@ namespace FE
             glUseProgram(shaderProgram);
             glDeleteShader(vertShader);
             glDeleteShader(fragShader);
+            glUseProgram(0);
 
             using namespace RENDERER;
             while (!MainWindow->ShouldClose())
@@ -171,13 +163,20 @@ namespace FE
                 RenderCommand::ClearColor(0.1f,0.1f,0.15f,1.0f);                
                 RenderCommand::Clear();
                 
-                glDrawElements(GL_TRIANGLES,ib->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+                //glDrawElements(GL_TRIANGLES,ib->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+                VAO->Bind();
+                glUseProgram(shaderProgram);
+                auto idxcount = VAO->GetIndexCount();
+                glDrawElements(GL_TRIANGLES,VAO->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+                glUseProgram(0);
+                VAO->Unbind();
+
                 //glDrawArrays(GL_TRIANGLES, 0, 3);
                 MainWindow->Update();
             }
 
             // delete             
-            glDeleteVertexArrays(1,&vao);
+            //glDeleteVertexArrays(1,&vao);
 
         }
 

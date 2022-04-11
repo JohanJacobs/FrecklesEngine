@@ -47,6 +47,7 @@ namespace FE
         BufferLayout::BufferLayout(const BufferLayout& other)
         {
             Elements = other.Elements;
+            Stride = other.Stride;
         }
 
         void BufferLayout::CalculateOffsets()
@@ -59,6 +60,7 @@ namespace FE
                 offset += e.Size;
                 e.Count = Utils::BufferElementTypeItemCount(e.Type);
             }
+            Stride = offset;
         }
         /*
             VERTEX BUFFER
@@ -98,7 +100,12 @@ namespace FE
             
             if (size != Size)
                 LOG_CORE_ERROR("Invalid size VertexBuffer::SetData, expected {} but got {}",Size,size);
+            Size = size;
             glNamedBufferStorage(RenderID, size, data,GL_DYNAMIC_STORAGE_BIT);
+        }
+        uint32_t VertexBuffer::GetSize() const
+        {
+            return Size;
         }
 
         void VertexBuffer::SetLayout(BufferLayout& layout)

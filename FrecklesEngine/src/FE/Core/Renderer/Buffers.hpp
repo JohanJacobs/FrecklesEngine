@@ -37,6 +37,8 @@ namespace FE
             BufferLayout (std::initializer_list<BufferElement> list);
             BufferLayout(const BufferLayout& other);
             
+            uint32_t GetStride() const {return Stride;}
+
             std::vector<BufferElement>::iterator begin() {return Elements.begin();}
             std::vector<BufferElement>::iterator end() {return Elements.end();}
             std::vector<BufferElement>::const_iterator begin() const {return Elements.begin();}
@@ -44,6 +46,7 @@ namespace FE
         private:
             void CalculateOffsets();
             std::vector<BufferElement> Elements;
+            uint32_t Stride{0};
         };
 
         class VertexBuffer 
@@ -56,6 +59,8 @@ namespace FE
         void Unbind() const;
 
         void SetData(void* data, uint32_t size);
+        uint32_t GetSize() const;
+
         void SetLayout(BufferLayout& layout);
         const BufferLayout& GetLayout() const; 
 
