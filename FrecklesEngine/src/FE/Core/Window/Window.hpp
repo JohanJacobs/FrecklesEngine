@@ -20,7 +20,7 @@ namespace FE
             void Init();
             void Shutdown();
             Ref<RENDERER::Context>& GetGraphicsContext() { return GraphicsContext;}
-            static Ref<Window> CreateWindow();
+            static Ref<Window> Create();
         private:
         private:
             GLFWwindow* WindowHandle;

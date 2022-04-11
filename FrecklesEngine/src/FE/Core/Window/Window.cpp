@@ -78,7 +78,7 @@ namespace FE
             return glfwWindowShouldClose(WindowHandle);
         }
 
-        Ref<Window> Window::CreateWindow()
+        Ref<Window> Window::Create()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
