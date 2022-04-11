@@ -18,6 +18,12 @@ namespace FE
             
         }
 
+        void RenderCommand::DrawIndexed(Ref<VertexArray>& vao, uint32_t indices)
+        {
+            if (indices == 0)
+                indices = vao->GetIndexCount();
+            s_RenderCommandData->GraphicsContext->DrawIndexed(indices);
+        }
         void RenderCommand::ClearColor(float red,float green,float blue, float alpha)
         {
             s_RenderCommandData->GraphicsContext->ClearColor(red, green, blue, alpha);

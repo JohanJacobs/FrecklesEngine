@@ -13,8 +13,8 @@ namespace FE
                 void Init(void* windowHandle);
                 void Shutdown();
 
+                void DrawIndexed(uint32_t indices);
                 void SwapBuffers() const;
-
                 void ClearColor(float red,float green,float blue, float alpha) const;
                 void Clear() const;
                 static Ref<Context> Create();

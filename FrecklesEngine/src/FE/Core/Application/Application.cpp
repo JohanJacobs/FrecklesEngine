@@ -166,8 +166,8 @@ namespace FE
                 //glDrawElements(GL_TRIANGLES,ib->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
                 VAO->Bind();
                 glUseProgram(shaderProgram);
-                auto idxcount = VAO->GetIndexCount();
-                glDrawElements(GL_TRIANGLES,VAO->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+                RenderCommand::DrawIndexed(VAO);
+                //glDrawElements(GL_TRIANGLES,VAO->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
                 glUseProgram(0);
                 VAO->Unbind();
 
