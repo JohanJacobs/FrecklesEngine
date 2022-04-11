@@ -111,6 +111,8 @@ namespace FE
 
         void Context::DrawIndexed(uint32_t indices)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            
             glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_INT, nullptr);
         }
 

@@ -11,6 +11,8 @@ namespace FE
         {
             uint32_t BufferElementTypeSize(BufferElementType type)
             {
+                LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
                 switch (type)
                 {
                     case BufferElementType::Float:  return sizeof(float);
@@ -24,6 +26,8 @@ namespace FE
 
             uint32_t BufferElementTypeItemCount(BufferElementType type)
             {
+                LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
                 switch (type)
                 {
                     case BufferElementType::Float:  return 1;
@@ -40,18 +44,24 @@ namespace FE
         */
         BufferLayout::BufferLayout(std::initializer_list<BufferElement> list)        
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             Elements = list;
             CalculateOffsets();
         }
 
         BufferLayout::BufferLayout(const BufferLayout& other)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             Elements = other.Elements;
             Stride = other.Stride;
         }
 
         void BufferLayout::CalculateOffsets()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             uint32_t offset = 0;
             for (auto& e : Elements)
             {
@@ -67,7 +77,7 @@ namespace FE
         */
         VertexBuffer::VertexBuffer(uint32_t size)
         :Size {size}
-        {
+        {            
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
             glCreateBuffers(1,&RenderID);
@@ -103,23 +113,30 @@ namespace FE
             Size = size;
             glNamedBufferStorage(RenderID, size, data,GL_DYNAMIC_STORAGE_BIT);
         }
+
         uint32_t VertexBuffer::GetSize() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return Size;
         }
 
         void VertexBuffer::SetLayout(BufferLayout& layout)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             Layout = layout;
         }
         
         const BufferLayout& VertexBuffer::GetLayout() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return Layout;
         }
         
         uint32_t VertexBuffer::GetRenderID() const
-        {
+        {            
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
             
             return RenderID;
@@ -139,37 +156,51 @@ namespace FE
         IndexBuffer::IndexBuffer(const uint32_t* indexData, uint32_t count)
         :Count {count}
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glCreateBuffers(1,&RenderID);
             glNamedBufferStorage(RenderID,sizeof(GL_UNSIGNED_INT)*count, indexData, GL_DYNAMIC_STORAGE_BIT);
         }
 
         IndexBuffer::~IndexBuffer()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glDeleteBuffers(1,&RenderID);
         }
 
         void IndexBuffer::Bind() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, RenderID);
         }
 
         void IndexBuffer::Unbind() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         }
 
         uint32_t IndexBuffer::GetRenderID() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return RenderID;
         }
 
         uint32_t IndexBuffer::GetIndexCount() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return Count;
         }
 
         Ref<IndexBuffer> IndexBuffer::Create(const uint32_t* indexData, uint32_t count)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            
             return CreateRef<IndexBuffer>(indexData,count);
         }
     }

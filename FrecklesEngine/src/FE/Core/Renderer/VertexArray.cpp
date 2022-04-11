@@ -24,26 +24,35 @@ namespace FE
 
         VertexArray::VertexArray()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
             glCreateVertexArrays(1,&RenderID);
         }
 
         VertexArray::~VertexArray()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glDeleteVertexArrays(1,&RenderID);
         }
 
         void VertexArray::Bind() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glBindVertexArray(RenderID);
         }
 
         void VertexArray::Unbind() const
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glBindVertexArray(0);
         }
 
         void VertexArray::SetVertexBuffer(Ref<VertexBuffer>& vertexBuffer)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             VB = vertexBuffer;
             auto& layout = VB->GetLayout();
             
@@ -64,17 +73,23 @@ namespace FE
 
         void VertexArray::SetIndexBuffer(Ref<IndexBuffer>& indexBuffer)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             IB =indexBuffer;
             glVertexArrayElementBuffer(RenderID, IB->GetRenderID());
         }
         
         uint32_t VertexArray::GetIndexCount() const 
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return IB->GetIndexCount();
         }
 
         Ref<VertexArray> VertexArray::Create()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            
             return CreateRef<VertexArray>();
         }
     }

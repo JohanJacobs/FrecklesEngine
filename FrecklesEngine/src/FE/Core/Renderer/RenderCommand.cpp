@@ -15,11 +15,13 @@ namespace FE
 
         void RenderCommand::Shutdown()
         {
-            
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         }
 
         void RenderCommand::DrawIndexed(Ref<VertexArray>& vao, uint32_t indices)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             if (indices == 0)
                 indices = vao->GetIndexCount();
             s_RenderCommandData->GraphicsContext->DrawIndexed(indices);
