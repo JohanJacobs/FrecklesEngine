@@ -25,7 +25,7 @@ project "FrecklesEngine"
     defines
     {
         "GLFW_INCLUDE_NONE",
-        "_CRT_"
+        "_CRT_SECURE_NO_WARNINGS"
     }
     filter "system:linux"
         links
