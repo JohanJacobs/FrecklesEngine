@@ -45,11 +45,8 @@ namespace FE
         void VertexArray::SetVertexBuffer(Ref<VertexBuffer>& vertexBuffer)
         {
             VB = vertexBuffer;
+            auto& layout = VB->GetLayout();
             
-            auto vbID = VB->GetRenderID();
-
-            auto layout = VB->GetLayout();
-            auto stride = layout.GetStride();
             glVertexArrayVertexBuffer(RenderID, 0, VB->GetRenderID(), 0, layout.GetStride()); 
             
             int elementIndex = 0;
@@ -58,8 +55,6 @@ namespace FE
             for (auto& element : layout)
             {
                 glVertexArrayAttribBinding(RenderID, elementIndex, bindingIndex);
-                auto count = element.Count;
-                auto offset = element.Offset;
                 glVertexArrayAttribFormat(RenderID, elementIndex, element.Count ,Utils::BufferElementToOpenGLType(element.Type), element.Normalized, element.Offset);
                 glEnableVertexArrayAttrib(RenderID, elementIndex);
 
