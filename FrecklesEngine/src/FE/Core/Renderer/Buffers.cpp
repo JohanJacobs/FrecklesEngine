@@ -18,14 +18,26 @@ namespace FE
                     case BufferElementType::Float3: return sizeof(float)*3;
                     case BufferElementType::Float4: return sizeof(float)*4;
                 }
-                LOG_CORE_ERROR("Invlaud RENDER::ElementType");
+                LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
                 return 0;
             }
+
+            uint32_t BufferElementTypeItemCount(BufferElementType type)
+            {
+                switch (type)
+                {
+                    case BufferElementType::Float:  return 1;
+                    case BufferElementType::Float2: return 2;
+                    case BufferElementType::Float3: return 3;
+                    case BufferElementType::Float4: return 4;
+                }
+                LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
+                return 0;
+            }            
         }
         /*
             BUFFER LAYOUT 
         */
-
         BufferLayout::BufferLayout(std::initializer_list<BufferElement> list)        
         {
             Elements = list;
@@ -45,6 +57,7 @@ namespace FE
                 e.Size =Utils::BufferElementTypeSize(e.Type);
                 e.Offset = offset;
                 offset += e.Size;
+                e.Count = Utils::BufferElementTypeItemCount(e.Type);
             }
         }
         /*
@@ -88,6 +101,16 @@ namespace FE
             glNamedBufferStorage(RenderID, size, data,GL_DYNAMIC_STORAGE_BIT);
         }
 
+        void VertexBuffer::SetLayout(BufferLayout& layout)
+        {
+            Layout = layout;
+        }
+        
+        const BufferLayout& VertexBuffer::GetLayout() const
+        {
+            return Layout;
+        }
+        
         uint32_t VertexBuffer::GetRenderID() const
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);

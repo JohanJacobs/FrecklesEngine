@@ -9,8 +9,24 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+
+   
+
 namespace FE
 {
+    GLenum BufferElementToOpenGLType(RENDERER::BufferElementType type )
+{
+    switch (type)
+    {
+        case RENDERER::BufferElementType::Float:  return GL_FLOAT;
+        case RENDERER::BufferElementType::Float2: return GL_FLOAT;
+        case RENDERER::BufferElementType::Float3: return GL_FLOAT;
+        case RENDERER::BufferElementType::Float4: return GL_FLOAT;
+    }
+    LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
+    return 0;
+};
+
     namespace CORE
     {
         Application::Application()
@@ -46,6 +62,11 @@ namespace FE
             auto vb = VertexBuffer::Create(vbSize);
             vb->SetData(vertData,vbSize);
             
+            BufferLayout bufferLayout{
+                {"a_Position",BufferElementType::Float3}
+            };
+            vb->SetLayout(bufferLayout);
+
             // index buffer 
             uint32_t indexData[] = {
                 0,1,2
@@ -55,6 +76,19 @@ namespace FE
 
             // link to vao
             glVertexArrayVertexBuffer(vao, 0, vb->GetRenderID(), 0,sizeof(float)*3); 
+            auto l  = vb->GetLayout();
+            {
+                int elementIndex = 0;
+                int bindingIndex = 0;
+
+                for (auto& element : l)
+                {
+                    glVertexArrayAttribBinding(vao, elementIndex, bindingIndex);
+                    glVertexArrayAttribFormat(vao, elementIndex, element.Count ,BufferElementToOpenGLType(element.Type), element.Normalized,element.Offset);
+                    glEnableVertexArrayAttrib(vao, elementIndex);
+                }
+
+            }
             glVertexArrayAttribBinding(vao, 0, 0);
             glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
             glEnableVertexArrayAttrib(vao,0);

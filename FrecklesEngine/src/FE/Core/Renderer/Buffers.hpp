@@ -19,18 +19,21 @@ namespace FE
 
         struct BufferElement
         {
-            BufferElement();
-            BufferElement(const std::string name, BufferElementType type, bool normalized=false):Name{name},Type{type},Size{0},Offset{0}, Normalized{normalized}{}
+            BufferElement() =default;
+            BufferElement(const std::string name, BufferElementType type, bool normalized=false)
+                :Name{name}, Type{type}, Size{0}, Count{0}, Offset{0}, Normalized{normalized} {}
             std::string Name;
             BufferElementType Type;
             uint32_t Size;
+            uint32_t Count;
             uint32_t Offset;
             bool Normalized;
         };
-
+        
         class BufferLayout
         {
         public:
+            BufferLayout()=default;
             BufferLayout (std::initializer_list<BufferElement> list);
             BufferLayout(const BufferLayout& other);
             
@@ -53,6 +56,8 @@ namespace FE
         void Unbind() const;
 
         void SetData(void* data, uint32_t size);
+        void SetLayout(BufferLayout& layout);
+        const BufferLayout& GetLayout() const; 
 
         uint32_t GetRenderID() const;
 
@@ -60,6 +65,7 @@ namespace FE
         private:
             uint32_t Size;
             uint32_t RenderID;
+            BufferLayout Layout;
         };
 
         class IndexBuffer
