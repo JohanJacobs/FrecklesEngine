@@ -32,12 +32,9 @@ namespace FE
         {
             using namespace RENDERER;
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            uint32_t ib,vao;
-            // uint32_t vb
-            glCreateVertexArrays(1,&vao);
-            //glCreateBuffers(1,&vb);
-            glCreateBuffers(1,&ib);
+            uint32_t vao;
 
+            glCreateVertexArrays(1,&vao);
 
             // vertex buffer
             float vertData[] = {
@@ -48,14 +45,13 @@ namespace FE
             int vbSize = sizeof(vertData);
             auto vb = VertexBuffer::Create(vbSize);
             vb->SetData(vertData,vbSize);
-            //glNamedBufferStorage(vb, vbSize, vertData,GL_DYNAMIC_STORAGE_BIT);
+            
             // index buffer 
             uint32_t indexData[] = {
                 0,1,2
             };
             int ibCount = 3;
-            int ibSize = sizeof(indexData);
-            glNamedBufferStorage(ib, ibSize, indexData, GL_DYNAMIC_STORAGE_BIT);
+            auto ib = IndexBuffer::Create(indexData, ibCount);
 
             // link to vao
             glVertexArrayVertexBuffer(vao, 0, vb->GetRenderID(), 0,sizeof(float)*3); 
@@ -63,7 +59,7 @@ namespace FE
             glVertexArrayAttribFormat(vao, 0, 2,GL_FLOAT, GL_FALSE,0);
             glEnableVertexArrayAttrib(vao,0);
 
-            glVertexArrayElementBuffer(vao, ib);
+            glVertexArrayElementBuffer(vao, ib->GetRenderID());
             glBindVertexArray(vao);
             // shader 
             std::string vertShaderCode = R"(
@@ -141,14 +137,12 @@ namespace FE
                 RenderCommand::ClearColor(0.1f,0.1f,0.15f,1.0f);                
                 RenderCommand::Clear();
                 
-                glDrawElements(GL_TRIANGLES,3, GL_UNSIGNED_INT, nullptr);
+                glDrawElements(GL_TRIANGLES,ib->GetIndexCount(), GL_UNSIGNED_INT, nullptr);
                 //glDrawArrays(GL_TRIANGLES, 0, 3);
                 MainWindow->Update();
             }
 
             // delete             
-            //glDeleteBuffers(1,&vb);
-            glDeleteBuffers(1,&ib);
             glDeleteVertexArrays(1,&vao);
 
         }
