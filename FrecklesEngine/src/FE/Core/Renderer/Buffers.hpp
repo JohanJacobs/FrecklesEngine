@@ -1,9 +1,48 @@
 #pragma once
 #include "FE/Core/Base.hpp"
+
+#include <initializer_list>
+#include <vector>
+#include <string>
+
 namespace FE
 {
     namespace RENDERER
     {
+        enum class BufferElementType
+        {
+            Float,
+            Float2,
+            Float3,
+            Float4
+        };
+
+        struct BufferElement
+        {
+            BufferElement();
+            BufferElement(const std::string name, BufferElementType type, bool normalized=false):Name{name},Type{type},Size{0},Offset{0}, Normalized{normalized}{}
+            std::string Name;
+            BufferElementType Type;
+            uint32_t Size;
+            uint32_t Offset;
+            bool Normalized;
+        };
+
+        class BufferLayout
+        {
+        public:
+            BufferLayout (std::initializer_list<BufferElement> list);
+            BufferLayout(const BufferLayout& other);
+            
+            std::vector<BufferElement>::iterator begin() {return Elements.begin();}
+            std::vector<BufferElement>::iterator end() {return Elements.end();}
+            std::vector<BufferElement>::const_iterator begin() const {return Elements.begin();}
+            std::vector<BufferElement>::const_iterator end() const {return Elements.end();}
+        private:
+            void CalculateOffsets();
+            std::vector<BufferElement> Elements;
+        };
+
         class VertexBuffer 
         {
         public:
@@ -22,8 +61,6 @@ namespace FE
             uint32_t Size;
             uint32_t RenderID;
         };
-
-
 
         class IndexBuffer
         {

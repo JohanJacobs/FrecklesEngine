@@ -7,6 +7,46 @@ namespace FE
 {
     namespace RENDERER
     {       
+        namespace Utils
+        {
+            uint32_t BufferElementTypeSize(BufferElementType type)
+            {
+                switch (type)
+                {
+                    case BufferElementType::Float:  return sizeof(float);
+                    case BufferElementType::Float2: return sizeof(float)*2;
+                    case BufferElementType::Float3: return sizeof(float)*3;
+                    case BufferElementType::Float4: return sizeof(float)*4;
+                }
+                LOG_CORE_ERROR("Invlaud RENDER::ElementType");
+                return 0;
+            }
+        }
+        /*
+            BUFFER LAYOUT 
+        */
+
+        BufferLayout::BufferLayout(std::initializer_list<BufferElement> list)        
+        {
+            Elements = list;
+            CalculateOffsets();
+        }
+
+        BufferLayout::BufferLayout(const BufferLayout& other)
+        {
+            Elements = other.Elements;
+        }
+
+        void BufferLayout::CalculateOffsets()
+        {
+            uint32_t offset = 0;
+            for (auto& e : Elements)
+            {
+                e.Size =Utils::BufferElementTypeSize(e.Type);
+                e.Offset = offset;
+                offset += e.Size;
+            }
+        }
         /*
             VERTEX BUFFER
         */
