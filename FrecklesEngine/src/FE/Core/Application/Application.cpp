@@ -14,7 +14,7 @@ namespace FE
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
-            MainWindow = Window::CreateWindow();
+            MainWindow = Window::Create();
             MainWindow->Init();
             RENDERER::RenderCommand::Init(MainWindow);
         }

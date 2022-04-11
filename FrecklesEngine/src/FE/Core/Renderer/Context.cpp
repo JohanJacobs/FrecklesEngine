@@ -19,8 +19,6 @@ namespace FE
             // ignore non-significant error/warning codes
             if(id == 131169 || id == 131185 || id == 131218 || id == 131204) return; 
 
-            LOG_WARN("Debug message ({0}): {1}",id,message);
-
             switch (source)
             {
                 case GL_DEBUG_SOURCE_API:             LOG_CORE_WARN("Source: API"); break;
@@ -51,6 +49,8 @@ namespace FE
                 case GL_DEBUG_SEVERITY_LOW:          LOG_CORE_WARN("Severity: low"); break;
                 case GL_DEBUG_SEVERITY_NOTIFICATION: LOG_CORE_WARN("Severity: notification"); break;
             } 
+
+            LOG_WARN("Message ({0}): {1}",id,message);
         }
 
         Ref<Context> Context::Create()
