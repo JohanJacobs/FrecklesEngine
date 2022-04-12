@@ -3,6 +3,9 @@
 
 #include <glad/glad.h>
 
+#include <fstream>
+#include <sstream>
+
 namespace FE
 {
     namespace RENDERER
@@ -34,6 +37,44 @@ namespace FE
                 LOG_CORE_ERROR("ShaderTypeToOpenGLType: Invalid shader type! ");
                 return GL_NONE;
             }
+
+            std::unordered_map<ShaderType, std::string> LoadShaderSourceFromFile(const std::string shaderPath)
+            {
+                std::unordered_map<ShaderType, std::string> shaderSources;
+
+                // open file and move to end.
+                std::ifstream file(shaderPath,ios::ate);
+                if (!file.is_open())
+                {
+                    LOG_CORE_ERROR("Failed to open file {}", shaderPath);
+                    return shaderSources;
+                }
+                // read into buffer 
+                std::stringstream buf; 
+                buf << file.rdbuf();
+                std::string fileContent = buff.str();
+{
+    std::string token = "#type";
+    int token_length = token.length();   
+
+    int idx = fileContent.find(token,0);
+    while (idx != std::string::npos)
+    {   
+        int idx_eol = fileContent.find('\n',idx);
+        std::string shader_type = fileContent.substr(idx + token_length+1, idx_eol-token_length-idx-1);
+        
+        // shader source code 
+        int idx2 = fileContent.find(token,idx_eol);
+        idx = idx2;
+        if (idx2 ==std::string::npos)
+            idx2 = fileContent.length() - idx;
+        std::string src = fileContent.substr(idx_eol+1,idx2-idx_eol-1);   
+    }
+}
+
+                file.close();
+                return shaderSources;               
+            }
         }
 
         Shader::Shader(const std::string& vertSrc, const std::string& fragSrc)
@@ -44,6 +85,20 @@ namespace FE
                 {ShaderType::VertexShader,vertSrc},
                 {ShaderType::FragmentShader,fragSrc}
             };
+
+            auto compliedShaders = CompileShaders(shaderSrc);
+            RenderID = LinkShaders(compliedShaders);
+        }
+
+        Shader::Shader(const std::string& shaderPath)
+        {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            auto shaderSrc = LoadShaderSourceFromFile(shaderPath);
+            // std::unordered_map<ShaderType, std::string> shaderSrc{
+            //     {ShaderType::VertexShader,vertSrc},
+            //     {ShaderType::FragmentShader,fragSrc}
+            // };
 
             auto compliedShaders = CompileShaders(shaderSrc);
             RenderID = LinkShaders(compliedShaders);
@@ -73,6 +128,13 @@ namespace FE
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
             return CreateRef<Shader>(vertSrc,fragSrc);
+        }
+
+        Ref<Shader> Shader::Create(const std::string& shaderPath)
+        {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            return CreateRef<Shader>(shaderPath);
         }
 
         std::unordered_map<ShaderType,uint32_t> Shader::CompileShaders(const std::unordered_map<ShaderType,std::string>& sources)

@@ -62,25 +62,25 @@ namespace FE
             VAO->SetIndexBuffer(ib);
 
             // shaders
-            std::string vertShaderCode = R"(
-                #version 460 core
-                layout(location=0) in vec3 a_Position;
-                void main()
-                {
-                    gl_Position = vec4(a_Position, 1.0);
-                }
-            )";
+            // std::string vertShaderCode = R"(
+            //     #version 460 core
+            //     layout(location=0) in vec3 a_Position;
+            //     void main()
+            //     {
+            //         gl_Position = vec4(a_Position, 1.0);
+            //     }
+            // )";
 
-            std::string fragmentShader = R"(
-                #version 460 core
-                out vec4 color;
-                void main()
-                {
-                    color = vec4(1.0f, 0.5f, 0.2f, 1.0f);   
-                }
-            )";
-            auto shader = Shader::Create(vertShaderCode, fragmentShader);
-
+            // std::string fragmentShader = R"(
+            //     #version 460 core
+            //     out vec4 color;
+            //     void main()
+            //     {
+            //         color = vec4(1.0f, 0.5f, 0.2f, 1.0f);   
+            //     }
+            // )";
+            //auto shader = Shader::Create(vertShaderCode, fragmentShader);
+            auto shader = Shader::Create("assets/shaders/basic.shader");
             while (!MainWindow->ShouldClose())
             {                
                 RenderCommand::ClearColor(0.1f,0.1f,0.15f,1.0f);

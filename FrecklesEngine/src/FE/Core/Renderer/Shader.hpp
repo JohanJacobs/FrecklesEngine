@@ -16,6 +16,7 @@ namespace FE
         {
         public:
             Shader(const std::string& vertSrc, const std::string& fragSrc);
+            Shader(const std::string& shaderPath);
             ~Shader();
             Shader(const Shader& other) = default;
 
@@ -23,6 +24,7 @@ namespace FE
             void Unbind()const;
 
             static Ref<Shader> Create(const std::string& vertSrc, const std::string& fragSrc );
+            static Ref<Shader> Create(const std::string& shaderPath);
         
         private:
             std::unordered_map<ShaderType,uint32_t> CompileShaders(const std::unordered_map<ShaderType,std::string>& sources);
