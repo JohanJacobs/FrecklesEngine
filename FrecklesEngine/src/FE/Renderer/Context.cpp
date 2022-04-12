@@ -1,5 +1,5 @@
 #include "FE/Core/FEpch.hpp"
-#include "Context.hpp"
+#include "FE/Renderer/Context.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -104,11 +104,15 @@ namespace FE
             LOG_CORE_TRACE("  Renderer: {0}", glGetString(GL_RENDERER));
             LOG_CORE_TRACE("  Version: {0}", glGetString(GL_VERSION));
         }
+        
         void Context::Shutdown()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         }
 
+        /*
+            Shaders and VAO should be bound prior to calling DrawIndexed
+        */
         void Context::DrawIndexed(uint32_t indices)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);

@@ -20,7 +20,7 @@ namespace FE
         struct BufferElement
         {
             BufferElement() =default;
-            BufferElement(const std::string name, BufferElementType type, bool normalized=false)
+            BufferElement(const std::string& name, BufferElementType type, bool normalized=false)
                 :Name{name}, Type{type}, Size{0}, Count{0}, Offset{0}, Normalized{normalized} {}
             std::string Name;
             BufferElementType Type;

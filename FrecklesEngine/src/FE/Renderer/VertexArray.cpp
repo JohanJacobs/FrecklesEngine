@@ -1,5 +1,5 @@
 #include "FE/Core/FEpch.hpp"
-#include "FE/Core/Renderer/VertexArray.hpp"
+#include "FE/Renderer/VertexArray.hpp"
 
 #include <glad/glad.h>
 namespace FE

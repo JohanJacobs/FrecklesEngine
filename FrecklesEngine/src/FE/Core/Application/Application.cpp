@@ -1,12 +1,12 @@
 
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Application/Application.hpp"
-#include "FE/Core/Renderer/RenderCommand.hpp"
 
 // temp
-#include "FE/Core/Renderer/Buffers.hpp"
-#include "FE/Core/Renderer/VertexArray.hpp"
-#include "FE/Core/Renderer/Shader.hpp"
+#include "FE/Renderer/RenderCommand.hpp"
+#include "FE/Renderer/Buffers.hpp"
+#include "FE/Renderer/VertexArray.hpp"
+#include "FE/Renderer/Shader.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
   

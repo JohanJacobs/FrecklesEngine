@@ -1,6 +1,6 @@
 #pragma once
 #include "FE/Core/Base.hpp"
-#include "FE/Core/Renderer/Context.hpp"
+#include "FE/Renderer/Context.hpp"
 
 class GLFWwindow;
 namespace FE

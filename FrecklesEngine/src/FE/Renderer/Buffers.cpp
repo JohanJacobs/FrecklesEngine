@@ -1,6 +1,6 @@
 
 #include "FE/Core/FEpch.hpp"
-#include "FE/Core/Renderer/Buffers.hpp"
+#include "FE/Renderer/Buffers.hpp"
 
 #include <glad/glad.h>
 namespace FE

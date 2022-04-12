@@ -1,5 +1,5 @@
 #include "FE/Core/FEpch.hpp"
-#include "FE/Core/Renderer/Shader.hpp"
+#include "FE/Renderer/Shader.hpp"
 
 #include <glad/glad.h>
 

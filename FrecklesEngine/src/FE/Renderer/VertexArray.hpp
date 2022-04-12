@@ -1,7 +1,7 @@
 #pragma once 
 #include "FE/Core/Base.hpp"
 
-#include "FE/Core/Renderer/Buffers.hpp"
+#include "FE/Renderer/Buffers.hpp"
 namespace FE
 {
     namespace RENDERER
