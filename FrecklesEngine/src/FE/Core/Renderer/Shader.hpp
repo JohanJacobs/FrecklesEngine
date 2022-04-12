@@ -8,6 +8,7 @@ namespace FE
     {
         enum class ShaderType
         {
+            None,
             FragmentShader,
             VertexShader
         };

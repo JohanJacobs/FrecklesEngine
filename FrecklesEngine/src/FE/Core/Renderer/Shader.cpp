@@ -31,48 +31,66 @@ namespace FE
             
                 switch (type)
                 {
-                    case ShaderType::VertexShader: return "VERTEX SHADER";
-                    case ShaderType::FragmentShader: return "FRAGMENT SHADER";
+                    case ShaderType::VertexShader: return "Vertex";
+                    case ShaderType::FragmentShader: return "Fragment";
                 }
                 LOG_CORE_ERROR("ShaderTypeToOpenGLType: Invalid shader type! ");
-                return GL_NONE;
+                return {};
             }
 
-            std::unordered_map<ShaderType, std::string> LoadShaderSourceFromFile(const std::string shaderPath)
+            ShaderType StringToShaderType(const std::string& shaderTypeString)
+            {
+                if (shaderTypeString == "Vertex")
+                    return ShaderType::VertexShader;
+                else if (shaderTypeString == "Fragment")
+                    return ShaderType::FragmentShader;
+                
+                LOG_CORE_ERROR("StringToShaderType received unknown Shader type string '{0}'",shaderTypeString);
+                return ShaderType::None;
+            }
+
+            std::unordered_map<ShaderType, std::string> LoadShaderSourceFromFile(const std::string& shaderPath)
             {
                 std::unordered_map<ShaderType, std::string> shaderSources;
 
                 // open file and move to end.
-                std::ifstream file(shaderPath,ios::ate);
+                std::ifstream file(shaderPath);
                 if (!file.is_open())
                 {
-                    LOG_CORE_ERROR("Failed to open file {}", shaderPath);
+                    //LOG_CORE_INFO("Working directionry {}", std::filesystem::current_path().string());
+                    LOG_CORE_ERROR("Failed to open file '{}'", shaderPath);
                     return shaderSources;
                 }
+
                 // read into buffer 
-                std::stringstream buf; 
-                buf << file.rdbuf();
-                std::string fileContent = buff.str();
-{
-    std::string token = "#type";
-    int token_length = token.length();   
-
-    int idx = fileContent.find(token,0);
-    while (idx != std::string::npos)
-    {   
-        int idx_eol = fileContent.find('\n',idx);
-        std::string shader_type = fileContent.substr(idx + token_length+1, idx_eol-token_length-idx-1);
-        
-        // shader source code 
-        int idx2 = fileContent.find(token,idx_eol);
-        idx = idx2;
-        if (idx2 ==std::string::npos)
-            idx2 = fileContent.length() - idx;
-        std::string src = fileContent.substr(idx_eol+1,idx2-idx_eol-1);   
-    }
-}
-
+                std::stringstream buffer; 
+                buffer << file.rdbuf();
+                std::string fileContent = buffer.str();
                 file.close();
+
+                // setup token information
+                std::string token = R"(#type)";
+                int token_length = token.length();   
+
+                int idx = fileContent.find(token,0);
+                while (idx != std::string::npos)
+                {   
+                    // shader type
+                    int idx_eol = fileContent.find('\n',idx);                    
+                    std::string shader_type = fileContent.substr(idx + token_length+1, idx_eol-token_length-idx-1);
+                    ShaderType shader = StringToShaderType(shader_type);
+
+                    // shader source code 
+                    int idx2 = fileContent.find(token,idx_eol);
+                    idx = idx2;
+
+                    if (idx2 ==std::string::npos)
+                        idx2 = fileContent.length() - idx;
+
+                    std::string shaderSrc = fileContent.substr(idx_eol+1,idx2-idx_eol-1);
+
+                    shaderSources[shader] = shaderSrc;
+                }
                 return shaderSources;               
             }
         }
@@ -94,12 +112,7 @@ namespace FE
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
-            auto shaderSrc = LoadShaderSourceFromFile(shaderPath);
-            // std::unordered_map<ShaderType, std::string> shaderSrc{
-            //     {ShaderType::VertexShader,vertSrc},
-            //     {ShaderType::FragmentShader,fragSrc}
-            // };
-
+            auto shaderSrc = Utils::LoadShaderSourceFromFile(shaderPath);
             auto compliedShaders = CompileShaders(shaderSrc);
             RenderID = LinkShaders(compliedShaders);
         }
