@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <memory>
+#include <string>
 
 #define LOG_FUNCTION_NAME __PRETTY_FUNCTION__
 
