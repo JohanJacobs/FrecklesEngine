@@ -99,10 +99,10 @@ namespace FE
             glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
             
             // print the opengl version of the window.
-            LOG_INFO("OpenGL Info:");
-            LOG_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
-            LOG_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
-            LOG_INFO("  Version: {0}", glGetString(GL_VERSION));
+            LOG_CORE_TRACE("OpenGL Info:");
+            LOG_CORE_TRACE("  Vendor: {0}", glGetString(GL_VENDOR));
+            LOG_CORE_TRACE("  Renderer: {0}", glGetString(GL_RENDERER));
+            LOG_CORE_TRACE("  Version: {0}", glGetString(GL_VERSION));
         }
         void Context::Shutdown()
         {
@@ -112,7 +112,7 @@ namespace FE
         void Context::DrawIndexed(uint32_t indices)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
+
             glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_INT, nullptr);
         }
 
