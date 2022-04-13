@@ -6,13 +6,14 @@
 #include "FE/Renderer/Buffers.hpp"
 #include "FE/Renderer/RenderCommand.hpp"
 #include "FE/Renderer/VertexArray.hpp"
+#include "FE/Renderer/Shader.hpp"
 
 // logger 
 #include "FE/Core/Log/Log.hpp"
 
 namespace FE
 {
-    Ref<CORE::Application> CreateApplication()
+    static Ref<CORE::Application> CreateApplication()
     {
         LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         return CreateRef<CORE::Application>();

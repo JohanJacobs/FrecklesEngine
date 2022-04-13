@@ -1,3 +1,4 @@
+#include "FE/FrecklesEngine.hpp"
 #include "TestAppLayer/TestAppLayer.hpp"
 
 int main()
