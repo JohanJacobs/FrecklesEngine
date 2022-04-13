@@ -173,6 +173,7 @@ namespace FE
                         glGetShaderInfoLog(shader, 512, NULL, infoLog);
                         LOG_CORE_ERROR("{} compilation failed: {}",Utils::ShaderTypeToString(type), infoLog );
                         glDeleteShader(shader);
+                        
                         break;
                         // TODO : this should be reworked. currently if one shader fails we still run the other shader
                     }
@@ -199,7 +200,7 @@ namespace FE
                 glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
                 if(!success) {
                     glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-                    LOG_CORE_ERROR("LinkShaders: Shader linking failed: {}", infoLog );
+                    LOG_CORE_ERROR("LinkShaders: Shader linking failed: {}", infoLog );                    
                 }
             }
             glUseProgram(shaderProgram);
