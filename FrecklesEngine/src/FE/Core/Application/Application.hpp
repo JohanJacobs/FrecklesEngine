@@ -1,3 +1,4 @@
+#pragma once 
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Window/Window.hpp"
 #include "FE/Core/Layer/LayerStack.hpp"

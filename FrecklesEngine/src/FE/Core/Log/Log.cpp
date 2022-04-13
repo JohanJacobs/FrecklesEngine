@@ -16,7 +16,7 @@ namespace FE
             console_sink->set_level(spdlog::level::info);
 
             // display log information in the console starting at trace level
-            auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/fe.log", true);
+            auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/FE.log", true);
             file_sink->set_level(spdlog::level::trace);
 
             CoreLogger = std::make_shared<spdlog::logger>("FE", std::initializer_list<spdlog::sink_ptr>{console_sink,file_sink});

@@ -2,7 +2,7 @@
 #include "FE/Core/Base.hpp"
 #include "FE/Renderer/Context.hpp"
 
-class GLFWwindow;
+struct GLFWwindow;
 namespace FE
 {
     namespace CORE

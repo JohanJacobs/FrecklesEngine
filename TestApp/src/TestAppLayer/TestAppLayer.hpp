@@ -1,3 +1,4 @@
+#pragma once 
 #include "FE/FrecklesEngine.hpp"
 
 class TestApp: public FE::CORE::Layer

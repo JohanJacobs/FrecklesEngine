@@ -1,0 +1,3 @@
+*.vcxproj
+/FrecklesEngine.vcxproj.filters
+/FrecklesEngine.vcxproj.user
