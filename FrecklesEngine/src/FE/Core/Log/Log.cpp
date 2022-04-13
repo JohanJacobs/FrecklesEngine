@@ -25,7 +25,9 @@ namespace FE
             //enable the logs
             CoreLogger->set_level(spdlog::level::trace);
             CoreLogger->flush_on(spdlog::level::trace);
+            
             ClientLogger->set_level(spdlog::level::trace);
+            ClientLogger->flush_on(spdlog::level::trace);
             
            
         }
