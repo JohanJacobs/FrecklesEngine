@@ -63,7 +63,7 @@ namespace FE
             glfwTerminate();
         }
 
-        void Window::Update()
+        void Window::Update(Timestep ts)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 

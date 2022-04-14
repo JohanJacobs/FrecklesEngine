@@ -2,7 +2,7 @@
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Window/Window.hpp"
 #include "FE/Core/Layer/LayerStack.hpp"
-
+#include "FE/Core/Time/Timer.hpp"
 namespace FE
 {
     namespace CORE
@@ -22,6 +22,7 @@ namespace FE
         private:
             Ref<Window> MainWindow;
             LayerStack Layers;
+            Timer MainTimer;
         };
     }
 }

@@ -4,13 +4,15 @@
 class TestApp: public FE::CORE::Layer
 {
 public:
-    TestApp();
-    TestApp(const TestApp& other) ;
-    TestApp(TestApp&& other)  noexcept;
+    TestApp(); // plain constructor    
+    TestApp(const TestApp& other); // copy constructor;
+    TestApp(TestApp&& other)  noexcept; // move constructor;
+    //TestApp operator = (const TestApp& other);  //copy assignment operator;
+    //TestApp operator = (TestApp&& other); // Move assignment operator;
 
     ~TestApp();
 
-    void OnUpdate() override;
+    void OnUpdate(FE::CORE::Timestep ts) override;
     void OnAttach() override;
     void OnDetach() override;
 

@@ -1,6 +1,7 @@
 
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Application/Application.hpp"
+#include "FE/Core/Time/Timestep.hpp"
 
 // temp
 #include "FE/Renderer/RenderCommand.hpp"
@@ -30,17 +31,20 @@ namespace FE
         }
 
         void Application::Run()
-        {
+        {            
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            Timestep ts = MainTimer.GetSeconds();
+            MainTimer.Reset();
 
             while (!MainWindow->ShouldClose())
             {
                 for (auto* l : Layers)
                 {
-                    l->OnUpdate();
+                    l->OnUpdate(ts);
                 }
                 
-                MainWindow->Update();
+                MainWindow->Update(ts);
             }
         }
 

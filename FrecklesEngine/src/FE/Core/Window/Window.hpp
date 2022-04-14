@@ -1,6 +1,7 @@
 #pragma once
 #include "FE/Core/Base.hpp"
 #include "FE/Renderer/Context.hpp"
+#include "FE/Core/Time/Timestep.hpp"
 
 struct GLFWwindow;
 namespace FE
@@ -13,7 +14,7 @@ namespace FE
             Window();
             ~Window();
 
-            void Update();
+            void Update(Timestep ts);
 
             bool ShouldClose() const;
 

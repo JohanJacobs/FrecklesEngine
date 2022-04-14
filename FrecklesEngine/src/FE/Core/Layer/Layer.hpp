@@ -1,5 +1,6 @@
 #pragma once 
 #include "FE/Core/Base.hpp"
+#include "FE/Core/Time/Timestep.hpp"
 namespace FE
 {
     namespace CORE
@@ -10,7 +11,7 @@ namespace FE
                 Layer() =default;
                 virtual ~Layer() = default;
                                  
-                virtual void OnUpdate(){};
+                virtual void OnUpdate(Timestep ts){};
                 virtual void OnRenderGUI(){};
 
                 virtual void OnAttach(){};

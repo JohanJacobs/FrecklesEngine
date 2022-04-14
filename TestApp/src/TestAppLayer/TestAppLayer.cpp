@@ -2,27 +2,29 @@
 
 TestApp::TestApp() 
 {
-    LOG_INFO("TestAppLayer::TestApp()");
+    LOG_TRACE("TestAppLayer::TestApp()");
 }
 
 TestApp::TestApp(const TestApp& other) 
 {
-    LOG_INFO("TestAppLayer::TestApp(const TestApp& other)");
+    LOG_TRACE("TestAppLayer::TestApp(const TestApp& other)");
 }
 
 TestApp::TestApp(TestApp&& other)  noexcept
 {
-    LOG_INFO("TestAppLayer:: TestApp(TestApp&& other)  noexcept");
+    LOG_TRACE("TestAppLayer:: TestApp(TestApp&& other) noexcept");
+    Shader = std::move(other.Shader);
+    VAO = std::move(other.VAO);
 }
 
 TestApp::~TestApp()
 {
-    LOG_INFO("TestAppLayer::~TestApp()");
+    LOG_TRACE("TestAppLayer::~TestApp()");
 }
 
-void TestApp::OnUpdate()
+void TestApp::OnUpdate(FE::CORE::Timestep ts)
 {
-    LOG_INFO("TestAppLayer::OnUpdate()");
+    LOG_TRACE("TestAppLayer::OnUpdate({})", static_cast<float>(ts));
     
     using namespace FE;
     using namespace RENDERER;
@@ -39,7 +41,7 @@ void TestApp::OnUpdate()
 
 void TestApp::OnAttach()
 {
-    LOG_INFO("TestAppLayer::OnAttach()");
+    LOG_TRACE("TestAppLayer::OnAttach()");
     using namespace FE;
     using namespace RENDERER;
 
@@ -76,5 +78,5 @@ void TestApp::OnAttach()
 
 void TestApp::OnDetach()
 {
-    LOG_INFO("TestAppLayer::OnDetach()");
+    LOG_TRACE("TestAppLayer::OnDetach()");
 }
