@@ -1,5 +1,6 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Window/Window.hpp"
+#include "FE/Core/Input/Input.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -48,7 +49,10 @@ namespace FE
                 Shutdown();
                 exit(1);
             }
+
+            //setup subsystems
             GraphicsContext->Init(WindowHandle);
+            Input::Init(WindowHandle);
         }
 
         void Window::Shutdown()
