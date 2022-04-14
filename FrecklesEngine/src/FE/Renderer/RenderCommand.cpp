@@ -1,6 +1,8 @@
 
 #include "FE/Core/FEpch.hpp"
 #include "FE/Renderer/RenderCommand.hpp"
+#include "FE/Renderer/Render2D.h"
+
 namespace FE
 {
     namespace RENDERER
@@ -11,6 +13,8 @@ namespace FE
         {
             s_RenderCommandData = CreateRef<RenderCommandData>();
             s_RenderCommandData->GraphicsContext = mainWindow->GetGraphicsContext();
+
+            Renderer2D::Init();
         }
 
         void RenderCommand::Shutdown()
@@ -34,5 +38,16 @@ namespace FE
         {
             s_RenderCommandData->GraphicsContext->Clear();
         }
-    }
+
+		glm::vec2 RenderCommand::GetWindowSize()
+		{
+            return s_RenderCommandData->GraphicsContext->GetWindowSize();
+		}
+
+		void RenderCommand::SetViewportSize(int x, int y, int width, int height)
+		{
+            s_RenderCommandData->GraphicsContext->SetViewportSize(x, y, width, height);
+		}
+
+	}
 }

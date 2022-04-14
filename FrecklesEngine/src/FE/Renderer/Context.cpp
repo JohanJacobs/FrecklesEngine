@@ -53,7 +53,8 @@ namespace FE
             LOG_WARN("Message ({0}): {1}",id,message);
         }
 
-        Ref<Context> Context::Create()
+
+		Ref<Context> Context::Create()
         {
             return CreateRef<Context>();
         }
@@ -104,6 +105,9 @@ namespace FE
             LOG_CORE_TRACE("  Vendor: {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
             LOG_CORE_TRACE("  Renderer: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
             LOG_CORE_TRACE("  Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+
+            auto viewport = GetWindowSize();
+            SetViewportSize(0, 0, int(viewport.x), int(viewport.y));
         }
         
         void Context::Shutdown()
@@ -141,5 +145,18 @@ namespace FE
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }        
-    }
+
+		glm::vec2 Context::GetWindowSize() const
+		{
+            int width{0}, height{ 0 };
+            glfwGetWindowSize(static_cast<GLFWwindow*>(WindowHandle), &width, &height);
+            return { width,height };
+		}
+
+		void Context::SetViewportSize(int x, int y, int width, int height) const
+		{
+            glViewport(x, y, width, height);
+		}
+
+	}
 }

@@ -18,6 +18,9 @@ namespace FE
                 void SwapBuffers() const;
                 void ClearColor(const glm::vec4& color) const;
                 void Clear() const;
+
+                glm::vec2 GetWindowSize() const;
+                void SetViewportSize(int x, int y, int width, int height) const;
                 static Ref<Context> Create();
             private:
                 void* WindowHandle;

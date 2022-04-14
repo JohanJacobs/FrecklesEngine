@@ -20,6 +20,9 @@ namespace FE
             
             static void ClearColor(const glm::vec4& color);
             static void Clear();
+
+            static glm::vec2 GetWindowSize();
+            static void SetViewportSize(int x, int y, int width, int height);
         private:
             struct RenderCommandData
             {
