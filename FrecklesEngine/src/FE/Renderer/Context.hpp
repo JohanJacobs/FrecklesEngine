@@ -1,6 +1,6 @@
 #pragma once 
 #include "FE/Core/Base.hpp"
-
+#include <glm/glm.hpp>
 namespace FE
 {
     namespace RENDERER
@@ -16,7 +16,7 @@ namespace FE
                 void DrawIndexed(uint32_t indices);
                 
                 void SwapBuffers() const;
-                void ClearColor(float red,float green,float blue, float alpha) const;
+                void ClearColor(const glm::vec4& color) const;
                 void Clear() const;
                 static Ref<Context> Create();
             private:

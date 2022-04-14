@@ -1,8 +1,8 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Renderer/Context.hpp"
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace FE
 {    
@@ -127,11 +127,11 @@ namespace FE
             glfwSwapBuffers(static_cast<GLFWwindow*>(WindowHandle));
         }
 
-        void Context::ClearColor(float red,float green,float blue, float alpha) const
+        void Context::ClearColor(const glm::vec4& color) const
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
-            glClearColor(red, green, blue, alpha);
+            glClearColor(color.r,color.g,color.b,color.a);
         }
 
         void Context::Clear() const

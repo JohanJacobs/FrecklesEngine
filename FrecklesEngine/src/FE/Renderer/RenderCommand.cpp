@@ -26,9 +26,9 @@ namespace FE
                 indices = vao->GetIndexCount();
             s_RenderCommandData->GraphicsContext->DrawIndexed(indices);
         }
-        void RenderCommand::ClearColor(float red,float green,float blue, float alpha)
+        void RenderCommand::ClearColor(const glm::vec4& color)
         {
-            s_RenderCommandData->GraphicsContext->ClearColor(red, green, blue, alpha);
+            s_RenderCommandData->GraphicsContext->ClearColor(color);
         }
         void RenderCommand::Clear()
         {

@@ -3,6 +3,8 @@
 #include "FE/Core/Window/Window.hpp"
 #include "FE/Renderer/VertexArray.hpp"
 
+#include <glm/glm.hpp>
+
 namespace FE
 {
     namespace RENDERER
@@ -16,7 +18,7 @@ namespace FE
 
             static void DrawIndexed(Ref<VertexArray>& vao, uint32_t indices=0);
             
-            static void ClearColor(float red,float green,float blue, float alpha);
+            static void ClearColor(const glm::vec4& color);
             static void Clear();
         private:
             struct RenderCommandData
