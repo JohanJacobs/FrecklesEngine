@@ -17,7 +17,7 @@ namespace FE
 		{
 			auto* window = static_cast<GLFWwindow*>(s_InputNativeWindowHandle);
 			auto state = glfwGetKey(window, static_cast<int32_t>(key));
-			return (state == GLFW_PRESS) || (state == GLFW_RELEASE);
+			return (state == GLFW_PRESS) || (state == GLFW_REPEAT);
 		}
 
 		bool Input::MousebuttonPressed(const MouseCode button)
