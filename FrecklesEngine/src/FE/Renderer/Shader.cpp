@@ -70,18 +70,18 @@ namespace FE
 
                 // setup token information
                 std::string token = R"(#type)";
-                int token_length = token.length();   
+                auto token_length = token.length();   
 
-                int idx = fileContent.find(token,0);
+                auto idx = fileContent.find(token,0);
                 while (idx != std::string::npos)
                 {   
                     // shader type
-                    int idx_eol = fileContent.find('\n',idx);                    
+                    auto idx_eol = fileContent.find('\n',idx);
                     std::string shader_type = fileContent.substr(idx + token_length+1, idx_eol-token_length-idx-1);
                     ShaderType shader = StringToShaderType(shader_type);
 
                     // shader source code 
-                    int idx2 = fileContent.find(token,idx_eol);
+                    auto idx2 = fileContent.find(token,idx_eol);
                     idx = idx2;
 
                     if (idx2 ==std::string::npos)

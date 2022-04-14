@@ -62,7 +62,7 @@ namespace FE
         :WindowHandle{nullptr}
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
+
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
