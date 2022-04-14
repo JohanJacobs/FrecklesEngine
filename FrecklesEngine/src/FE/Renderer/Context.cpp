@@ -99,10 +99,11 @@ namespace FE
             glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
             
             // print the opengl version of the window.
+          
             LOG_CORE_TRACE("OpenGL Info:");
-            LOG_CORE_TRACE("  Vendor: {0}", glGetString(GL_VENDOR));
-            LOG_CORE_TRACE("  Renderer: {0}", glGetString(GL_RENDERER));
-            LOG_CORE_TRACE("  Version: {0}", glGetString(GL_VERSION));
+            LOG_CORE_TRACE("  Vendor: {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
+            LOG_CORE_TRACE("  Renderer: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+            LOG_CORE_TRACE("  Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
         }
         
         void Context::Shutdown()
