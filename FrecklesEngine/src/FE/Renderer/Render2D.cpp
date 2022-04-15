@@ -13,7 +13,7 @@
 #include <array>
 
 namespace FE
-{
+{	
 	namespace RENDERER
 	{
 		struct Render2DVertexData
@@ -119,9 +119,7 @@ namespace FE
 			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices)
 				EndCurentRenderBatch();
 			
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-				//glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3{ 0.0f,0.0f,1.0f }) *
-				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
+			auto transform = CalculateTransform(position, scale);		
 
 			for (auto i = 0; i < 4; i++)
 			{				
@@ -141,9 +139,7 @@ namespace FE
 			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices)
 				EndCurentRenderBatch();
 
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-				glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegree), glm::vec3{ 0.0f,0.0f,1.0f }) *
-				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
+			glm::mat4 transform = CalculateTransform(position,scale,rotationDegree);
 
 			for (auto i = 0; i < 4; i++)
 			{
@@ -183,10 +179,7 @@ namespace FE
 				s_Data2D.RenderTextureSlotOffset += 1;
 			}
 
-			//create transform for this object 
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-				//glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegree), glm::vec3{ 0.0f,0.0f,1.0f }) *
-				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
+			auto transform = CalculateTransform(position, scale);
 
 			// populate vertices
 			for (auto i = 0; i < 4; i++)
@@ -227,10 +220,7 @@ namespace FE
 				s_Data2D.RenderTextureSlotOffset += 1;
 			}
 
-			//create transform for this object 
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-				glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegree), glm::vec3{ 0.0f,0.0f,1.0f }) *
-				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
+			glm::mat4 transform = CalculateTransform(position, scale,rotationDegree);
 
 			// populate vertices
 			for (auto i = 0; i < 4; i++)
@@ -291,6 +281,19 @@ namespace FE
 		void Render2D::Flush()
 		{
 			RenderCommand::DrawIndexed(s_Data2D.QuadVAO, s_Data2D.RenderQuadIndexOffset);
+		}
+
+		glm::mat4 Render2D::CalculateTransform (const glm::vec3& position, const glm::vec2& scale)
+		{
+			return glm::translate(glm::mat4(1.0f), position) * 
+				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
+		}
+
+		glm::mat4 Render2D::CalculateTransform (const glm::vec3& position, const glm::vec2& scale, float rotationDegree)
+		{
+			return glm::translate(glm::mat4(1.0f), position) *
+				glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegree), glm::vec3{ 0.0f,0.0f,1.0f }) *
+				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
 		}
 	}
 }

@@ -33,6 +33,9 @@ namespace FE
 			static void EndBatch();
 			static void Flush();
 
+			static glm::mat4 CalculateTransform (const glm::vec3& position, const glm::vec2& scale);
+			static glm::mat4 CalculateTransform (const glm::vec3& position, const glm::vec2& scale, float rotationDegree);
+
 		};
 	}
 }
