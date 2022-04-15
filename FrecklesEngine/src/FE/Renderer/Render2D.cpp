@@ -68,7 +68,7 @@ namespace FE
 
 			s_Data2D.QuadVertexBuffer->SetLayout(layout);
 
-			uint32_t indexData[Render2DData::MaxIndices];
+			uint32_t* indexData = new uint32_t[Render2DData::MaxIndices];
 			{
 				uint32_t default_indices[] = { 0, 1, 2, 2, 3, 0 };
 				uint32_t offset = 0;
@@ -85,6 +85,7 @@ namespace FE
 			}
 			auto IB = IndexBuffer::Create(indexData, Render2DData::MaxIndices);
 			s_Data2D.QuadVAO = VertexArray::Create(s_Data2D.QuadVertexBuffer, IB);
+			delete[] indexData;
 
 			// white Texture 
 			s_Data2D.WhiteTexture = Texture2D::Create("assets/textures/white.png");
