@@ -1,7 +1,7 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Input/Input.hpp"
 
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 namespace FE
 {

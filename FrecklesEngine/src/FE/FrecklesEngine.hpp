@@ -8,7 +8,7 @@
 #include "FE/Core/Time/Timestep.hpp"
 #include "FE/Core/Input/Input.hpp"
 #include "FE/Core/Input/KeyCodes.hpp"
-#include "Fe/Core/Input/MouseCodes.hpp"
+#include "FE/Core/Input/MouseCodes.hpp"
 
 // Renderer 
 #include "FE/Renderer/Buffers.hpp"

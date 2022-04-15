@@ -15,9 +15,9 @@ workspace "FrecklesEngine"
 
     flags
 	{
-		"MultiProcessorCompile"
-	}
-    
+		"MultiProcessorCompile",
+        "FatalWarnings"
+	}   
     
 group "Dependencies"
     include "FrecklesEngine/vendor/glfw"

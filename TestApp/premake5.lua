@@ -32,6 +32,7 @@ project "TestApp"
             "GLFW",
             "Glad"
         }
+        
         pic "On"
     
     filter "system:windows"
