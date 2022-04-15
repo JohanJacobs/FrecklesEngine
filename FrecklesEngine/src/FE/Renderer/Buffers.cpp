@@ -19,6 +19,7 @@ namespace FE
                     case BufferElementType::Float2: return sizeof(float)*2;
                     case BufferElementType::Float3: return sizeof(float)*3;
                     case BufferElementType::Float4: return sizeof(float)*4;
+                    case BufferElementType::Int:    return sizeof(int) ;
                 }
                 LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
                 return 0;
@@ -34,6 +35,8 @@ namespace FE
                     case BufferElementType::Float2: return 2;
                     case BufferElementType::Float3: return 3;
                     case BufferElementType::Float4: return 4;
+                    case BufferElementType::Int:    return 1;
+                        
                 }
                 LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
                 return 0;

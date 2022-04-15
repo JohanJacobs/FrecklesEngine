@@ -14,7 +14,8 @@ namespace FE
             Float,
             Float2,
             Float3,
-            Float4
+            Float4,
+            Int           
         };
 
         struct BufferElement

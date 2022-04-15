@@ -143,6 +143,12 @@ namespace FE
             glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 		}
 
+		void Shader::SetUniform(const std::string& uniformName, int* intArray, uint32_t count) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform1iv(location, count, intArray);
+		}
+
 		Ref<Shader> Shader::Create(const std::string& vertSrc, const std::string& fragSrc)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);

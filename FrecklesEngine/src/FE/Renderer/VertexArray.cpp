@@ -12,12 +12,13 @@ namespace FE
             {
                 switch (type)
                 {
-                    case RENDERER::BufferElementType::Float:  return GL_FLOAT;
-                    case RENDERER::BufferElementType::Float2: return GL_FLOAT;
-                    case RENDERER::BufferElementType::Float3: return GL_FLOAT;
-                    case RENDERER::BufferElementType::Float4: return GL_FLOAT;
+                    case RENDERER::BufferElementType::Float:    return GL_FLOAT;
+                    case RENDERER::BufferElementType::Float2:   return GL_FLOAT;
+                    case RENDERER::BufferElementType::Float3:   return GL_FLOAT;
+                    case RENDERER::BufferElementType::Float4:   return GL_FLOAT;
+                    case RENDERER::BufferElementType::Int:      return GL_FLOAT;
                 }
-                LOG_CORE_ERROR("Invlaud RENDER::BufferElementType");
+                LOG_CORE_ERROR("Invalid RENDER::BufferElementType");
                 return 0;
             }
         }

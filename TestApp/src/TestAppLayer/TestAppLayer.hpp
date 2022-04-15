@@ -14,7 +14,7 @@ public:
 private:
     
     Ref<FE::RENDERER::VertexArray> VAO;
-    
+    Ref<FE::RENDERER::Texture2D> CrateTexture;
     // camera stuff 
     glm::vec3 cameraPosition{0.0f, 0.0f, 10.0f};
     glm::vec3 cameraRotation{0.0f, 0.0f, 0.0f};

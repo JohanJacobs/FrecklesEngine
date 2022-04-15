@@ -72,6 +72,10 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
     Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
 
+    Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f },45.0f);
+
+    Render2D::RenderTexture(CrateTexture, {  0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
+    Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, 45.0f);
 
     Render2D::EndScene();
 }
@@ -80,44 +84,8 @@ void TestApp::OnAttach()
 {
     LOG_TRACE("TestAppLayer::OnAttach()");
     using namespace FE;
-    using namespace RENDERER;
-
-    //VAO = VertexArray::Create();
-
-    //// vertex buffer
-    //float vertData[] = {
-    //    -1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, // top left     / RGBA / texture coordinates
-    //    -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left  / RGBA / texture coordinates
-    //     1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, // bottom right / RGBA / texture coordinates
-    //     1.0f,  1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f  // top right    / RGBA / texture coordinates
-    //};
-    //int vbSize = sizeof(vertData);
-    //auto vb = VertexBuffer::Create(vbSize);
-    //vb->SetData(vertData,vbSize);
-
-    //BufferLayout bufferLayout{
-    //    {"a_Position",BufferElementType::Float3},
-    //    {"a_Color",BufferElementType::Float4},
-    //    {"a_TexCoord",BufferElementType::Float2}
-    //};
-    //vb->SetLayout(bufferLayout);
-
-    //// index buffer 
-    //uint32_t indexData[] = {
-    //    0,1,2,2,3,0
-    //};
-    //int ibCount = 6;
-    //auto ib = IndexBuffer::Create(indexData, ibCount);
-
-    //VAO->SetVertexBuffer(vb);
-    //VAO->SetIndexBuffer(ib);
-
-    // shaders
-    //VertexColorShader = Shader::Create("assets/shaders/CameraVertexColorShaderTexture.shader");
-    
-    // CrateTexture = Texture2D::Create("assets/textures/container.jpg");
-    
-    
+    using namespace RENDERER;       
+    CrateTexture = Texture2D::Create("assets/textures/container.jpg");     
 }
 
 void TestApp::OnDetach()
