@@ -1,0 +1,76 @@
+#include "FE/Core/FEpch.hpp"
+#include "FE/Renderer/Texture.hpp"
+
+#include "stb_image.h"
+#include <glad/glad.h>
+
+namespace FE
+{
+	namespace RENDERER
+	{
+
+		Texture2D::Texture2D(const std::string& filePath)
+		{
+			// texture 
+			glGenTextures(1, &RenderID);
+			glBindTexture(GL_TEXTURE_2D, RenderID);
+			// set the texture wrapping/filtering options (on the currently bound texture object)
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			// load and generate the texture
+			int width, height, nrChannels;
+			stbi_set_flip_vertically_on_load(1); // flip image
+			unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels,0);
+			
+			if (data)
+			{
+				LOG_CORE_INFO("Loaded Texture '{}'", filePath.c_str());
+				switch (nrChannels)
+				{
+				case 3: 
+				{
+					ImageFormat = GL_RGB;
+					InternalFormat = GL_RGB;
+					break;
+				}
+				case 4:
+				{
+					ImageFormat = GL_RGBA;
+					InternalFormat = GL_RGBA;
+					break;
+				}
+
+				LOG_CORE_ERROR("Invalid image Format, Channels: {}", nrChannels);
+				}
+				
+				glTexImage2D(GL_TEXTURE_2D, 0, ImageFormat, width, height, 0, InternalFormat, GL_UNSIGNED_BYTE, data);
+				glGenerateMipmap(GL_TEXTURE_2D);
+			}
+			else
+			{
+				LOG_ERROR("file not loaded");
+			}
+			stbi_image_free(data);
+		}
+
+		Texture2D::~Texture2D()
+		{
+			glDeleteTextures(1, &RenderID);
+		}
+
+		void Texture2D::Bind(uint32_t slot) const
+		{
+			glActiveTexture(GL_TEXTURE0 + slot);
+			glBindTexture(GL_TEXTURE_2D, RenderID);
+		}
+
+		Ref<FE::RENDERER::Texture2D> Texture2D::Create(const std::string& filePath)
+		{
+			return CreateRef<Texture2D>(filePath);
+		}
+
+	}
+}

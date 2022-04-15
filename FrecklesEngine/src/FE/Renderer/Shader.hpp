@@ -1,7 +1,9 @@
 #pragma once 
 #include "FE/Core/Base.hpp"
 
+#include <glm/glm.hpp>
 #include <unordered_map>
+
 namespace FE
 {
     namespace RENDERER
@@ -23,6 +25,8 @@ namespace FE
 
             void Bind() const;
             void Unbind()const;
+
+            void SetUniform(const std::string& uniformName, const glm::mat4& matrix) const;
 
             static Ref<Shader> Create(const std::string& vertSrc, const std::string& fragSrc );
             static Ref<Shader> Create(const std::string& shaderPath);

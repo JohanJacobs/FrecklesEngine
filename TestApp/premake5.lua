@@ -10,7 +10,7 @@ project "TestApp"
     files
     {
         "src/**.cpp",
-        "src/**.hpp"        
+        "src/**.hpp"
     }
     
     includedirs
@@ -18,7 +18,7 @@ project "TestApp"
         "%{prj.location}/src",
         "%{IncludeDirs.FE}",
         "%{IncludeDirs.spdlog}",
-        "%{IncludeDirs.glm}"
+        "%{IncludeDirs.glm}",        
     }
 
     links 

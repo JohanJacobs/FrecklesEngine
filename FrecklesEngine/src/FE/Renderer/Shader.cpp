@@ -2,6 +2,7 @@
 #include "FE/Renderer/Shader.hpp"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -136,7 +137,13 @@ namespace FE
             glUseProgram(0);
         }
 
-        Ref<Shader> Shader::Create(const std::string& vertSrc, const std::string& fragSrc )
+		void Shader::SetUniform(const std::string& uniformName, const glm::mat4& matrix) const
+		{
+            auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+            glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+		}
+
+		Ref<Shader> Shader::Create(const std::string& vertSrc, const std::string& fragSrc)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 

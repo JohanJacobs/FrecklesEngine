@@ -11,7 +11,9 @@ project "FrecklesEngine"
     files
     {
         "src/**.cpp",
-        "src/**.hpp"
+        "src/**.hpp",
+        "vendor/stb/**.cpp",
+        "vendor/stb/**.h"
     }
 
     includedirs
@@ -20,7 +22,8 @@ project "FrecklesEngine"
         "%{IncludeDirs.glfw}",
         "%{IncludeDirs.spdlog}",
         "%{IncludeDirs.glad}",
-        "%{IncludeDirs.glm}"
+        "%{IncludeDirs.glm}",
+        "%{IncludeDirs.stb}"
     }
 
     defines
