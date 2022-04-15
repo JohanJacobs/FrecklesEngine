@@ -1,7 +1,7 @@
 
 #include "FE/Core/FEpch.hpp"
 #include "FE/Renderer/RenderCommand.hpp"
-#include "FE/Renderer/Render2D.h"
+#include "FE/Renderer/Render2D.hpp"
 
 namespace FE
 {
@@ -14,7 +14,7 @@ namespace FE
             s_RenderCommandData = CreateRef<RenderCommandData>();
             s_RenderCommandData->GraphicsContext = mainWindow->GetGraphicsContext();
 
-            Renderer2D::Init();
+            Render2D::Init();
         }
 
         void RenderCommand::Shutdown()

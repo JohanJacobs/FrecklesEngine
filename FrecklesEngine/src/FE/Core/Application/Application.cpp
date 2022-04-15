@@ -16,7 +16,7 @@ namespace FE
     namespace CORE
     {
         Application::Application()
-        {
+        {            
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
             MainWindow = Window::Create();

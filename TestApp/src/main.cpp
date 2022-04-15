@@ -1,9 +1,10 @@
 #include "FE/FrecklesEngine.hpp"
 #include "TestAppLayer/TestAppLayer.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
-    auto App = FE::CreateApplication();
+    
+    auto App = CreateApplication();
     
     App->PushLayer(new TestApp());
     App->Run();

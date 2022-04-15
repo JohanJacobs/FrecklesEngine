@@ -1,4 +1,7 @@
 #pragma once
+// logger 
+#include "FE/Core/Log/Log.hpp"
+// CORE functions
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Application/Application.hpp"
 #include "FE/Core/Layer/Layer.hpp"
@@ -14,14 +17,13 @@
 #include "FE/Renderer/Shader.hpp"
 #include "FE/Renderer/Texture.hpp"
 
-// logger 
-#include "FE/Core/Log/Log.hpp"
 
-namespace FE
-{
-    static Ref<CORE::Application> CreateApplication()
+
+    static Ref<FE::CORE::Application> CreateApplication()
     {
+        using namespace FE;
+        using namespace CORE;
+        Log::Init();
         LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-        return CreateRef<CORE::Application>();
+        return CreateRef<Application>();
     }
-}

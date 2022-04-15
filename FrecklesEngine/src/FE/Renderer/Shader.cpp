@@ -120,7 +120,7 @@ namespace FE
 
         Shader::~Shader()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); // spdlog crash
         }
 
         void Shader::Bind() const

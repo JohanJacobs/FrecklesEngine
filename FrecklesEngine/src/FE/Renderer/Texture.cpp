@@ -11,14 +11,7 @@ namespace FE
 
 		Texture2D::Texture2D(const std::string& filePath)
 		{
-			// texture 
-			glGenTextures(1, &RenderID);
-			glBindTexture(GL_TEXTURE_2D, RenderID);
-			// set the texture wrapping/filtering options (on the currently bound texture object)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 
 			// load and generate the texture
 			int width, height, nrChannels;
@@ -33,21 +26,30 @@ namespace FE
 				case 3: 
 				{
 					ImageFormat = GL_RGB;
-					InternalFormat = GL_RGB;
+					InternalFormat = GL_RGBA8;
 					break;
 				}
 				case 4:
 				{
 					ImageFormat = GL_RGBA;
-					InternalFormat = GL_RGBA;
+					InternalFormat = GL_RGBA8;
 					break;
 				}
 
 				LOG_CORE_ERROR("Invalid image Format, Channels: {}", nrChannels);
 				}
-				
-				glTexImage2D(GL_TEXTURE_2D, 0, ImageFormat, width, height, 0, InternalFormat, GL_UNSIGNED_BYTE, data);
-				glGenerateMipmap(GL_TEXTURE_2D);
+
+				// texture 
+				glCreateTextures(GL_TEXTURE_2D, 1, &RenderID);
+				glTextureStorage2D(RenderID, 1, InternalFormat, width, height);
+				// set the texture wrapping/filtering options (on the currently bound texture object)
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+				glTextureSubImage2D(RenderID, 0, 0, 0, width, height, ImageFormat, GL_UNSIGNED_BYTE, data);
+				//glGenerateMipmap(GL_TEXTURE_2D);
 			}
 			else
 			{

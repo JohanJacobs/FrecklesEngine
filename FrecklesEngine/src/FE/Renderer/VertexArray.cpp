@@ -25,12 +25,22 @@ namespace FE
         VertexArray::VertexArray()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             glCreateVertexArrays(1,&RenderID);
         }
 
+		VertexArray::VertexArray(Ref<VertexBuffer>& vb, Ref<IndexBuffer>& ib)
+		{
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            glCreateVertexArrays(1, &RenderID);
+            SetVertexBuffer(vb);
+            SetIndexBuffer(ib);
+		}
+        
         VertexArray::~VertexArray()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); // spdlog crash
 
             glDeleteVertexArrays(1,&RenderID);
         }
@@ -92,5 +102,11 @@ namespace FE
             
             return CreateRef<VertexArray>();
         }
-    }
+
+		Ref<VertexArray> VertexArray::Create(Ref<VertexBuffer>& vb, Ref<IndexBuffer>& ib)
+		{
+            return CreateRef<VertexArray>(vb,ib);
+		}
+
+	}
 }

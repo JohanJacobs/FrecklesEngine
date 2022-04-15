@@ -1,7 +1,7 @@
 #pragma once 
 #include "FE/Core/Base.hpp"
-
 #include "FE/Renderer/Buffers.hpp"
+
 namespace FE
 {
     namespace RENDERER
@@ -10,6 +10,7 @@ namespace FE
         {
         public:
             VertexArray();
+            VertexArray(Ref<VertexBuffer>& vb, Ref<IndexBuffer>& ib);
             ~VertexArray();
 
             void Bind() const;
@@ -20,6 +21,7 @@ namespace FE
             uint32_t GetIndexCount() const;
 
             static Ref<VertexArray> Create();
+            static Ref<VertexArray> Create(Ref<VertexBuffer>& vb, Ref<IndexBuffer>& ib);
         private:
             uint32_t RenderID;
             Ref<VertexBuffer> VB;

@@ -81,11 +81,12 @@ namespace FE
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
             glCreateBuffers(1,&RenderID);
+            glNamedBufferStorage(RenderID, size, nullptr, GL_DYNAMIC_STORAGE_BIT);
         }
 
         VertexBuffer::~VertexBuffer()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); spdlog crash
 
             glDeleteBuffers(1,&RenderID);
         }
@@ -107,11 +108,8 @@ namespace FE
         void VertexBuffer::SetData(void* data, uint32_t size)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
-            if (size != Size)
-                LOG_CORE_ERROR("Invalid size VertexBuffer::SetData, expected {} but got {}",Size,size);
-            Size = size;
-            glNamedBufferStorage(RenderID, size, data,GL_DYNAMIC_STORAGE_BIT);
+                        
+            glNamedBufferSubData(RenderID,0, size, data);
         }
 
         uint32_t VertexBuffer::GetSize() const
@@ -164,7 +162,7 @@ namespace FE
 
         IndexBuffer::~IndexBuffer()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); spdlog crash
 
             glDeleteBuffers(1,&RenderID);
         }

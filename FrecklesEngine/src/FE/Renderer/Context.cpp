@@ -70,9 +70,8 @@ namespace FE
         }
 
         Context::~Context()
-        {
-            // why does LOG_CORE_ seg fault here 
-            // LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+        {            
+            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); spdlog crash
         }
 
         void Context::Init(void* windowHandle)
@@ -106,6 +105,14 @@ namespace FE
             LOG_CORE_TRACE("  Renderer: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
             LOG_CORE_TRACE("  Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 
+
+            // blending / depth testing information 
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			glEnable(GL_DEPTH_TEST);
+
+            // set viewport to match window size
             auto viewport = GetWindowSize();
             SetViewportSize(0, 0, int(viewport.x), int(viewport.y));
         }
