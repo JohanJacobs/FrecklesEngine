@@ -16,12 +16,10 @@ namespace FE
 
         Window::Window()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         }   
         
         Window::~Window()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
             Shutdown();
         } 
 
@@ -77,8 +75,6 @@ namespace FE
 
         bool Window::ShouldClose() const
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
             return glfwWindowShouldClose(WindowHandle);
         }
 

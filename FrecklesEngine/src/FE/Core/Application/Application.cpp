@@ -16,9 +16,7 @@ namespace FE
     namespace CORE
     {
         Application::Application()
-        {            
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
+        {
             MainWindow = Window::Create();
             MainWindow->Init();
             RENDERER::RenderCommand::Init(MainWindow);
@@ -26,12 +24,11 @@ namespace FE
 
         Application::~Application()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
             Shutdown();
         }
 
         void Application::Run()
-        {            
+        {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
             Timestep ts = MainTimer.GetSeconds();
@@ -50,6 +47,8 @@ namespace FE
 
         void Application::PushLayer(Layer* layer)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             Layers.PushLayer(layer);
         }
         void Application::Shutdown()

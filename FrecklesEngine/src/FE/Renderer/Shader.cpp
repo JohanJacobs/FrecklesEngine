@@ -14,9 +14,7 @@ namespace FE
         namespace Utils
         {
             GLenum ShaderTypeToOpenGLType(ShaderType type)
-            {
-                LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
+            {            
                 switch (type)
                 {
                    case ShaderType::VertexShader: return GL_VERTEX_SHADER;
@@ -28,8 +26,6 @@ namespace FE
 
             std::string ShaderTypeToString(ShaderType type)
             {
-                LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
                 switch (type)
                 {
                     case ShaderType::VertexShader: return "Vertex";
@@ -52,6 +48,8 @@ namespace FE
 
             std::unordered_map<ShaderType, std::string> LoadShaderSourceFromFile(const std::string& shaderPath)
             {
+                LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+                
                 std::unordered_map<ShaderType, std::string> shaderSources;
 
                 // open file and move to end.
@@ -98,8 +96,6 @@ namespace FE
 
         Shader::Shader(const std::string& vertSrc, const std::string& fragSrc)
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             std::unordered_map<ShaderType, std::string> shaderSrc{
                 {ShaderType::VertexShader,vertSrc},
                 {ShaderType::FragmentShader,fragSrc}
@@ -111,8 +107,6 @@ namespace FE
 
         Shader::Shader(const std::string& shaderPath)
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             auto shaderSrc = Utils::LoadShaderSourceFromFile(shaderPath);
             auto compliedShaders = CompileShaders(shaderSrc);
             RenderID = LinkShaders(compliedShaders);
@@ -120,20 +114,15 @@ namespace FE
 
         Shader::~Shader()
         {
-            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); // spdlog crash
         }
 
         void Shader::Bind() const
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             glUseProgram(RenderID);
         }
 
         void Shader::Unbind()const
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-            
             glUseProgram(0);
         }
 

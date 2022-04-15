@@ -22,6 +22,10 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     if (Angle > 360)
         Angle -=360;
 
+    SmileyPos.x += SmileyVelocity*ts;
+    if ((SmileyPos.x >= 4.0) || (SmileyPos.x <= -4.0))
+        SmileyVelocity *= -1;
+    
     using namespace FE;
     using namespace RENDERER;
     using namespace CORE;
@@ -77,6 +81,7 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
     Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f },Angle);
 
+    Render2D::RenderTexture(SmileyTexture, SmileyPos, { 1.0f, 1.0f }, { 1.0f, 0.7f, 0.05f, 1.0f });
     Render2D::RenderTexture(CrateTexture, {  0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
     Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
 
@@ -88,7 +93,8 @@ void TestApp::OnAttach()
     LOG_TRACE("TestAppLayer::OnAttach()");
     using namespace FE;
     using namespace RENDERER;       
-    CrateTexture = Texture2D::Create("assets/textures/container.jpg");     
+    CrateTexture = Texture2D::Create("assets/textures/container.jpg");    
+    SmileyTexture = Texture2D::Create("assets/textures/smiley.png"); 
 }
 
 void TestApp::OnDetach()

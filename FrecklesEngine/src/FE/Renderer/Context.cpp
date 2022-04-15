@@ -56,14 +56,14 @@ namespace FE
 
 		Ref<Context> Context::Create()
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             return CreateRef<Context>();
         }
 
         Context::Context()
         :WindowHandle{nullptr}
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -71,12 +71,12 @@ namespace FE
 
         Context::~Context()
         {            
-            //LOG_CORE_TRACE(LOG_FUNCTION_NAME); spdlog crash
         }
 
         void Context::Init(void* windowHandle)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
             if (!windowHandle)
             {
                 LOG_CORE_ERROR("Null handle for window!");                
@@ -119,7 +119,6 @@ namespace FE
         
         void Context::Shutdown()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
         }
 
         /*
@@ -141,15 +140,11 @@ namespace FE
 
         void Context::ClearColor(const glm::vec4& color) const
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             glClearColor(color.r,color.g,color.b,color.a);
         }
 
         void Context::Clear() const
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }        
 

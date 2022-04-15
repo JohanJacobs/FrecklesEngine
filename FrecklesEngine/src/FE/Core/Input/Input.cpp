@@ -10,6 +10,8 @@ namespace FE
 		static void* s_InputNativeWindowHandle;
 		void Input::Init(void* nativeWindowHandle)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+			
 			s_InputNativeWindowHandle = nativeWindowHandle;
 		}
 

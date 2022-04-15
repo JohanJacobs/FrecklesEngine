@@ -18,11 +18,11 @@ namespace FE
 	{
 		struct Render2DVertexData
 		{
-			glm::vec3 Position; // 3*float = 12
-			glm::vec4 Color;	// 4 * float = 16
-			glm::vec2 TexCoord; // 2 * float = 8
-			int TexIndex;  // 1 * uint32 = 4
-			int TilingFactor; //  1 * uint32 = 4
+			glm::vec3 Position; // 3 * float = 12 bytes
+			glm::vec4 Color;	// 4 * float = 16 bytes
+			glm::vec2 TexCoord; // 2 * float = 8 bytes
+			int TexIndex;  		// 1 * uint32 = 4 bytes
+			int TilingFactor; 	// 1 * uint32 = 4 bytes
 		};
 
 		struct Render2DData
@@ -114,6 +114,8 @@ namespace FE
 
 		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			CheckBatch();			
 			auto transform = CalculateTransform(position, scale);		
 			CreateVertices(transform, color);
@@ -121,6 +123,8 @@ namespace FE
 
 		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, float rotationDegree)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			CheckBatch();
 			auto transform = CalculateTransform(position,scale,rotationDegree);
 			CreateVertices(transform, color);
@@ -128,6 +132,8 @@ namespace FE
 
 		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			CheckBatch();
 			auto transform = CalculateTransform(position, scale);
 			int texIndex = GetTextureIndex(texture);
@@ -136,6 +142,8 @@ namespace FE
 
 		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, float rotationDegree)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			CheckBatch();
 			auto transform = CalculateTransform(position, scale, rotationDegree);
 			int texIndex = GetTextureIndex(texture);
@@ -143,7 +151,9 @@ namespace FE
 		}
 
 		void Render2D::BeginScene(const glm::mat4& viewProjection)
-		{			
+		{	
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			s_Data2D.TextureShader->Bind();
 			s_Data2D.TextureShader->SetUniform("u_ViewProjection", viewProjection);
 			NewBatch();
@@ -151,6 +161,8 @@ namespace FE
 
 		void Render2D::EndScene()
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			EndBatch();
 		}
 
@@ -188,6 +200,8 @@ namespace FE
 
 		void Render2D::Flush()
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+			
 			RenderCommand::DrawIndexed(s_Data2D.QuadVAO, s_Data2D.RenderQuadIndexOffset);
 		}
 
@@ -211,17 +225,14 @@ namespace FE
 			{
 				if (texture == s_Data2D.RenderTextureSlots[i])
 				{
-					texIndex = static_cast<int>(i);
+					return static_cast<int>(i);
 					break;
 				}
 			}
-
-			if (texIndex == -1)
-			{				
-				s_Data2D.RenderTextureSlots[s_Data2D.RenderTextureSlotOffset] = texture;
-				texIndex = s_Data2D.RenderTextureSlotOffset;
-				s_Data2D.RenderTextureSlotOffset += 1;
-			}
+			
+			s_Data2D.RenderTextureSlots[s_Data2D.RenderTextureSlotOffset] = texture;
+			texIndex = s_Data2D.RenderTextureSlotOffset;
+			s_Data2D.RenderTextureSlotOffset += 1;
 
 			return texIndex;
 		}

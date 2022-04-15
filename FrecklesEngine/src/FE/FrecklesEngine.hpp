@@ -25,5 +25,6 @@
         using namespace CORE;
         Log::Init();
         LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+        
         return CreateRef<Application>();
     }

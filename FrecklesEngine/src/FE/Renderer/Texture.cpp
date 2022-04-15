@@ -11,7 +11,7 @@ namespace FE
 
 		Texture2D::Texture2D(const std::string& filePath)
 		{
-
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
 			// load and generate the texture
 			int width, height, nrChannels;
@@ -71,8 +71,9 @@ namespace FE
 
 		Ref<FE::RENDERER::Texture2D> Texture2D::Create(const std::string& filePath)
 		{
+			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
 			return CreateRef<Texture2D>(filePath);
 		}
-
 	}
 }

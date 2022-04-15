@@ -11,6 +11,8 @@ namespace FE
 
         void RenderCommand::Init(Ref<CORE::Window>& mainWindow)
         {
+            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            
             s_RenderCommandData = CreateRef<RenderCommandData>();
             s_RenderCommandData->GraphicsContext = mainWindow->GetGraphicsContext();
 
@@ -19,7 +21,7 @@ namespace FE
 
         void RenderCommand::Shutdown()
         {
-            LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+            Render2D::Shutdown();
         }
 
         void RenderCommand::DrawIndexed(Ref<VertexArray>& vao, uint32_t indices)
@@ -28,6 +30,7 @@ namespace FE
 
             if (indices == 0)
                 indices = vao->GetIndexCount();
+                
             s_RenderCommandData->GraphicsContext->DrawIndexed(indices);
         }
         void RenderCommand::ClearColor(const glm::vec4& color)
