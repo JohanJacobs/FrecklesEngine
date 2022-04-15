@@ -20,5 +20,6 @@ private:
     glm::vec3 cameraRotation{0.0f, 0.0f, 0.0f};
     float cameraZoom{1.0f};
     glm::mat4 cameraTransform{glm::mat4(1.0f)};
+    float Angle;
 
 };

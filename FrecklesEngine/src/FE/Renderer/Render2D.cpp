@@ -20,7 +20,6 @@ namespace FE
 		{
 			glm::vec3 Position; // 3*float = 12
 			glm::vec4 Color;	// 4 * float = 16
-			glm::vec2 Scale;	// 2 * float = 8
 			glm::vec2 TexCoord; // 2 * float = 8
 			int TexIndex;  // 1 * uint32 = 4
 			int TilingFactor; //  1 * uint32 = 4
@@ -70,7 +69,6 @@ namespace FE
 			BufferLayout layout({
 				{"a_Position", BufferElementType::Float3},
 				{"a_Color", BufferElementType::Float4},
-				{"a_Scale", BufferElementType::Float2},
 				{"a_TexCoord", BufferElementType::Float2}, 
 				{"a_TexIndex", BufferElementType::Int},
 				{"a_TilingFactor", BufferElementType::Int},
@@ -114,127 +112,34 @@ namespace FE
 
 		}
 
-		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& Color)
+		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color)
 		{
-			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices)
-				EndCurentRenderBatch();
-			
+			CheckBatch();			
 			auto transform = CalculateTransform(position, scale);		
-
-			for (auto i = 0; i < 4; i++)
-			{				
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Position = transform * s_Data2D.QuadVertexPositions[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Scale = scale;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexCoord = s_Data2D.QuadTextureCoordinates[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Color = Color;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TilingFactor = 1;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexIndex = 0;
-			}
-
-			s_Data2D.RenderQuadVertexOffset += 4;
-			s_Data2D.RenderQuadIndexOffset += 6;
-		}
-		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& Color, float rotationDegree)
-		{
-			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices)
-				EndCurentRenderBatch();
-
-			glm::mat4 transform = CalculateTransform(position,scale,rotationDegree);
-
-			for (auto i = 0; i < 4; i++)
-			{
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Position = transform * s_Data2D.QuadVertexPositions[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Scale = scale;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexCoord = s_Data2D.QuadTextureCoordinates[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Color = Color;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TilingFactor = 1;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexIndex = 0;
-			}
-
-			s_Data2D.RenderQuadVertexOffset += 4;
-			s_Data2D.RenderQuadIndexOffset += 6;
+			CreateVertices(transform, color);
 		}
 
-		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& Color)
+		void Render2D::RenderQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, float rotationDegree)
 		{
-			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices || s_Data2D.RenderTextureSlotOffset >= 32)
-				EndCurentRenderBatch();
+			CheckBatch();
+			auto transform = CalculateTransform(position,scale,rotationDegree);
+			CreateVertices(transform, color);
+		}
 
-			// check if texture is in the textureSet
-			int texIndex = -1; // default to white texture 
-			for (uint32_t i = 0; i < s_Data2D.RenderTextureSlotOffset; i++)
-			{
-				if (texture == s_Data2D.RenderTextureSlots[i])
-				{
-					texIndex = static_cast<int>(i);
-					break;
-				}
-			}
-
-			//texture does not exist, add it to set
-			if (texIndex == -1)
-			{				
-				s_Data2D.RenderTextureSlots[s_Data2D.RenderTextureSlotOffset] = texture;
-				texIndex = s_Data2D.RenderTextureSlotOffset;
-				s_Data2D.RenderTextureSlotOffset += 1;
-			}
-
+		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color)
+		{
+			CheckBatch();
 			auto transform = CalculateTransform(position, scale);
-
-			// populate vertices
-			for (auto i = 0; i < 4; i++)
-			{
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Position = transform * s_Data2D.QuadVertexPositions[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Scale = scale;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexCoord = s_Data2D.QuadTextureCoordinates[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Color = Color;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TilingFactor = 1;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexIndex = texIndex;
-			}
-
-			s_Data2D.RenderQuadVertexOffset += 4;
-			s_Data2D.RenderQuadIndexOffset += 6;
+			int texIndex = GetTextureIndex(texture);
+			CreateVertices(transform, color, texIndex);
 		}
 
-		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& Color, float rotationDegree)
+		void Render2D::RenderTexture(Ref<Texture2D>& texture, const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, float rotationDegree)
 		{
-			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices || s_Data2D.RenderTextureSlotOffset >= 32)
-				EndCurentRenderBatch();
-
-			// check if texture is in the textureSet
-			int texIndex = -1; // default to white texture 
-			for (uint32_t i = 0; i < s_Data2D.RenderTextureSlotOffset; i++)
-			{
-				if (texture == s_Data2D.RenderTextureSlots[i])
-				{
-					texIndex = static_cast<int>(i);
-					break;
-				}
-			}
-
-			//texture does not exist, add it to set
-			if (texIndex == -1)
-			{
-				s_Data2D.RenderTextureSlots[s_Data2D.RenderTextureSlotOffset] = texture;
-				texIndex = s_Data2D.RenderTextureSlotOffset;
-				s_Data2D.RenderTextureSlotOffset += 1;
-			}
-
-			glm::mat4 transform = CalculateTransform(position, scale,rotationDegree);
-
-			// populate vertices
-			for (auto i = 0; i < 4; i++)
-			{
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Position = transform * s_Data2D.QuadVertexPositions[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Scale = scale;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexCoord = s_Data2D.QuadTextureCoordinates[i];
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Color = Color;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TilingFactor = 1;
-				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexIndex = texIndex;
-			}
-
-			s_Data2D.RenderQuadVertexOffset += 4;
-			s_Data2D.RenderQuadIndexOffset += 6;
+			CheckBatch();
+			auto transform = CalculateTransform(position, scale, rotationDegree);
+			int texIndex = GetTextureIndex(texture);
+			CreateVertices(transform, color, texIndex);
 		}
 
 		void Render2D::BeginScene(const glm::mat4& viewProjection)
@@ -249,10 +154,13 @@ namespace FE
 			EndBatch();
 		}
 
-		void Render2D::EndCurentRenderBatch()
+		void Render2D::CheckBatch()
 		{
-			EndBatch();
-			NewBatch();
+			if (s_Data2D.RenderQuadIndexOffset >= Render2DData::MaxIndices || s_Data2D.RenderTextureSlotOffset >= 32)
+			{
+				EndBatch();
+				NewBatch();	
+			}
 		}
 
 		void Render2D::NewBatch()
@@ -295,5 +203,43 @@ namespace FE
 				glm::rotate(glm::mat4(1.0f), glm::radians(rotationDegree), glm::vec3{ 0.0f,0.0f,1.0f }) *
 				glm::scale(glm::mat4(1.0f), { scale.x,scale.y,1.0f });
 		}
+
+		int Render2D::GetTextureIndex(Ref<Texture2D>& texture)
+		{
+			int texIndex = -1; // default to white texture 
+			for (uint32_t i = 0; i < s_Data2D.RenderTextureSlotOffset; i++)
+			{
+				if (texture == s_Data2D.RenderTextureSlots[i])
+				{
+					texIndex = static_cast<int>(i);
+					break;
+				}
+			}
+
+			if (texIndex == -1)
+			{				
+				s_Data2D.RenderTextureSlots[s_Data2D.RenderTextureSlotOffset] = texture;
+				texIndex = s_Data2D.RenderTextureSlotOffset;
+				s_Data2D.RenderTextureSlotOffset += 1;
+			}
+
+			return texIndex;
+		}
+
+		void Render2D::CreateVertices(const glm::mat4& transform, const glm::vec4& color,int texIndex)
+		{
+			for (auto i = 0; i < 4; i++)
+			{
+				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Position = transform * s_Data2D.QuadVertexPositions[i];
+				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexCoord = s_Data2D.QuadTextureCoordinates[i];
+				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].Color = color;
+				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TilingFactor = 1;
+				s_Data2D.RenderQuadVertexData[s_Data2D.RenderQuadVertexOffset + i].TexIndex = texIndex;
+			}
+
+			s_Data2D.RenderQuadVertexOffset += 4;
+			s_Data2D.RenderQuadIndexOffset += 6;
+		}
+
 	}
 }

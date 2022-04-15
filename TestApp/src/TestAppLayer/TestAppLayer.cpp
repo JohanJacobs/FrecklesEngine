@@ -18,7 +18,10 @@ TestApp::~TestApp()
 void TestApp::OnUpdate(FE::CORE::Timestep ts)
 {
     LOG_TRACE("TestAppLayer::OnUpdate({})", static_cast<float>(ts));
-    
+    Angle += 15 * ts;
+    if (Angle > 360)
+        Angle -=360;
+
     using namespace FE;
     using namespace RENDERER;
     using namespace CORE;
@@ -72,10 +75,10 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
     Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
 
-    Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f },45.0f);
+    Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f },Angle);
 
     Render2D::RenderTexture(CrateTexture, {  0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
-    Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, 45.0f);
+    Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
 
     Render2D::EndScene();
 }
