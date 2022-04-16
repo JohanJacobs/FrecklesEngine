@@ -36,6 +36,9 @@ namespace FE
 			void SetupCamera(const OrthographicProperties& props = OrthographicProperties());
 			void SetAspectRatio(float aspectRatio);
 			void OnUpdate(CORE::Timestep ts);
+			
+			float GetSize() const;
+			void SetSize(float size);
 
 			const glm::mat4& GetViewProjection() const;
 		private:

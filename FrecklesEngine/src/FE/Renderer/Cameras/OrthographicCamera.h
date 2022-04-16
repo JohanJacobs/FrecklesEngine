@@ -28,6 +28,7 @@ namespace FE
 			}
 			
 			void SetSize(float size) { Size = size; }
+			float GetSize() const { return Size; }
 
 			const glm::mat4& GetProjection() const 
 			{ 
