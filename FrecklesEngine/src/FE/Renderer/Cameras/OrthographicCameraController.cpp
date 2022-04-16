@@ -51,7 +51,7 @@ namespace FE
 				Position.x += TranslationSpeed * ts;
 				changed = true;
 			}
-						
+
 			if (Input::Keypressed(KeyCode::Q))
 			{
 				Rotation -= RotationSpeed * ts;
@@ -65,7 +65,6 @@ namespace FE
 
 			if (changed)
 				CalculateMatrices();
-			
 		}
 
 		const glm::mat4& OrthographicCameraController::GetViewProjection() const

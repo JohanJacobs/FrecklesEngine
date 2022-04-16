@@ -26,6 +26,7 @@ namespace FE
 			float FarClip{100.0f};
 
 		};
+
 		class OrthographicCameraController
 		{
 		public:
@@ -44,11 +45,9 @@ namespace FE
 			glm::vec3 Position;
 			float TranslationSpeed;
 			float Rotation,RotationSpeed;
-			
 
 			glm::mat4 ViewMatrix;
 			glm::mat4 ViewProjectionMatrix;
-
 		};
 
 	}

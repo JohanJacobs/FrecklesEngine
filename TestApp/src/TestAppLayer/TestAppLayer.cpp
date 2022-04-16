@@ -3,18 +3,6 @@
 
 #include "FE/Renderer/Render2D.hpp"
 
-// image is not square like the window.
-
-TestApp::TestApp() 
-{
-    LOG_TRACE("TestAppLayer::TestApp()");
-}
-
-TestApp::~TestApp()
-{
-    LOG_TRACE("TestAppLayer::~TestApp()");
-}
-
 void TestApp::OnUpdate(FE::CORE::Timestep ts)
 {
     LOG_TRACE("TestAppLayer::OnUpdate({})", static_cast<float>(ts));
@@ -31,14 +19,13 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     using namespace CORE;
     
     cameraController.OnUpdate(ts);
-    //auto halfCameraDist= cameraPosition.z /2.0f;
+    
     
     // hack to handle window resize 
     auto viewport = RenderCommand::GetWindowSize();
     auto aspectRatio = viewport.x / viewport.y;
     cameraController.SetAspectRatio(aspectRatio);
     RenderCommand::SetViewportSize(0, 0, static_cast<int>(viewport.x), static_cast<int>(viewport.y));
-           
     
     RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
     RenderCommand::Clear();
