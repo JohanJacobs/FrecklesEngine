@@ -31,11 +31,11 @@ namespace FE
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
-            Timestep ts = MainTimer.GetSeconds();
-            MainTimer.Reset();
-
             while (!MainWindow->ShouldClose())
             {
+				Timestep ts = MainTimer.GetSeconds();
+				MainTimer.Reset();
+
                 for (auto* l : Layers)
                 {
                     l->OnUpdate(ts);
