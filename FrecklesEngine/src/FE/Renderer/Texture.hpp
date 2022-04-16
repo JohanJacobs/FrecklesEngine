@@ -16,14 +16,20 @@ namespace FE
 		class Texture2D:public Texture
 		{
 		public:
-			Texture2D(const std::string& filePath);
+			explicit Texture2D(const std::string& filePath);
+			explicit Texture2D(uint32_t width, uint32_t height);
+
 			~Texture2D();
 			void Bind(uint32_t slot = 0) const;
 
+			uint32_t GetRenderID() const { return RenderID; }
 			static Ref<Texture2D> Create(const std::string& filePath);
+			static Ref<Texture2D> Create(uint32_t width, uint32_t height) ;
+
 		private:
 			uint32_t RenderID;
-			uint32_t InternalFormat{ 0 }, ImageFormat{0};
+			uint32_t InternalFormat{ 0 };
+			uint32_t Width{0}, Height{ 0 };
 		};
 
 	}
