@@ -24,6 +24,6 @@ private:
     //basic animation stuff 
     float Angle;
     glm::vec3 SmileyPos {0.0f, 3.0f, 0.0f};
-    int SmileyVelocity{1};
+    float SmileyVelocity{0.5f};
 
 };

@@ -18,13 +18,13 @@ TestApp::~TestApp()
 void TestApp::OnUpdate(FE::CORE::Timestep ts)
 {
     LOG_TRACE("TestAppLayer::OnUpdate({})", static_cast<float>(ts));
-    Angle += 15 * ts;
-    if (Angle > 360)
-        Angle -=360;
+    Angle += 15.0f * ts;
+    if (Angle > 360.0f)
+        Angle -=360.0f;
 
     SmileyPos.x += SmileyVelocity*ts;
-    if ((SmileyPos.x >= 4.0) || (SmileyPos.x <= -4.0))
-        SmileyVelocity *= -1;
+    if ((SmileyPos.x >= 4.0f) || (SmileyPos.x <= -4.0f))
+        SmileyVelocity *= -1.0f;
     
     using namespace FE;
     using namespace RENDERER;
