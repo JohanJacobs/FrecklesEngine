@@ -138,6 +138,12 @@ namespace FE
 			glUniform1iv(location, count, intArray);
 		}
 
+		void Shader::SetUniform(const std::string& uniformName, int value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform1i(location, value);
+		}
+
 		Ref<Shader> Shader::Create(const std::string& vertSrc, const std::string& fragSrc)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
