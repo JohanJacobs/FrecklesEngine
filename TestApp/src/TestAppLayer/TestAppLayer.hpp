@@ -1,6 +1,7 @@
 #pragma once 
 #include "FE/FrecklesEngine.hpp"
 #include "FE/Renderer/Cameras/OrthographicCameraController.h"
+#include "FE/Renderer/Framebuffer.h"
 #include <glm/glm.hpp>
 
 
@@ -17,10 +18,11 @@ public:
 private:
 
 	//frame buffer 
-	uint32_t FBO;
-	uint32_t /*ColorAttachment,*/DepthAndStencilBuffer;
+	Ref<FE::RENDERER::FrameBuffer> FB;
+	//uint32_t FBO;
+	//uint32_t /*ColorAttachment,*/DepthAndStencilBuffer;
 	//shaders 
-	Ref<FE::RENDERER::Shader> defaultShader,screenShader;
+	Ref<FE::RENDERER::Shader> defaultShader,screenShader,GrayScaleShader, BlurShader;
 	// buffers 
 	Ref<FE::RENDERER::VertexArray> QuadVAO,FBVAO;
 	Ref<FE::RENDERER::VertexBuffer> QuadVB, FBVB;
@@ -60,6 +62,12 @@ private:
 	};
 
     uint32_t defaultQuadIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		
+	float Angle{ 0.0f };
+	glm::vec3 SmileyPos{ 0.0f,0.0f,0.0f };
+	float SmileyVelocity{ 5.0f };
     bool framebufferOn = false;
+
+	float xPhase, yPhase;
+
+	VertexData BlurVertData[4], GrayscaleVertData[4];
 };

@@ -97,8 +97,7 @@ namespace FE
 			delete[] indexData;
 
 			// white Texture 
-			s_Data2D.WhiteTexture = Texture2D::Create("assets/textures/white.png");
-			s_Data2D.WhiteTexture->Unbind();
+			s_Data2D.WhiteTexture = Texture2D::Create("assets/textures/white.png");			
 			s_Data2D.RenderTextureSlots[0] = s_Data2D.WhiteTexture;
 
 			int32_t samplers[Render2DData::MaxTextureSlots];

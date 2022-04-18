@@ -7,9 +7,9 @@
 
 void CheckFramebufferStatus(uint32_t fbo)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    auto status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    //glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    auto status = glCheckNamedFramebufferStatus(fbo,GL_FRAMEBUFFER);
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	switch (status)
     {
@@ -60,7 +60,6 @@ void TestApp::OnAttach()
     SmileyTexture->Unbind();
     CrateTexture = Texture2D::Create("assets/textures/container.jpg");
     CrateTexture->Unbind();
-
     // load shaders
     defaultShader = Shader::Create("assets/shaders/simpleShader.shader");
 	int textureSlots[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 };
@@ -69,57 +68,45 @@ void TestApp::OnAttach()
     defaultShader->Unbind();
 
     screenShader = Shader::Create("assets/shaders/screenShader.shader");
-    
+    GrayScaleShader = Shader::Create("assets/shaders/GrayScaleShader.shader");
+    BlurShader = Shader::Create("assets/shaders/blurShader.shader");
     // QUAD FOR FRAMEBUFFER
     FBVB = VertexBuffer::Create(quad_vb_size);
     FBVB->SetLayout(layout);
-    VertexData FBVertexData[4];
+
 	for (int i = 0; i < 4; i++)
 	{	
-        FBVertexData[i].Position = defaultQuadVertices[i]; // scale to half size
-        FBVertexData[i].Color = defaultColor;
-        FBVertexData[i].TexCoord = defaultQuadTextCoords[i];
-        FBVertexData[i].TexIndex = 0;
-        FBVertexData[i].TilingFactor = 1;
+        GrayscaleVertData[i].Position = defaultQuadVertices[i]; // scale to half size
+        GrayscaleVertData[i].Color = defaultColor;
+        GrayscaleVertData[i].TexCoord = defaultQuadTextCoords[i];
+        GrayscaleVertData[i].TexIndex = 0;
+        GrayscaleVertData[i].TilingFactor = 1;
 	}
-    FBVertexData[0].Position = { -1.0f, 1.0f, 0.0f }; // left top 
-    FBVertexData[1].Position = { -1.0f, 0.35f, 0.0f }; // left bottom
-    FBVertexData[2].Position = { -0.35f, 0.35f, 0.0f }; // right bottom
-    FBVertexData[3].Position = { -0.35f, 1.0f, 0.0f};  // right top 
+    GrayscaleVertData[0].Position = { -1.0f, 1.0f, 0.0f }; // left top 
+    GrayscaleVertData[1].Position = { -1.0f, 0.35f, 0.0f }; // left bottom
+    GrayscaleVertData[2].Position = { -0.35f, 0.35f, 0.0f }; // right bottom
+    GrayscaleVertData[3].Position = { -0.35f, 1.0f, 0.0f};  // right top 
 
-    FBVB->SetData(FBVertexData, quad_vb_size);
+	// Blurring Effect
+	for (int i = 0; i < 4; i++)
+	{
+	
+		BlurVertData[i].Color = defaultColor;
+		BlurVertData[i].TexCoord = defaultQuadTextCoords[i];
+		BlurVertData[i].TexIndex = 0;
+		BlurVertData[i].TilingFactor = 1;
+	}
+    BlurVertData[0].Position = { 0.35f, 1.0f , 0.0f }; // left top 
+    BlurVertData[1].Position = { 0.35f, 0.35f, 0.0f }; // left bottom
+    BlurVertData[2].Position = { 1.0f , 0.35f, 0.0f }; // right bottom
+    BlurVertData[3].Position = { 1.0f , 1.0f , 0.0f };  // right top 
+
+    //FBVB->SetData(FBVertexData, quad_vb_size);
 	FBIB = IndexBuffer::Create(defaultQuadIndices, 6);
     FBVAO = VertexArray::Create(FBVB, FBIB);
     FBVAO->Unbind();
 
-    //create frame buffer 
-    glGenFramebuffers(1, &FBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-
-    //create color attachment (texture) 
-    ColorAttachment = Texture2D::Create(GLsizei(RenderCommand::GetWindowSize().x), GLsizei(RenderCommand::GetWindowSize().y));
-    ColorAttachment->Unbind();
-    //glGenTextures(1, &ColorAttachment);
-    //glBindTexture(GL_TEXTURE_2D, ColorAttachment);//bind 
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, GLsizei(RenderCommand::GetWindowSize().x), GLsizei(RenderCommand::GetWindowSize().y), 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr); // text storage
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //glBindTexture(GL_TEXTURE_2D, 0); // unbind 
-
-    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ColorAttachment, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ColorAttachment->GetRenderID(), 0);
-
-    // depth and stencil buffer as render buffer 
-    glGenRenderbuffers(1, &DepthAndStencilBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, DepthAndStencilBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, GLsizei(RenderCommand::GetWindowSize().x), GLsizei(RenderCommand::GetWindowSize().y));
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, DepthAndStencilBuffer);
-   
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    CheckFramebufferStatus(FBO);
+    FB = FrameBuffer::Create(uint32_t(RenderCommand::GetWindowSize().x), uint32_t(RenderCommand::GetWindowSize().y));
 
     //setup camera
     OrthographicProperties props;
@@ -138,6 +125,14 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     using namespace RENDERER;
     using namespace CORE;
 
+	Angle += 15.0f * ts;
+	if (Angle > 360.0f)
+		Angle -= 360.0f;
+
+	SmileyPos.x += SmileyVelocity * ts;
+	if ((SmileyPos.x >= 4.0f) || (SmileyPos.x <= -4.0f))
+		SmileyVelocity *= -1.0f;
+
     if (Input::Keypressed(KeyCode::RightBracket))
     {
         auto size = cameraController.GetSize();
@@ -145,10 +140,6 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
         cameraController.SetSize(size);
         LOG_INFO("Camera size {}", size);
 
-        /*auto pos = cameraController.GetPosition();
-        pos.z -= 5.0f * ts;
-        cameraController.SetPosition(pos);
-        LOG_INFO("CameraPos ({},{},{})",pos.x, pos.y, pos.z);*/
     }
 
 	if (Input::Keypressed(KeyCode::LeftBracket))
@@ -157,11 +148,7 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 		size -= 5.0f * ts;
 		cameraController.SetSize(size);
         LOG_INFO("Camera size {}", size);
-
-		/*auto pos = cameraController.GetPosition();
-		pos.z += 5.0f * ts;
-		cameraController.SetPosition(pos);
-        LOG_INFO("CameraPos ({},{},{})", pos.x, pos.y, pos.z);*/
+        		
 	}
 
     if (Input::Keypressed(KeyCode::T) && framebufferOn == true)
@@ -179,30 +166,30 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
 
     if (framebufferOn)
-        glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+        FB->Bind();
+
     
 	RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
 	RenderCommand::Clear();
 
     Render2D::BeginScene(cameraController.GetViewProjection());
    
-    Render2D::RenderTexture(CrateTexture, { -1.0f,0.0f,0.0f }, { 1.0f,1.0f }, {1.0f,1.0f,1.0f,1.0f });
-    Render2D::RenderTexture(SmileyTexture, { 1.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
+	Render2D::RenderQuad({ 3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.8f,0.5f,1.0f });
+
+	Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
+
+	Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f }, Angle);
+
+	Render2D::RenderTexture(SmileyTexture, SmileyPos, { 1.0f, 1.0f }, { 1.0f, 0.7f, 0.05f, 1.0f });
+	Render2D::RenderTexture(CrateTexture, { 0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
+	Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
+
+
     Render2D::EndScene();
 
-    //RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
-    //RenderCommand::Clear();
-    
-    //SmileyTexture->Bind(0);
-    //defaultShader->Bind();    
-    //QuadVAO->Bind();
-    //RenderCommand::DrawIndexed(QuadVAO, 6);
-    //QuadVAO->Unbind();
-    //defaultShader->Unbind();
-    //SmileyTexture->Unbind();
-
     if (framebufferOn)
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        FB->Unbind();
+
 
     if (framebufferOn)
     {
@@ -211,22 +198,48 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
 		Render2D::BeginScene(cameraController.GetViewProjection());
 
-		Render2D::RenderTexture(CrateTexture, { -1.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
-		Render2D::RenderTexture(SmileyTexture, { 1.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
+		Render2D::RenderQuad({ 3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.8f,0.5f,1.0f });
+
+		Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
+
+		Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f }, Angle);
+
+		Render2D::RenderTexture(SmileyTexture, SmileyPos, { 1.0f, 1.0f }, { 1.0f, 0.7f, 0.05f, 1.0f });
+		Render2D::RenderTexture(CrateTexture, { 0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
+		Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
+
+
 		Render2D::EndScene();
 
-		//RenderCommand::ClearColor({ 0.15f, 0.1f, 0.1f, 1.0f });
-		//RenderCommand::Clear();
+
         glDisable(GL_DEPTH_TEST);        
-		// render the captured screen back 
-		screenShader->Bind();
-		screenShader->SetUniform("u_Texture", 0);        
-        ColorAttachment->Bind(0);
+		// GrayScaleEffect 
+		GrayScaleShader->Bind();
+        GrayScaleShader->SetUniform("u_Texture", 0);        
+        FB->GetColorAtachment()->Bind(0);
+        FBVB->SetData(GrayscaleVertData, sizeof(VertexData) * 4);
 		FBVAO->Bind();
 		RenderCommand::DrawIndexed(QuadVAO, 6);
 		FBVAO->Unbind();
-		screenShader->Unbind();
-        ColorAttachment->Unbind();
+        GrayScaleShader->Unbind();
+
+        // blur effect 
+		BlurShader->Bind();
+        BlurShader->SetUniform("u_Texture", 0);
+        float offset = 1 / 300;// float(RenderCommand::GetWindowSize().x);
+        BlurShader->SetUniform("u_Offset", offset);
+                        
+		FB->GetColorAtachment()->Bind(0);
+        FBVB->SetData(BlurVertData, sizeof(VertexData)*4);
+		FBVAO->Bind();
+		RenderCommand::DrawIndexed(QuadVAO, 6);
+		FBVAO->Unbind();
+        BlurShader->Unbind();
+
+        FB->GetColorAtachment()->Unbind();
+
+
+
         glEnable(GL_DEPTH_TEST);
     }    
 }
@@ -236,16 +249,3 @@ void TestApp::OnDetach()
 {
     LOG_TRACE("TestAppLayer::OnDetach()");
 }
-
-//switch (status)
-//{
-//case GL_FRAMEBUFFER_UNDEFINED:LOG_ERROR("GL_FRAMEBUFFER_UNDEFINED"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"); break;
-//case GL_FRAMEBUFFER_UNSUPPORTED:LOG_ERROR("GL_FRAMEBUFFER_UNSUPPORTED"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"); break;
-//case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"); break;
-//case GL_FRAMEBUFFER_COMPLETE: LOG_INFO("framebuffer complete");
-//};
