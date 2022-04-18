@@ -29,6 +29,10 @@ namespace FE
             void SetUniform(const std::string& uniformName, const glm::mat4& matrix) const;
             void SetUniform(const std::string& uniformName, int* intArray, uint32_t count) const;
             void SetUniform(const std::string& uniformName, int value) const;
+            void SetUniform(const std::string& uniformName, float value) const;
+            void SetUniform(const std::string& uniformName, glm::vec2 value) const;
+            void SetUniform(const std::string& uniformName, glm::vec3 value) const;
+            void SetUniform(const std::string& uniformName, glm::vec4 value) const;
 
             static Ref<Shader> Create(const std::string& vertSrc, const std::string& fragSrc );
             static Ref<Shader> Create(const std::string& shaderPath);
