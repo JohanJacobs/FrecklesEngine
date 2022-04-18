@@ -138,6 +138,36 @@ namespace FE
 			glUniform1iv(location, count, intArray);
 		}
 
+		void Shader::SetUniform(const std::string& uniformName, int value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform1i(location, value);
+		}
+
+		void Shader::SetUniform(const std::string& uniformName, float value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform1f(location, value);
+		}
+
+		void Shader::SetUniform(const std::string& uniformName, glm::vec2 value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());			
+            glUniform2f(location, value.x, value.y);
+		}
+
+		void Shader::SetUniform(const std::string& uniformName, glm::vec3 value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform3f(location, value.x, value.y, value.z);
+		}
+
+		void Shader::SetUniform(const std::string& uniformName, glm::vec4 value) const
+		{
+			auto location = glGetUniformLocation(RenderID, uniformName.c_str());
+			glUniform4f(location, value.x, value.y, value.z, value.w);
+		}
+
 		Ref<Shader> Shader::Create(const std::string& vertSrc, const std::string& fragSrc)
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
