@@ -2,36 +2,35 @@
 #include "FE/FrecklesEngine.hpp"
 #include "FE/Renderer/Cameras/OrthographicCameraController.h"
 #include <glm/glm.hpp>
-class TestApp: public FE::CORE::Layer
+
+
+class TestApp : public FE::CORE::Layer
 {
 public:
-    TestApp()=default;
-    ~TestApp()=default;
+	TestApp() = default;
+	~TestApp() = default;
 
-    void OnUpdate(FE::CORE::Timestep ts) override;
-    void OnAttach() override;
-    void OnDetach() override;
+	void OnUpdate(FE::CORE::Timestep ts) override;
+	void OnAttach() override;
+	void OnDetach() override;
 
 private:
-    
-    Ref<FE::RENDERER::VertexArray> VAO;
-    Ref<FE::RENDERER::Texture2D> CrateTexture,SmileyTexture, Tex1;
 
-    Ref<FE::RENDERER::Shader> GrayScaleShader;
-    // camera stuff 
-    FE::RENDERER::OrthographicCameraController cameraController;
- 
-    //basic animation stuff 
-    float Angle{0.0f};
-    glm::vec3 SmileyPos {0.0f, 3.0f, 0.0f};
-    float SmileyVelocity{5.0f};
+	//frame buffer 
+	uint32_t FBO;
+	uint32_t /*ColorAttachment,*/DepthAndStencilBuffer;
+	//shaders 
+	Ref<FE::RENDERER::Shader> defaultShader,screenShader;
+	// buffers 
+	Ref<FE::RENDERER::VertexArray> QuadVAO,FBVAO;
+	Ref<FE::RENDERER::VertexBuffer> QuadVB, FBVB;
+	Ref<FE::RENDERER::IndexBuffer> QuadIB, FBIB;
 
-    //framebuffer
-    uint32_t FBO, RBO;
-    //uint32_t Tex1;
-        
-    Ref<FE::RENDERER::VertexBuffer> VB;
-    Ref<FE::RENDERER::IndexBuffer> IB; 
+	// Textures 
+	Ref<FE::RENDERER::Texture2D> SmileyTexture, CrateTexture, ColorAttachment;
+
+	// camera stuff 
+	FE::RENDERER::OrthographicCameraController cameraController;
 
 	struct VertexData
 	{
@@ -41,5 +40,26 @@ private:
 		int TexIndex;  		// 1 * uint32 = 4 bytes
 		int TilingFactor; 	// 1 * uint32 = 4 bytes
 	};
-    std::array<VertexData, 4> vertData;
+
+	std::array<VertexData, 4> vertData;
+
+	glm::vec4 defaultQuadVertices[4]
+	{
+		{ -1.0f,  1.0f, 0.0f, 1.0f }, // top left
+		{ -1.0f, -1.0f, 0.0f, 1.0f }, // bottom left
+		{  1.0f, -1.0f, 0.0f, 1.0f }, // bottom right
+		{  1.0f,  1.0f, 0.0f, 1.0f }  // top right
+	};
+
+	glm::vec2 defaultQuadTextCoords[4] =
+	{
+		{ 0.0f, 1.0f }, // Top Left
+		{ 0.0f, 0.0f }, // Bottom Left
+		{ 1.0f, 0.0f }, // Bottom Right
+		{ 1.0f, 1.0f } // Top Right
+	};
+
+    uint32_t defaultQuadIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		
+    bool framebufferOn = false;
 };

@@ -93,10 +93,12 @@ namespace FE
 			}
 			auto IB = IndexBuffer::Create(indexData, Render2DData::MaxIndices);
 			s_Data2D.QuadVAO = VertexArray::Create(s_Data2D.QuadVertexBuffer, IB);
+			s_Data2D.QuadVAO->Unbind();
 			delete[] indexData;
 
 			// white Texture 
 			s_Data2D.WhiteTexture = Texture2D::Create("assets/textures/white.png");
+			s_Data2D.WhiteTexture->Unbind();
 			s_Data2D.RenderTextureSlots[0] = s_Data2D.WhiteTexture;
 
 			int32_t samplers[Render2DData::MaxTextureSlots];
@@ -106,7 +108,9 @@ namespace FE
 			s_Data2D.TextureShader = Shader::Create("assets/shaders/TexturesShader.shader");
 			s_Data2D.TextureShader->Bind();
 			s_Data2D.TextureShader->SetUniform("u_Textures", samplers, Render2DData::MaxTextureSlots);
+			s_Data2D.TextureShader->Unbind();
 		}
+
 		void Render2D::Shutdown()
 		{
 
@@ -164,6 +168,7 @@ namespace FE
 			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
 
 			EndBatch();
+			s_Data2D.TextureShader->Unbind();
 		}
 
 		void Render2D::CheckBatch()
@@ -192,17 +197,19 @@ namespace FE
 			//bind textures 
 			for (uint32_t i = 0; i < s_Data2D.RenderTextureSlotOffset; i++)
 				s_Data2D.RenderTextureSlots[i]->Bind(static_cast<int>(i));
-		
-			s_Data2D.QuadVAO->Bind();
-
+					
 			Flush();
+
+			for (uint32_t i = 0; i < s_Data2D.RenderTextureSlotOffset; i++)
+				s_Data2D.RenderTextureSlots[i]->Unbind();
 		}
 
 		void Render2D::Flush()
 		{
 			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-			
+			s_Data2D.QuadVAO->Bind();
 			RenderCommand::DrawIndexed(s_Data2D.QuadVAO, s_Data2D.RenderQuadIndexOffset);
+			s_Data2D.QuadVAO->Unbind();
 		}
 
 		glm::mat4 Render2D::CalculateTransform (const glm::vec3& position, const glm::vec2& scale)
