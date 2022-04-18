@@ -19,6 +19,7 @@ namespace FE
 			Texture2D(const std::string& filePath);
 			~Texture2D();
 			void Bind(uint32_t slot = 0) const;
+			void Unbind() const;
 
 			static Ref<Texture2D> Create(const std::string& filePath);
 		private:
