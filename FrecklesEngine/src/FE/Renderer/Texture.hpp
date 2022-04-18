@@ -8,7 +8,8 @@ namespace FE
 		class Texture
 		{
 		public:			
-			virtual void Bind(uint32_t slot = 0) const=0;
+			virtual void Bind(uint32_t slot = 0) =0;
+			virtual void Unbind() = 0;
 
 		private:
 		};
@@ -20,15 +21,16 @@ namespace FE
 			explicit Texture2D(uint32_t width, uint32_t height);
 
 			~Texture2D();
-			void Bind(uint32_t slot = 0) const;
-			void Unbind() const;
+			void Bind(uint32_t slot = 0);
+			void Unbind() ;
 
 			uint32_t GetRenderID() const { return RenderID; }
 			static Ref<Texture2D> Create(const std::string& filePath);
 			static Ref<Texture2D> Create(uint32_t width, uint32_t height) ;
 
 		private:
-			uint32_t RenderID;
+			bool Bound{ false };
+			uint32_t RenderID,Slot;
 			uint32_t InternalFormat{ 0 };
 			uint32_t Width{0}, Height{ 0 };
 		};
