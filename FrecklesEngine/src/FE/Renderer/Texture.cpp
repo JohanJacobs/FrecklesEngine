@@ -84,15 +84,22 @@ namespace FE
 			glDeleteTextures(1, &RenderID);
 		}
 
-		void Texture2D::Bind(uint32_t slot) const
+		void Texture2D::Bind(uint32_t slot) 
 		{
-			glActiveTexture(GL_TEXTURE0 + slot);
-			glBindTexture(GL_TEXTURE_2D, RenderID);
+			//glActiveTexture(GL_TEXTURE0 + slot);
+			//glBindTexture(GL_TEXTURE_2D, RenderID);
+			Slot = slot;
+			Bound = true;
+			glBindTextureUnit(Slot, RenderID); //DSA
+			
 		}
 
-		void Texture2D::Unbind() const
+		void Texture2D::Unbind() 
 		{
-			glBindTexture(GL_TEXTURE_2D, 0);
+			if (!Bound)
+				return;
+			//glBindTexture(GL_TEXTURE_2D, 0);
+			glBindTextureUnit(Slot, 0); // DSA
 		}
 
 		Ref<FE::RENDERER::Texture2D> Texture2D::Create(const std::string& filePath)
