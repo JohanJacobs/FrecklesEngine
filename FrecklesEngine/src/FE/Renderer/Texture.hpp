@@ -21,6 +21,7 @@ namespace FE
 
 			~Texture2D();
 			void Bind(uint32_t slot = 0) const;
+			void Unbind() const;
 
 			uint32_t GetRenderID() const { return RenderID; }
 			static Ref<Texture2D> Create(const std::string& filePath);

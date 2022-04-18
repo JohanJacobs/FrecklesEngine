@@ -90,6 +90,11 @@ namespace FE
 			glBindTexture(GL_TEXTURE_2D, RenderID);
 		}
 
+		void Texture2D::Unbind() const
+		{
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
 		Ref<FE::RENDERER::Texture2D> Texture2D::Create(const std::string& filePath)
 		{
 			LOG_CORE_TRACE(LOG_FUNCTION_NAME);
