@@ -1,6 +1,6 @@
 #pragma once
 #include "FE/Core/Base.hpp"
-#include "FE/core/Time/Timestep.hpp"
+#include "FE/Core/Time/Timestep.hpp"
 
 #include "FE/Renderer/Cameras/OrthographicCamera.h"
 
@@ -35,10 +35,14 @@ namespace FE
 
 			void SetupCamera(const OrthographicProperties& props = OrthographicProperties());
 			void SetAspectRatio(float aspectRatio);
+
 			void OnUpdate(CORE::Timestep ts);
 
 			const glm::vec3& GetPosition() const { return Position; }
 			void SetPosition(const glm::vec3& position) { Position =position; }
+
+			float GetSize() const;
+			void SetSize(float size);
 
 			const glm::mat4& GetViewProjection() const;
 		private:

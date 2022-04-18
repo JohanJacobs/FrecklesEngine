@@ -1,5 +1,5 @@
 #include "FE/Core/FEpch.hpp"
-#include "FE/CORE/Input/Input.hpp"
+#include "FE/Core/Input/Input.hpp"
 
 #include "FE/Renderer/Cameras/OrthographicCameraController.h"
 

@@ -58,6 +58,8 @@ void TestApp::OnAttach()
     OrthographicProperties props;
     props.AspectRatio = viewport.x / viewport.y;
     props.TranslationSpeed = 1.0f;
+    props.Size = 10.0f;
+
     cameraController.SetupCamera(props);
 }
 
