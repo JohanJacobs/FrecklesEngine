@@ -21,7 +21,7 @@ namespace FE
 
 			float AspectRatio{16.0f/9.0f};
 
-			float Size{50.0f};
+			float Size{1.0f};
 			float NearClip{0.01f};
 			float FarClip{100.0f};
 
@@ -36,6 +36,9 @@ namespace FE
 			void SetupCamera(const OrthographicProperties& props = OrthographicProperties());
 			void SetAspectRatio(float aspectRatio);
 			void OnUpdate(CORE::Timestep ts);
+
+			const glm::vec3& GetPosition() const { return Position; }
+			void SetPosition(const glm::vec3& position) { Position =position; }
 
 			const glm::mat4& GetViewProjection() const;
 		private:

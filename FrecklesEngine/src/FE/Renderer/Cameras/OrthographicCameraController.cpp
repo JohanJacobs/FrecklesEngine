@@ -7,14 +7,13 @@ namespace FE
 {
 	namespace RENDERER
 	{
-		
-		void OrthographicCameraController::SetupCamera(const OrthographicProperties& props)
+		void OrthographicCameraController::SetupCamera(const OrthographicProperties& props /*= OrthographicProperties()*/)
 		{
 			Camera.SetAspectRatio(props.AspectRatio);
 			Camera.SetClipSpace(props.Size, props.NearClip, props.FarClip);
 			Position = props.Position;
 			TranslationSpeed = props.TranslationSpeed;
-			
+
 			Rotation = props.Rotation;
 			RotationSpeed = props.RotationSpeed;
 			CalculateMatrices();
@@ -52,12 +51,12 @@ namespace FE
 				changed = true;
 			}
 
-			if (Input::Keypressed(KeyCode::Q))
+			if (Input::Keypressed(KeyCode::Q)) // rot left
 			{
 				Rotation -= RotationSpeed * ts;
 				changed = true;
 			}
-			else if (Input::Keypressed(KeyCode::R))
+			else if (Input::Keypressed(KeyCode::R)) //rot right
 			{
 				Rotation += RotationSpeed * ts;
 				changed = true;
@@ -65,6 +64,17 @@ namespace FE
 
 			if (changed)
 				CalculateMatrices();
+		}
+
+		float OrthographicCameraController::GetSize() const
+		{
+			return Camera.GetSize();
+		}
+
+		void OrthographicCameraController::SetSize(float size)
+		{
+			Camera.SetSize(size);
+			CalculateMatrices();
 		}
 
 		const glm::mat4& OrthographicCameraController::GetViewProjection() const
