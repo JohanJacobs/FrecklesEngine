@@ -51,12 +51,12 @@ namespace FE
 				changed = true;
 			}
 
-			if (Input::Keypressed(KeyCode::Q))
+			if (Input::Keypressed(KeyCode::Q)) // rot left
 			{
 				Rotation -= RotationSpeed * ts;
 				changed = true;
 			}
-			else if (Input::Keypressed(KeyCode::R))
+			else if (Input::Keypressed(KeyCode::R)) //rot right
 			{
 				Rotation += RotationSpeed * ts;
 				changed = true;
@@ -74,6 +74,7 @@ namespace FE
 		void OrthographicCameraController::SetSize(float size)
 		{
 			Camera.SetSize(size);
+			CalculateMatrices();
 		}
 
 		const glm::mat4& OrthographicCameraController::GetViewProjection() const

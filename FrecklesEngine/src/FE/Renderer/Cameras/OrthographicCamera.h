@@ -16,7 +16,7 @@ namespace FE
 			void SetAspectRatio(float aspectRatio = 16/9.0f) 
 			{ 
 				AspectRatio = aspectRatio; 
-				CalcualteProjection(); 
+				CalculateProjection();
 			}
 
 			void SetClipSpace(float size = 1.0f, float nearClip = 0.01f, float farClip=100.0f)
@@ -24,10 +24,10 @@ namespace FE
 				Size = size;
 				NearClip = nearClip;
 				FarClip = farClip;
-				CalcualteProjection();
+				CalculateProjection();
 			}
 			
-			void SetSize(float size) { Size = size; }
+			void SetSize(float size) { Size = size; CalculateProjection(); }
 			float GetSize() const { return Size; }
 
 			const glm::mat4& GetProjection() const 
@@ -36,7 +36,7 @@ namespace FE
 			}
 
 		private:
-			void CalcualteProjection()
+			void CalculateProjection()
 			{
 				auto left = -Size * AspectRatio * 0.5f;
 				auto right = Size * AspectRatio * 0.5f;
