@@ -9,6 +9,11 @@ namespace FE
 {
     namespace RENDERER
     {
+        enum class RenderFlags
+        {
+            DepthTest,
+        };
+
         class RenderCommand
         {
         public:
@@ -23,6 +28,9 @@ namespace FE
 
             static glm::vec2 GetWindowSize();
             static void SetViewportSize(int x, int y, int width, int height);
+
+            static void SetFlags(RenderFlags flag, bool value);
+            
         private:
             struct RenderCommandData
             {

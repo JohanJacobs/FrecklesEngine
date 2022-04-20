@@ -52,5 +52,15 @@ namespace FE
             s_RenderCommandData->GraphicsContext->SetViewportSize(x, y, width, height);
 		}
 
+        void RenderCommand::SetFlags(RenderFlags flag, bool value)
+        {
+            switch (flag)
+            {
+                case RenderFlags::DepthTest:
+                {
+                    s_RenderCommandData->GraphicsContext->SetDepthTest(value);
+                }
+            }
+        }
 	}
 }
