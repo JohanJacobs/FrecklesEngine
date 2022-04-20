@@ -1,6 +1,6 @@
 #pragma once
 #include "FE/Core/Base.hpp"
-#include "FE/core/Time/Timestep.hpp"
+#include "FE/Core/Time/Timestep.hpp"
 
 #include "FE/Renderer/Cameras/OrthographicCamera.h"
 
