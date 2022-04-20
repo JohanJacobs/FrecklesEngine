@@ -2,28 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "FE/Renderer/Render2D.hpp"
-#include <glad/glad.h>
 
-
-void CheckFramebufferStatus(uint32_t fbo)
-{
-    //glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    auto status = glCheckNamedFramebufferStatus(fbo,GL_FRAMEBUFFER);
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	switch (status)
-    {
-    case GL_FRAMEBUFFER_UNDEFINED:LOG_ERROR("GL_FRAMEBUFFER_UNDEFINED"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"); break;
-    case GL_FRAMEBUFFER_UNSUPPORTED:LOG_ERROR("GL_FRAMEBUFFER_UNSUPPORTED"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"); break;
-    case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS:LOG_ERROR("GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"); break;
-    case GL_FRAMEBUFFER_COMPLETE: LOG_INFO("framebuffer complete");
-    };
-}
 void TestApp::OnAttach()
 {
     LOG_TRACE("TestAppLayer::OnAttach()");
@@ -164,10 +143,8 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
     cameraController.OnUpdate(ts);
 
-
     if (framebufferOn)
         FB->Bind();
-
     
 	RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
 	RenderCommand::Clear();
@@ -183,7 +160,6 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 	Render2D::RenderTexture(SmileyTexture, SmileyPos, { 1.0f, 1.0f }, { 1.0f, 0.7f, 0.05f, 1.0f });
 	Render2D::RenderTexture(CrateTexture, { 0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
 	Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
-
 
     Render2D::EndScene();
 
@@ -208,11 +184,10 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 		Render2D::RenderTexture(CrateTexture, { 0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
 		Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
 
-
 		Render2D::EndScene();
 
-
-        glDisable(GL_DEPTH_TEST);        
+        //glDisable(GL_DEPTH_TEST);        
+        RenderCommand::SetFlags(RenderFlags::DepthTest,false);
 		// GrayScaleEffect 
 		GrayScaleShader->Bind();
         GrayScaleShader->SetUniform("u_Texture", 0);        
@@ -237,10 +212,8 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
         BlurShader->Unbind();
 
         FB->GetColorAtachment()->Unbind();
-
-
-
-        glEnable(GL_DEPTH_TEST);
+        RenderCommand::SetFlags(RenderFlags::DepthTest,true);
+        //glEnable(GL_DEPTH_TEST);
     }    
 }
 
