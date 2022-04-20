@@ -148,6 +148,14 @@ namespace FE
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }        
 
+        void Context::SetDepthTest(bool value)
+        {
+            if (value)
+                glEnable(GL_DEPTH_TEST);
+            else
+                glDisable(GL_DEPTH_TEST);
+        }
+
 		glm::vec2 Context::GetWindowSize() const
 		{
             int width{0}, height{ 0 };

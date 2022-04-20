@@ -19,6 +19,9 @@ namespace FE
                 void ClearColor(const glm::vec4& color) const;
                 void Clear() const;
 
+                // flags 
+                void SetDepthTest(bool value);
+
                 glm::vec2 GetWindowSize() const;
                 void SetViewportSize(int x, int y, int width, int height) const;
                 static Ref<Context> Create();
