@@ -173,20 +173,14 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 		RenderCommand::Clear();
 
 		Render2D::BeginScene(cameraController.GetViewProjection());
-
 		Render2D::RenderQuad({ 3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.8f,0.5f,1.0f });
-
 		Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
-
 		Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f }, Angle);
-
 		Render2D::RenderTexture(SmileyTexture, SmileyPos, { 1.0f, 1.0f }, { 1.0f, 0.7f, 0.05f, 1.0f });
 		Render2D::RenderTexture(CrateTexture, { 0.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.15f, 0.5f, 1.0f });
 		Render2D::RenderTexture(CrateTexture, { -3.0f, -3.0f, 0.0f }, { 1.0f, 1.0f }, { 0.5f, 0.5f,  0.5f, 1.0f }, Angle);
-
 		Render2D::EndScene();
-
-        //glDisable(GL_DEPTH_TEST);        
+      
         RenderCommand::SetFlags(RenderFlags::DepthTest,false);
 		// GrayScaleEffect 
 		GrayScaleShader->Bind();
@@ -198,7 +192,7 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 		FBVAO->Unbind();
         GrayScaleShader->Unbind();
 
-        // blur effect 
+        // blur effect ? not working well atm
 		BlurShader->Bind();
         BlurShader->SetUniform("u_Texture", 0);
         float offset = 1 / 300;// float(RenderCommand::GetWindowSize().x);
@@ -213,7 +207,6 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
 
         FB->GetColorAtachment()->Unbind();
         RenderCommand::SetFlags(RenderFlags::DepthTest,true);
-        //glEnable(GL_DEPTH_TEST);
     }    
 }
 
