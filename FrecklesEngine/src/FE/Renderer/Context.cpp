@@ -160,5 +160,21 @@ namespace FE
             glViewport(x, y, width, height);
 		}
 
+		void Context::EnableFlag(ContextFlags flag)
+		{
+			switch (flag)
+			{
+			case ContextFlags::DepthTest: glEnable(GL_DEPTH_TEST); break;
+			}
+		}
+
+		void Context::DisableFlag(ContextFlags flag)
+		{
+            switch (flag)
+            {
+                case ContextFlags::DepthTest: glDisable(GL_DEPTH_TEST); break;
+            }            
+		}
+
 	}
 }

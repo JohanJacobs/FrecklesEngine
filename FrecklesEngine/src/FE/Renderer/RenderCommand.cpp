@@ -52,5 +52,13 @@ namespace FE
             s_RenderCommandData->GraphicsContext->SetViewportSize(x, y, width, height);
 		}
 
+		void RenderCommand::SetFlag(ContextFlags flag, bool state)
+		{
+            if (state)
+                s_RenderCommandData->GraphicsContext->EnableFlag(flag);
+            else
+                s_RenderCommandData->GraphicsContext->DisableFlag(flag);
+		}
+
 	}
 }
