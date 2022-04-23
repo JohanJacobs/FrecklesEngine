@@ -25,7 +25,8 @@ namespace FE
             static void SetViewportSize(int x, int y, int width, int height);
 
             static void SetFlag(ContextFlags flag, bool state);
-        private:
+
+        private:            
             struct RenderCommandData
             {
                 Ref<RENDERER::Context> GraphicsContext;

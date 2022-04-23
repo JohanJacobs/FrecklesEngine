@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+
 namespace FE
 {
     namespace CORE
@@ -14,10 +15,6 @@ namespace FE
             LOG_CORE_ERROR("[GLFW] Error Code {0}:{1}",error,description );
         }
 
-        Window::Window()
-        {
-        }   
-        
         Window::~Window()
         {
             Shutdown();
@@ -48,9 +45,15 @@ namespace FE
                 exit(1);
             }
 
+            SetupCallbackFunctions();
+            
             //setup subsystems
             GraphicsContext->Init(WindowHandle);
             Input::Init(WindowHandle);
+
+            // setup event listeners
+            EventBus::AddListener<EVENTS::WindowResizeEvent&>("Window", BINDFN(OnWindowResizeEvent));
+
         }
 
         void Window::Shutdown()
@@ -84,5 +87,28 @@ namespace FE
 
             return CreateRef<Window>();
         }
-    }
+
+		void Window::SetupCallbackFunctions()
+		{
+            glfwSetWindowCloseCallback(WindowHandle, [](GLFWwindow* window) 
+                {
+                    EVENTS::WindowCloseEvent e;
+                    
+                    EventBus::PushEvent(e);
+                });
+
+            glfwSetWindowSizeCallback(WindowHandle, 
+                [](GLFWwindow* windowHandle, int width, int height) 
+                {
+                    EVENTS::WindowResizeEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
+                    EventBus::PushEvent(e);
+                }
+            );
+		}
+
+		void Window::OnWindowResizeEvent(EVENTS::WindowResizeEvent& event)
+		{            
+            GraphicsContext->SetViewportSize(0, 0, event.GetWidth(), event.GetHeight());
+		}
+	}
 }

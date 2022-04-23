@@ -3,6 +3,9 @@
 #include "FE/Core/Window/Window.hpp"
 #include "FE/Core/Layer/LayerStack.hpp"
 #include "FE/Core/Time/Timer.hpp"
+
+#include "FE/Core/Events/Events.h"
+#include "FE/Core/Events/ApplicationEvent.h"
 namespace FE
 {
     namespace CORE
@@ -17,12 +20,17 @@ namespace FE
             void PushLayer(Layer* layer);
             
             void Shutdown();
+                        
             ~Application();
+        private:
+            void OnWindowCloseEvent(EVENTS::WindowCloseEvent& event);
 
         private:
             Ref<Window> MainWindow;
             LayerStack Layers;
             Timer MainTimer;
+
+            bool Running{false};
         };
     }
 }

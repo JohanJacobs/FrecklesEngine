@@ -21,10 +21,10 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     cameraController.OnUpdate(ts);
 
     // hack to handle window resize 
-    auto viewport = RenderCommand::GetWindowSize();
-    auto aspectRatio = viewport.x / viewport.y;
-    cameraController.SetAspectRatio(aspectRatio);
-    RenderCommand::SetViewportSize(0, 0, static_cast<int>(viewport.x), static_cast<int>(viewport.y));
+    auto windowSize= RenderCommand::GetWindowSize();
+    auto aspectRatio = windowSize.x / windowSize.y;
+    //cameraController.SetAspectRatio(aspectRatio);
+    //RenderCommand::SetViewportSize(0, 0, static_cast<int>(viewport.x), static_cast<int>(viewport.y));
 
     //Render the frame buffer to the scene in a rear view mirror (black and white) 
     MainFrameBuffer->Bind();
@@ -61,6 +61,12 @@ void TestApp::OnAttach()
 void TestApp::OnDetach()
 {
     LOG_TRACE("TestAppLayer::OnDetach()");
+}
+
+void TestApp::OnWindowResizeEvent(FE::EVENTS::WindowResizeEvent& event)
+{
+    float aspectRatio = event.GetWidth() / static_cast<float>(event.GetHeight());
+    cameraController.SetAspectRatio(aspectRatio);
 }
 
 void TestApp::DrawDemoScene()

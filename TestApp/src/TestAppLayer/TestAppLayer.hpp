@@ -2,6 +2,7 @@
 #include "FE/FrecklesEngine.hpp"
 #include "FE/Renderer/Cameras/OrthographicCameraController.h"
 #include <glm/glm.hpp>
+
 class TestApp: public FE::CORE::Layer
 {
 public:
@@ -12,6 +13,7 @@ public:
     void OnAttach() override;
     void OnDetach() override;
 
+    void OnWindowResizeEvent(FE::EVENTS::WindowResizeEvent& event);
 private:
     void DrawDemoScene();
     void DrawMainScene();

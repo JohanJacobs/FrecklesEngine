@@ -3,6 +3,9 @@
 #include "FE/Renderer/Context.hpp"
 #include "FE/Core/Time/Timestep.hpp"
 
+#include "FE/Core/Events/ApplicationEvent.h"
+#include "FE/Core/Events/Eventbus/EventBus.hpp"
+
 struct GLFWwindow;
 namespace FE
 {
@@ -11,7 +14,7 @@ namespace FE
         class Window
         {
         public:
-            Window();
+            Window()=default;
             ~Window();
 
             void Update(Timestep ts);
@@ -22,10 +25,17 @@ namespace FE
             void Shutdown();
             Ref<RENDERER::Context>& GetGraphicsContext() { return GraphicsContext;}
             static Ref<Window> Create();
-        private:
+        
+        private: 
+            void SetupCallbackFunctions();
+            void OnWindowResizeEvent(EVENTS::WindowResizeEvent& event);
         private:
             GLFWwindow* WindowHandle;
             Ref<RENDERER::Context> GraphicsContext;
+            struct WindowData
+            {
+                GLFWwindow* WindowHandle;
+            } WindowUserData;
         };
     }
 }

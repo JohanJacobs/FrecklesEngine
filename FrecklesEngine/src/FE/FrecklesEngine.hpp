@@ -18,6 +18,9 @@
 #include "FE/Renderer/Texture.hpp"
 #include "FE/Renderer/Framebuffer.hpp"
 
+// Events
+#include "FE/Core/Events/Eventbus/EventBus.hpp"
+#include "FE/Core/Events/ApplicationEvent.h"
 
 
     static Ref<FE::CORE::Application> CreateApplication()
