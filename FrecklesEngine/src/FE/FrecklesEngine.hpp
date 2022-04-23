@@ -19,8 +19,8 @@
 #include "FE/Renderer/Framebuffer.hpp"
 
 // Events
-#include "FE/Core/Events/Eventbus/EventBus.hpp"
-#include "FE/Core/Events/ApplicationEvent.h"
+#include "FE/Core/Events/Events.hpp"
+#include "FE/Core/Events/ApplicationEvent.hpp"
 
 
     static Ref<FE::CORE::Application> CreateApplication()

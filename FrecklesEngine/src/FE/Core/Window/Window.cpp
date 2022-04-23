@@ -52,7 +52,7 @@ namespace FE
             Input::Init(WindowHandle);
 
             // setup event listeners
-            EventBus::AddListener<EVENTS::WindowResizeEvent&>("Window", BINDFN(OnWindowResizeEvent));
+            EventBus::AddListener<EVENTS::WindowResizeEvent&>("Window", BIND_EVENT_FN(OnWindowResizeEvent));
 
         }
 

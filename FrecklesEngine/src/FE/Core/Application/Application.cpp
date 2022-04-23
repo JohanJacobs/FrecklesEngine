@@ -2,16 +2,12 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Application/Application.hpp"
 #include "FE/Core/Time/Timestep.hpp"
-#include "FE/Core/Events/Eventbus/EventBus.hpp"
+
+#include "FE/Core/Events/Events.hpp"
 
 // temp
 #include "FE/Renderer/RenderCommand.hpp"
-//#include "FE/Renderer/Buffers.hpp"
-//#include "FE/Renderer/VertexArray.hpp"
-//#include "FE/Renderer/Shader.hpp"
-//#include <glad/glad.h>
-//#include <GLFW/glfw3.h>
-  
+
 namespace FE
 {
     namespace CORE
@@ -20,10 +16,12 @@ namespace FE
         {
             MainWindow = Window::Create();
             MainWindow->Init();
-            RENDERER::RenderCommand::Init(MainWindow);         
+
+
+            RENDERER::RenderCommand::Init(MainWindow);
 
             // register for events 
-            EventBus::AddListener<EVENTS::WindowCloseEvent&>("Application", BINDFN(OnWindowCloseEvent));
+            EventBus::AddListener<EVENTS::WindowCloseEvent&>("Application", BIND_EVENT_FN(OnWindowCloseEvent));
 
             Running = true;
         }

@@ -56,6 +56,8 @@ void TestApp::OnAttach()
     GrayShader = Shader::Create("assets/shaders/gray.shader");
 
     SetupRearviewVAO();
+    //register for events
+    EventBus::AddListener<EVENTS::WindowResizeEvent&>("TestApp", BIND_EVENT_FN(OnWindowResizeEvent));
 }
 
 void TestApp::OnDetach()

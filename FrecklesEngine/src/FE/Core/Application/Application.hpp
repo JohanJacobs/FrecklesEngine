@@ -4,8 +4,8 @@
 #include "FE/Core/Layer/LayerStack.hpp"
 #include "FE/Core/Time/Timer.hpp"
 
-#include "FE/Core/Events/Events.h"
-#include "FE/Core/Events/ApplicationEvent.h"
+#include "FE/Core/Events/Events.hpp"
+#include "FE/Core/Events/ApplicationEvent.hpp"
 namespace FE
 {
     namespace CORE
