@@ -42,7 +42,9 @@ project "FrecklesEngine"
     filter "system:windows"
         links
         {
-            "Glad",
+            "Glad",   
+            "gdi32",
+            "opengl32",
             "GLFW"
         }
 

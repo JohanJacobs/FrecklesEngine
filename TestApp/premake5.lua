@@ -36,12 +36,6 @@ project "TestApp"
         pic "On"
     
     filter "system:windows"
-        links
-        {
-            "GLFW",
-            "GLAD",
-            "gdi32"
-        }
         
     filter "configurations:Debug"
         runtime "Debug"
