@@ -16,6 +16,7 @@
 #include "FE/Renderer/VertexArray.hpp"
 #include "FE/Renderer/Shader.hpp"
 #include "FE/Renderer/Texture.hpp"
+#include "FE/Renderer/Framebuffer.hpp"
 
 
 

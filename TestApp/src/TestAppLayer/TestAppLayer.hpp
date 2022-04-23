@@ -13,10 +13,17 @@ public:
     void OnDetach() override;
 
 private:
-    
-    Ref<FE::RENDERER::VertexArray> VAO;
-    Ref<FE::RENDERER::Texture2D> CrateTexture,SmileyTexture;
+    void DrawDemoScene();
+    void DrawMainScene();
 
+    void SetupRearviewVAO();
+private:
+
+    Ref<FE::RENDERER::VertexArray> RearviewVAO;    
+
+    Ref<FE::RENDERER::Texture2D> CrateTexture,SmileyTexture;
+    Ref<FE::RENDERER::FrameBuffer> MainFrameBuffer;
+    Ref<FE::RENDERER::Shader> GrayShader;
     // camera stuff 
     FE::RENDERER::OrthographicCameraController cameraController;
  
