@@ -7,7 +7,7 @@
 #include "FunctionContainer.hpp"
 namespace FE
 {
-#define BINDFN(fn) [&](auto&&... args)->decltype(auto) { fn(std::forward<decltype(args)>(args)...); }
+#define BIND_EVENT_FN(fn) [&](auto&&... args)->decltype(auto) { fn(std::forward<decltype(args)>(args)...); }
     class EventBus
     {
     public:

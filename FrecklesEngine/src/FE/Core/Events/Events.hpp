@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "FE/Core/Events/Eventbus/EventBus.hpp"
 
 namespace FE
 {
