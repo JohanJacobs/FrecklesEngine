@@ -1,6 +1,6 @@
 #pragma once
 #include "FE/Core/FEpch.hpp"
-#include "FE/Renderer/Framebuffer.h"
+#include "FE/Renderer/Framebuffer.hpp"
 
 #include <glad/glad.h>
 namespace FE
