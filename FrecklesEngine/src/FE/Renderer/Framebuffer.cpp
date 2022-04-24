@@ -1,4 +1,3 @@
-#pragma once
 #include "FE/Core/FEpch.hpp"
 #include "FE/Renderer/Framebuffer.hpp"
 
