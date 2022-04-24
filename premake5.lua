@@ -26,3 +26,4 @@ group ""
     
 include "FrecklesEngine"
 include "TestApp"
+include "TestApp3d"
