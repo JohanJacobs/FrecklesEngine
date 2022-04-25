@@ -2,6 +2,8 @@
 #include "FE/Core/Window/Window.hpp"
 #include "FE/Core/Input/Input.hpp"
 
+#include "FE/Core/Events/MouseEvents.hpp"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -53,7 +55,6 @@ namespace FE
 
             // setup event listeners
             EventBus::AddListener<EVENTS::WindowResizeEvent&>("Window", BIND_EVENT_FN(OnWindowResizeEvent));
-
         }
 
         void Window::Shutdown()
@@ -90,6 +91,7 @@ namespace FE
 
 		void Window::SetupCallbackFunctions()
 		{
+            // WINDOW CALLBACKS
             glfwSetWindowCloseCallback(WindowHandle, [](GLFWwindow* window) 
                 {
                     EVENTS::WindowCloseEvent e;
@@ -104,6 +106,36 @@ namespace FE
                     EventBus::PushEvent(e);
                 }
             );
+
+            //MOUSE CALLBACKS
+            glfwSetCursorPosCallback(WindowHandle,
+                [](GLFWwindow* windowHandle,double xpos, double ypos) 
+                {
+                    EVENTS::MouseMoveEvent e(static_cast<uint32_t>(xpos), static_cast<uint32_t>(ypos));
+                    EventBus::PushEvent(e);
+                });
+
+            glfwSetMouseButtonCallback(WindowHandle,
+                [](GLFWwindow* windowHandle, int button, int action, int mods)
+                {
+                    if (action == GLFW_PRESS || action == GLFW_REPEAT)
+                    {
+                        EVENTS::MouseButtonEvent e(static_cast<MouseCode>(button), true);
+                        EventBus::PushEvent(e);
+                    }
+                    else
+                    { 
+                        EVENTS::MouseButtonEvent e(static_cast<MouseCode>(button), false );
+                        EventBus::PushEvent(e);
+                    }
+                });
+
+            glfwSetScrollCallback(WindowHandle, 
+                [](GLFWwindow* window, double xOffset, double yOffset)
+                {
+                    EVENTS::MouseScrollEvent e(static_cast<float>(xOffset), static_cast<float>(yOffset));
+                    EventBus::PushEvent(e);
+                });
 		}
 
 		void Window::OnWindowResizeEvent(EVENTS::WindowResizeEvent& event)

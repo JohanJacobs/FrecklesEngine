@@ -3,7 +3,7 @@
 #include "FE/Renderer/Context.hpp"
 #include "FE/Core/Time/Timestep.hpp"
 
-#include "FE/Core/Events/ApplicationEvent.hpp"
+#include "FE/Core/Events/ApplicationEvents.hpp"
 #include "FE/Core/Events/Eventbus/EventBus.hpp"
 
 struct GLFWwindow;
