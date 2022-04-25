@@ -20,7 +20,8 @@
 
 // Events
 #include "FE/Core/Events/Events.hpp"
-#include "FE/Core/Events/ApplicationEvent.hpp"
+#include "FE/Core/Events/ApplicationEvents.hpp"
+#include "FE/Core/Events/MouseEvents.hpp"
 
 
     static Ref<FE::CORE::Application> CreateApplication()

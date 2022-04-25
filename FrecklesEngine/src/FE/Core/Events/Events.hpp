@@ -9,12 +9,12 @@ namespace FE
 		enum class EventCategory
 		{
 			Application,
-			Input
+			Mouse
 		};
 
 		enum class EventType
 		{
-			WindowResizeEvent, WindowCloseEvent
+			WindowResizeEvent, WindowCloseEvent, MouseMoveEvent, MouseScrollEvent, MouseButton
 		};
 
 		class Event
