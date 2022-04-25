@@ -5,9 +5,14 @@ namespace FE
 {
     namespace RENDERER
     {
-        enum class ContextFlags
+        enum class ContextRenderFlags
         {
             DepthTest
+        };
+
+        enum class ContextWindowFlags
+        {
+            MouseCapture
         };
         class Context
         {
@@ -26,8 +31,11 @@ namespace FE
                 glm::vec2 GetWindowSize() const;
                 void SetViewportSize(int x, int y, int width, int height) const;
 
-                void EnableFlag(ContextFlags flag);
-                void DisableFlag(ContextFlags flag);
+                void EnableFlag(ContextRenderFlags flag);
+                void DisableFlag(ContextRenderFlags flag);
+
+				void EnableFlag(ContextWindowFlags flag);
+				void DisableFlag(ContextWindowFlags flag);
                 
                 static Ref<Context> Create();
             private:

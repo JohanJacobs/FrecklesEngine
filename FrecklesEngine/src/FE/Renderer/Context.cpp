@@ -160,20 +160,37 @@ namespace FE
             glViewport(x, y, width, height);
 		}
 
-		void Context::EnableFlag(ContextFlags flag)
+		void Context::EnableFlag(ContextRenderFlags flag)
 		{
 			switch (flag)
 			{
-			case ContextFlags::DepthTest: glEnable(GL_DEPTH_TEST); break;
+			case ContextRenderFlags::DepthTest: glEnable(GL_DEPTH_TEST); break;
 			}
 		}
 
-		void Context::DisableFlag(ContextFlags flag)
+		void Context::DisableFlag(ContextRenderFlags flag)
 		{
             switch (flag)
             {
-                case ContextFlags::DepthTest: glDisable(GL_DEPTH_TEST); break;
+                case ContextRenderFlags::DepthTest: glDisable(GL_DEPTH_TEST); break;
             }            
+		}
+
+        // TODO: this is not for the context
+		void Context::EnableFlag(ContextWindowFlags flag)
+		{
+			switch (flag)
+			{
+            case ContextWindowFlags::MouseCapture:  glfwSetInputMode(static_cast<GLFWwindow*>(WindowHandle), GLFW_CURSOR, GLFW_CURSOR_NORMAL); break;
+			}
+		}
+        // TODO: this is not for the context
+		void Context::DisableFlag(ContextWindowFlags flag)
+		{
+			switch (flag)
+			{
+            case ContextWindowFlags::MouseCapture: glfwSetInputMode(static_cast<GLFWwindow*>(WindowHandle), GLFW_CURSOR, GLFW_CURSOR_DISABLED); break;
+			}
 		}
 
 	}

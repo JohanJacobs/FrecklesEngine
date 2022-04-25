@@ -24,7 +24,8 @@ namespace FE
             static glm::vec2 GetWindowSize();
             static void SetViewportSize(int x, int y, int width, int height);
 
-            static void SetFlag(ContextFlags flag, bool state);
+            static void SetFlag(ContextRenderFlags flag, bool state);
+            static void SetFlag(ContextWindowFlags flag, bool state);
                         
         private:            
             struct RenderCommandData
