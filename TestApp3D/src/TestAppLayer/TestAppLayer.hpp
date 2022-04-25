@@ -16,5 +16,22 @@ public:
 private:
 
 private:
+    struct CameraData
+    {
+        float FOV, NearClip, FarClip, AspectRatio;
+        glm::mat4 Projection;
+        glm::mat4 View; // aka, camera transform
+        glm::vec3 Position;        
+    } Camera;
 
+    struct CubeData
+    {        
+        float RotationDegree ;
+        Ref<FE::RENDERER::VertexArray> VAO;
+        Ref<FE::RENDERER::IndexBuffer> IB;
+        Ref<FE::RENDERER::VertexBuffer> VB;
+
+        Ref<FE::RENDERER::Texture2D> Texture,Texture2;
+        Ref<FE::RENDERER::Shader> TextureShader;
+    }Cube;
 };
