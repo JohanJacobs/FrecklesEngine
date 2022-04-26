@@ -102,7 +102,7 @@ void TestApp::DrawMainScene()
     DrawDemoScene();
 
     //draw the framebuffer
-    RenderCommand::SetFlag(ContextFlags::DepthTest, false);
+    RenderCommand::SetFlag(ContextRenderFlags::DepthTest, false);
 
     GrayShader->Bind();
     //GrayShader->SetUniform("u_Texture", (int)MainFrameBuffer->GetColorAtachment()->GetRenderID());
@@ -113,7 +113,7 @@ void TestApp::DrawMainScene()
     RearviewVAO->Unbind();
     GrayShader->Unbind();
 
-    RenderCommand::SetFlag(ContextFlags::DepthTest, true);
+    RenderCommand::SetFlag(ContextRenderFlags::DepthTest, true);
 }
 
 void TestApp::SetupRearviewVAO()
