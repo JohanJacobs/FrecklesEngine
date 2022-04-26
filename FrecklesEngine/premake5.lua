@@ -56,3 +56,7 @@ project "FrecklesEngine"
         runtime "Release"
         optimize "On"
 
+    group "Dependencies"
+        include "FrecklesEngine/vendor/glad"
+        include "FrecklesEngine/vendor/glfw"
+    group ""

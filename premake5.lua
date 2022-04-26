@@ -18,12 +18,7 @@ workspace "FrecklesEngine"
 		"MultiProcessorCompile",
         "FatalWarnings"
 	}   
-    
-group "Dependencies"
-    include "FrecklesEngine/vendor/glfw"
-    include "FrecklesEngine/vendor/glad"
-group ""
-    
+        
 include "FrecklesEngine"
 include "TestApp"
 include "TestApp3d"
