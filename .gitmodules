@@ -7,3 +7,6 @@
 [submodule "FrecklesEngine/vendor/glm"]
 	path = FrecklesEngine/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "FrecklesEngine/vendor/ImGui"]
+	path = FrecklesEngine/vendor/ImGui
+	url = https://github.com/ocornut/imgui
