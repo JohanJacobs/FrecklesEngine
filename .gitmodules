@@ -9,4 +9,4 @@
 	url = https://github.com/g-truc/glm
 [submodule "FrecklesEngine/vendor/ImGui"]
 	path = FrecklesEngine/vendor/ImGui
-	url = https://github.com/ocornut/imgui
+	url = https://github.com/JohanJacobs/imgui
