@@ -6,6 +6,8 @@
 
 #include "FE/Core/Events/Events.hpp"
 #include "FE/Core/Events/ApplicationEvents.hpp"
+
+#include "FE/Core/ImGuiLayer/ImGuiLayer.hpp"
 namespace FE
 {
     namespace CORE
@@ -29,7 +31,7 @@ namespace FE
             Ref<Window> MainWindow;
             LayerStack Layers;
             Timer MainTimer;
-
+            Ref<ImGuiLayer> GuiLayer;
             bool Running{false};
         };
     }

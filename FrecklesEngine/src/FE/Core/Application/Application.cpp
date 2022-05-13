@@ -24,6 +24,10 @@ namespace FE
             EventBus::AddListener<EVENTS::WindowCloseEvent&>("Application", BIND_EVENT_FN(OnWindowCloseEvent));
 
             Running = true;
+
+            // GuiLayer
+            GuiLayer = CreateRef<ImGuiLayer>(MainWindow);
+            GuiLayer->OnAttach();
         }
 
         Application::~Application()
@@ -41,11 +45,21 @@ namespace FE
 				Timestep ts = MainTimer.GetSeconds();
 				MainTimer.Reset();
 
+                // render main update
                 for (auto* l : Layers)
                 {
                     l->OnUpdate(ts);
                 }
-                
+
+                // render GUI
+                GuiLayer->BeginGui();
+				for (auto* l : Layers)
+				{
+                    l->OnRenderGUI();
+				}
+                GuiLayer->OnRenderGUI();
+                GuiLayer->EndGui();
+
                 MainWindow->Update(ts);
             }
         }
@@ -60,6 +74,8 @@ namespace FE
         void Application::Shutdown()
         {
             LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+
+            GuiLayer->OnDetach();
 
             EventBus::RemoveListener<EVENTS::WindowCloseEvent&>("Application");
 

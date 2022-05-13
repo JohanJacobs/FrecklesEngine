@@ -23,7 +23,8 @@ project "FrecklesEngine"
         "%{IncludeDirs.spdlog}",
         "%{IncludeDirs.glad}",
         "%{IncludeDirs.glm}",
-        "%{IncludeDirs.stb}"
+        "%{IncludeDirs.stb}",
+        "%{IncludeDirs.ImGui}"
     }
 
     defines
@@ -31,14 +32,20 @@ project "FrecklesEngine"
         "GLFW_INCLUDE_NONE",
         "_CRT_SECURE_NO_WARNINGS"
     }
+	
+	links
+	{
+		"ImGui"
+	}	
+
     filter "system:linux"
         links
         {
             "Glad",
-            "GLFW"
+            "GLFW"			
         }
         pic "On"
-    
+
     filter "system:windows"
         links
         {
@@ -59,4 +66,5 @@ project "FrecklesEngine"
     group "Dependencies"
         include "FrecklesEngine/vendor/glad"
         include "FrecklesEngine/vendor/glfw"
+		include "FrecklesEngine/vendor/ImGui"
     group ""

@@ -46,6 +46,8 @@ namespace FE
                 Shutdown();
                 exit(1);
             }
+            WindowUserData.width = 1024;
+            WindowUserData.width = 768;
 
             SetupCallbackFunctions();
             
@@ -102,6 +104,11 @@ namespace FE
             glfwSetWindowSizeCallback(WindowHandle, 
                 [](GLFWwindow* windowHandle, int width, int height) 
                 {
+                    // set the window data 
+                    WindowData* windowUserData = static_cast<WindowData*>(glfwGetWindowUserPointer(windowHandle));
+                    windowUserData->width = width;
+                    windowUserData->height= height;
+
                     EVENTS::WindowResizeEvent e(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
                     EventBus::PushEvent(e);
                 }

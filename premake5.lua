@@ -12,6 +12,7 @@ workspace "FrecklesEngine"
     IncludeDirs["glad"] = "%{wks.location}/FrecklesEngine/vendor/glad/include"
     IncludeDirs["glm"] = "%{wks.location}/FrecklesEngine/vendor/glm"
     IncludeDirs["stb"] = "%{wks.location}/FrecklesEngine/vendor/stb"
+    IncludeDirs["ImGui"] = "%{wks.location}/FrecklesEngine/vendor/ImGui"
 
     flags
 	{

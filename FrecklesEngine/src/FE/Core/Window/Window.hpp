@@ -25,7 +25,8 @@ namespace FE
             void Shutdown();
             Ref<RENDERER::Context>& GetGraphicsContext() { return GraphicsContext;}
             static Ref<Window> Create();
-        
+            void* GetWindowHandle() { return WindowHandle; }
+            glm::vec2 GetWindowSize() const { return glm::vec2{ WindowUserData.width,WindowUserData.height }; }
         private: 
             void SetupCallbackFunctions();
             void OnWindowResizeEvent(EVENTS::WindowResizeEvent& event);
@@ -35,6 +36,7 @@ namespace FE
             struct WindowData
             {
                 GLFWwindow* WindowHandle;
+                uint32_t width, height;
             } WindowUserData;
         };
     }

@@ -13,7 +13,6 @@ namespace FE
                                  
                 virtual void OnUpdate(Timestep ts){};
                 virtual void OnRenderGUI(){};
-
                 virtual void OnAttach(){};
                 virtual void OnDetach(){};
         };
