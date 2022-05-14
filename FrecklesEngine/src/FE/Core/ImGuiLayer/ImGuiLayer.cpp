@@ -8,12 +8,10 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
-
 namespace FE
 {
 	namespace CORE
 	{
-
 		ImGuiLayer::ImGuiLayer(Ref<Window>& window)
 			:MainWindow{window}
 		{

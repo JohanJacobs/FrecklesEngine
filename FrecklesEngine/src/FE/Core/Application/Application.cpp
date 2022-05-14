@@ -1,4 +1,3 @@
-
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Application/Application.hpp"
 #include "FE/Core/Time/Timestep.hpp"

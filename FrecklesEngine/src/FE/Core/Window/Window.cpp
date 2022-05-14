@@ -7,7 +7,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-
 namespace FE
 {
     namespace CORE
@@ -48,6 +47,7 @@ namespace FE
             }
             WindowUserData.width = 1024;
             WindowUserData.width = 768;
+            glfwSetWindowUserPointer(WindowHandle, static_cast<void*>(&WindowUserData));
 
             SetupCallbackFunctions();
             

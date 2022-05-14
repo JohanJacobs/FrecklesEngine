@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "FE/Renderer/Render2D.hpp"
+#include "imgui.h"
 
 void TestApp::OnUpdate(FE::CORE::Timestep ts)
 {
@@ -28,7 +29,9 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     DrawDemoScene();
     MainFrameBuffer->Unbind();
 
+    ViewPortFrameBuffer->Bind();
     DrawMainScene();
+    ViewPortFrameBuffer->Unbind();
 }
 
 void TestApp::OnAttach()
@@ -49,7 +52,7 @@ void TestApp::OnAttach()
     cameraController.SetupCamera(props);
         
     MainFrameBuffer = FrameBuffer::Create((uint32_t)viewport.x, (uint32_t)viewport.y);
-    
+    ViewPortFrameBuffer = FrameBuffer::Create((uint32_t)viewport.x, (uint32_t)viewport.y);
     GrayShader = Shader::Create("assets/shaders/gray.shader");
 
     SetupRearviewVAO();
@@ -66,6 +69,71 @@ void TestApp::OnWindowResizeEvent(FE::EVENTS::WindowResizeEvent& event)
 {
     float aspectRatio = event.GetWidth() / static_cast<float>(event.GetHeight());
     cameraController.SetAspectRatio(aspectRatio);
+}
+
+void TestApp::OnRenderGUI()
+{
+    bool main_window_open = true;
+    bool opt_fullscreen = true;
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None ;
+
+    //main window as the background
+	if (opt_fullscreen)
+	{
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->Pos);
+		ImGui::SetNextWindowSize(viewport->Size);
+		ImGui::SetNextWindowViewport(viewport->ID);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	}
+
+	// When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background and handle the pass-thru hole, so we ask Begin() to not render a background.
+	if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+		window_flags |= ImGuiWindowFlags_NoBackground;
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f)); // remove window padding
+    ImGui::Begin("TestApp", &main_window_open, window_flags);
+    ImGui::PopStyleVar();
+
+	// DockSpace setup
+	ImGuiIO& io = ImGui::GetIO();
+    ImGuiStyle& style = ImGui::GetStyle();
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+	}
+
+    // Menu 
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Exit"))
+                LOG_CORE_ERROR("Seriously cant quit application yet?");
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+
+
+    // Render our scene to the viewport
+    ImGui::Begin("Viewport");
+    ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+    uint64_t textureID = ViewPortFrameBuffer->GetColorAtachment()->GetRenderID();
+	ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ viewportPanelSize.x, viewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+    ImGui::End();
+
+    ImGui::PopStyleVar();
+    ImGui::PopStyleVar();
+    ImGui::End();
+    
+
 }
 
 void TestApp::DrawDemoScene()
@@ -101,18 +169,16 @@ void TestApp::DrawMainScene()
     
     DrawDemoScene();
 
-    //draw the framebuffer
+    //draw the framebuffer   
     RenderCommand::SetFlag(ContextRenderFlags::DepthTest, false);
 
-    GrayShader->Bind();
-    //GrayShader->SetUniform("u_Texture", (int)MainFrameBuffer->GetColorAtachment()->GetRenderID());
+    GrayShader->Bind();    
     GrayShader->SetUniform("u_Texture", 0);
     MainFrameBuffer->GetColorAtachment()->Bind(0);
     RearviewVAO->Bind();
     RenderCommand::DrawIndexed(RearviewVAO, 6);
     RearviewVAO->Unbind();
-    GrayShader->Unbind();
-
+    GrayShader->Unbind();        
     RenderCommand::SetFlag(ContextRenderFlags::DepthTest, true);
 }
 

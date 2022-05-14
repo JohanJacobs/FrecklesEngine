@@ -14,6 +14,9 @@ public:
     void OnDetach() override;
 
     void OnWindowResizeEvent(FE::EVENTS::WindowResizeEvent& event);
+
+    void OnRenderGUI() override;
+
 private:
     void DrawDemoScene();
     void DrawMainScene();
@@ -24,7 +27,7 @@ private:
     Ref<FE::RENDERER::VertexArray> RearviewVAO;    
 
     Ref<FE::RENDERER::Texture2D> CrateTexture,SmileyTexture;
-    Ref<FE::RENDERER::FrameBuffer> MainFrameBuffer;
+    Ref<FE::RENDERER::FrameBuffer> MainFrameBuffer,ViewPortFrameBuffer;
     Ref<FE::RENDERER::Shader> GrayShader;
     // camera stuff 
     FE::RENDERER::OrthographicCameraController cameraController;
