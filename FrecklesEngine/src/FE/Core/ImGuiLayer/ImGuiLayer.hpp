@@ -1,7 +1,7 @@
 #pragma once
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Window/Window.hpp"
-#include "Fe/Core/Layer/layer.hpp"
+#include "FE/Core/Layer/Layer.hpp"
 
 namespace FE
 {

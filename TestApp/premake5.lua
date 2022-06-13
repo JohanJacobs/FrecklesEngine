@@ -31,7 +31,8 @@ project "TestApp"
         links
         {            
             "GLFW",
-            "Glad"
+            "Glad",
+            "ImGui"
         }
         
         pic "On"

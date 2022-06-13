@@ -18,7 +18,8 @@ project "TestApp3D"
         "%{prj.location}/src",
         "%{IncludeDirs.FE}",
         "%{IncludeDirs.spdlog}",
-        "%{IncludeDirs.glm}",        
+        "%{IncludeDirs.glm}" ,
+        "%{IncludeDirs.ImGui}"
     }
 
     links 
@@ -30,7 +31,8 @@ project "TestApp3D"
         links
         {            
             "GLFW",
-            "Glad"
+            "Glad",
+            "ImGui"
         }
         
         pic "On"

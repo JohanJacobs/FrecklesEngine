@@ -22,4 +22,4 @@ workspace "FrecklesEngine"
         
 include "FrecklesEngine"
 include "TestApp"
-include "TestApp3d"
+include "TestApp3D"
