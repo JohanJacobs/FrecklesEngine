@@ -10,3 +10,6 @@
 [submodule "FrecklesEngine/vendor/ImGui"]
 	path = FrecklesEngine/vendor/ImGui
 	url = https://github.com/JohanJacobs/imgui
+[submodule "FrecklesEngine/vendor/entt"]
+	path = FrecklesEngine/vendor/entt
+	url = http://github.com/skypjack/entt
