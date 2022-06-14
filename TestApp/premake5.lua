@@ -19,7 +19,8 @@ project "TestApp"
         "%{IncludeDirs.FE}",
         "%{IncludeDirs.spdlog}",
         "%{IncludeDirs.glm}",
-		"%{IncludeDirs.ImGui}"
+		"%{IncludeDirs.ImGui}",
+        "%{IncludeDirs.entt}"
     }
 
     links 

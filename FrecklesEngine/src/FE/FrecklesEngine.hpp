@@ -25,6 +25,10 @@
 #include "FE/Core/Events/MouseEvents.hpp"
 
 
+// Scene
+#include "FE/Scene/Scene.hpp"
+#include "FE/Scene/Entity.hpp"
+
     static Ref<FE::CORE::Application> CreateApplication()
     {
         using namespace FE;

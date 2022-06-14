@@ -24,7 +24,8 @@ project "FrecklesEngine"
         "%{IncludeDirs.glad}",
         "%{IncludeDirs.glm}",
         "%{IncludeDirs.stb}",
-        "%{IncludeDirs.ImGui}"
+        "%{IncludeDirs.ImGui}",
+        "%{IncludeDirs.entt}"
     }
 
     defines
