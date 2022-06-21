@@ -1,7 +1,8 @@
 #pragma once 
 #include "FE/FrecklesEngine.hpp"
-#include "FE/Renderer/Cameras/OrthographicCameraController.h"
+#include "FE/Renderer/Cameras/OrthographicCameraController.hpp"
 #include <glm/glm.hpp>
+#include "FE/Scene/Scene.hpp"
 
 class TestApp: public FE::CORE::Layer
 {
@@ -37,4 +38,6 @@ private:
     glm::vec3 SmileyPos {0.0f, 3.0f, 0.0f};
     float SmileyVelocity{0.5f};
 
+    FE::Scene ActiveScene;
+    FE::Entity BlueRect;
 };

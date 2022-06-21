@@ -2,6 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "FE/Renderer/Render2D.hpp"
+#include "FE/Scene/Components/Components.hpp"
 #include "imgui.h"
 
 void TestApp::OnUpdate(FE::CORE::Timestep ts)
@@ -58,6 +59,12 @@ void TestApp::OnAttach()
     SetupRearviewVAO();
     //register for events
     EventBus::AddListener<EVENTS::WindowResizeEvent&>("TestApp", BIND_EVENT_FN(OnWindowResizeEvent));
+
+
+    // createing entityies
+    BlueRect = ActiveScene.CreateEntity("BlueRect");
+    using namespace COMPONENTS;
+    auto transform = BlueRect.AddComponent<Transform>();    
 }
 
 void TestApp::OnDetach()
@@ -138,19 +145,20 @@ void TestApp::OnRenderGUI()
 
 void TestApp::DrawDemoScene()
 {
-	using namespace FE;
-	using namespace RENDERER;
-	using namespace CORE;
+    using namespace FE;
+    using namespace RENDERER;
+    using namespace CORE;
 
-	
-	RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
-	RenderCommand::Clear();
 
-	Render2D::BeginScene(cameraController.GetViewProjection());
+    RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
+    RenderCommand::Clear();
 
-	Render2D::RenderQuad({ 3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.8f,0.5f,1.0f });
+    Render2D::BeginScene(cameraController.GetViewProjection());
 
-	Render2D::RenderQuad({ 0.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.15f,0.5f,1.0f });
+    Render2D::RenderQuad({ 3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.8f,0.5f,1.0f });
+
+    auto transform = BlueRect.GetComponent<COMPONENTS::Transform>();
+    Render2D::RenderQuad(transform.Position, {transform.Scale.x, transform.Scale.y}, { 0.15f,0.15f,0.85f,1.0f });
 
 	Render2D::RenderQuad({ -3.0f,0.0f,0.0f }, { 1.0f,1.0f }, { 0.5f,0.5f,0.5f,1.0f }, Angle);
 

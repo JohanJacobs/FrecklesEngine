@@ -2,7 +2,7 @@
 #include "FE/Core/Base.hpp"
 #include "FE/Core/Time/Timestep.hpp"
 
-#include "FE/Renderer/Cameras/OrthographicCamera.h"
+#include "FE/Renderer/Cameras/OrthographicCamera.hpp"
 
 #include <glm/glm.hpp>
 
