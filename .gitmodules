@@ -13,3 +13,6 @@
 [submodule "FrecklesEngine/vendor/entt"]
 	path = FrecklesEngine/vendor/entt
 	url = http://github.com/skypjack/entt
+[submodule "FrecklesEngine/vendor/debugbreak"]
+	path = FrecklesEngine/vendor/debugbreak
+	url = ../../scottt/debugbreak
