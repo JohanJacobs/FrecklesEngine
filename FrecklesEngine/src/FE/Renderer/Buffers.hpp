@@ -62,8 +62,11 @@ namespace FE
                 // copy everything over
                 if (!Elements.empty())
                     Elements.clear();
-                std::copy(other.Elements.begin(),other.Elements.end(),Elements);
+
+                Elements = other.Elements;
                 this->Stride = other.Stride;
+
+                return *this;
             }
             uint32_t GetStride() const {return Stride;}
 

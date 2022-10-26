@@ -47,7 +47,8 @@ project "FrecklesEngine"
             "GLFW"			
         }
         pic "On"
-        buildoptions{"-Wall -pedantic -Wextra -Wshadow -Wconversion"}
+        
+        --buildoptions{"-Wall -pedantic -Wextra -Wshadow -Wconversion"}
 
     filter "system:windows"
         links
