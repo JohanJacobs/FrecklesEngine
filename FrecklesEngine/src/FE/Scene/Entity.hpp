@@ -33,7 +33,7 @@ namespace FE
                 if (!HasComponent<ComponentType>())
                 {
                     LOG_CORE_ERROR("Entity does not have component!");
-                    __debugbreak();
+                    FE_DEBUGBREAK();
                 }
 
                 return ActiveScene->Registry.get<ComponentType>(EnitityID);

@@ -29,12 +29,13 @@
 #include "FE/Scene/Scene.hpp"
 #include "FE/Scene/Entity.hpp"
 
-    static Ref<FE::CORE::Application> CreateApplication()
-    {
-        using namespace FE;
-        using namespace CORE;
-        Log::Init();
-        LOG_CORE_TRACE(LOG_FUNCTION_NAME);
-        
-        return CreateRef<Application>();
-    }
+
+static Ref<FE::CORE::Application> CreateApplication()
+{
+    using namespace FE;
+    using namespace CORE;
+    Log::Init();
+    LOG_CORE_TRACE(LOG_FUNCTION_NAME);
+    
+    return CreateRef<Application>();
+}

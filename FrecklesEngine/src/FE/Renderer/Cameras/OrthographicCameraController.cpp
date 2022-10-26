@@ -1,7 +1,7 @@
 #include "FE/Core/FEpch.hpp"
 #include "FE/Core/Input/Input.hpp"
 
-#include "FE/Renderer/Cameras/OrthographicCameraController.h"
+#include "FE/Renderer/Cameras/OrthographicCameraController.hpp"
 
 namespace FE
 {

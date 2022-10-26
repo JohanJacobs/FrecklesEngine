@@ -25,7 +25,8 @@ project "FrecklesEngine"
         "%{IncludeDirs.glm}",
         "%{IncludeDirs.stb}",
         "%{IncludeDirs.ImGui}",
-        "%{IncludeDirs.entt}"
+        "%{IncludeDirs.entt}",
+        "%{IncludeDirs.debugbreak}"
     }
 
     defines
@@ -46,6 +47,7 @@ project "FrecklesEngine"
             "GLFW"			
         }
         pic "On"
+        buildoptions{"-Wall -pedantic -Wextra -Wshadow -Wconversion"}
 
     filter "system:windows"
         links

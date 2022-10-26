@@ -19,7 +19,9 @@ project "TestApp3D"
         "%{IncludeDirs.FE}",
         "%{IncludeDirs.spdlog}",
         "%{IncludeDirs.glm}" ,
-        "%{IncludeDirs.ImGui}"
+        "%{IncludeDirs.ImGui}",
+        "%{IncludeDirs.entt}",
+        "%{IncludeDirs.debugbreak}"
     }
 
     links 

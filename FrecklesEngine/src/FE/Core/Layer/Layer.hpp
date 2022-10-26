@@ -11,7 +11,7 @@ namespace FE
                 Layer() =default;
                 virtual ~Layer() = default;
                                  
-                virtual void OnUpdate(FE::CORE::Timestep ts){};
+                virtual void OnUpdate([[maybe_unused]]FE::CORE::Timestep ts){};
                 virtual void OnRenderGUI(){};
                 virtual void OnAttach(){};
                 virtual void OnDetach(){};

@@ -23,6 +23,22 @@ namespace FE
             BufferElement() =default;
             BufferElement(const std::string& name, BufferElementType type, bool normalized=false)
                 :Name{name}, Type{type}, Size{0}, Count{0}, Offset{0}, Normalized{normalized} {}
+            BufferElement& operator=(const BufferElement& other)
+            {
+                //guard against self assignment
+                if (this==&other)
+                    return *this;
+
+                // copy everything over
+                this->Name = other.Name;
+                this->Type = other.Type;
+                this->Size = other.Size;
+                this->Count = other.Count;
+                this->Offset = other.Offset;
+                this->Normalized = other.Normalized;
+                
+                return *this;
+            }
             std::string Name;
             BufferElementType Type;
             uint32_t Size;
@@ -37,7 +53,18 @@ namespace FE
             BufferLayout()=default;
             BufferLayout (std::initializer_list<BufferElement> list);
             BufferLayout(const BufferLayout& other);
-            
+            BufferLayout& operator = (const BufferLayout& other)
+            {
+                //guard against self assignment
+                if (this ==  &other)
+                    return *this;
+
+                // copy everything over
+                if (!Elements.empty())
+                    Elements.clear();
+                std::copy(other.Elements.begin(),other.Elements.end(),Elements);
+                this->Stride = other.Stride;
+            }
             uint32_t GetStride() const {return Stride;}
 
             std::vector<BufferElement>::iterator begin() {return Elements.begin();}

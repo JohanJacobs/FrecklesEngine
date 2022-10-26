@@ -20,7 +20,8 @@ project "TestApp"
         "%{IncludeDirs.spdlog}",
         "%{IncludeDirs.glm}",
 		"%{IncludeDirs.ImGui}",
-        "%{IncludeDirs.entt}"
+        "%{IncludeDirs.entt}",
+        "%{IncludeDirs.debugbreak}"
     }
 
     links 

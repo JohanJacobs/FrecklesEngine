@@ -81,7 +81,7 @@ namespace FE
             RENDERER::RenderCommand::Shutdown();
         }
 
-		void Application::OnWindowCloseEvent(EVENTS::WindowCloseEvent& event)
+		void Application::OnWindowCloseEvent([[maybe_unused]]EVENTS::WindowCloseEvent& event)
 		{
             Running = false;
 		}

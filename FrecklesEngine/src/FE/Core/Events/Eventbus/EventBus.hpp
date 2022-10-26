@@ -49,7 +49,7 @@ namespace FE
                 });
 
             Listeners[typeIndex].erase(rm, Listeners[typeIndex].end());
-        };
+        }
 
         /*
             USAGE:PushEvent<ParameterType>(param);

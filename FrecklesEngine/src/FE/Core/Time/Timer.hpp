@@ -20,7 +20,7 @@ namespace FE
         private:
             float Elapsed()
             {
-                return std::chrono::duration_cast<std::chrono::microseconds>(TimeResolution::now() - StartTime).count()*0.001f;
+                return static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(TimeResolution::now() - StartTime).count())*0.001f;
             }    
         private:
             std::chrono::time_point<TimeResolution> StartTime;

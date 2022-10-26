@@ -3,11 +3,16 @@
 #include <memory>
 #include <string>
 
+#include "FE/Core/Log/Log.hpp"
+#include "FE/Core/DebugBreak/DebugBreak.hpp"
+
 #ifdef _MSC_VER
 #define LOG_FUNCTION_NAME __FUNCSIG__
 #else
 #define LOG_FUNCTION_NAME __PRETTY_FUNCTION__
 #endif
+
+
 
 template <typename T>
 using Ref =  std::shared_ptr<T>;
