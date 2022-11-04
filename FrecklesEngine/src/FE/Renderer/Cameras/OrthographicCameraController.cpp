@@ -56,7 +56,7 @@ namespace FE
 				Rotation -= RotationSpeed * ts;
 				changed = true;
 			}
-			else if (Input::Keypressed(KeyCode::R)) //rot right
+			else if (Input::Keypressed(KeyCode::E)) //rot right
 			{
 				Rotation += RotationSpeed * ts;
 				changed = true;
