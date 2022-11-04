@@ -26,10 +26,12 @@ void TestApp::OnUpdate(FE::CORE::Timestep ts)
     auto windowSize= RenderCommand::GetWindowSize();
     auto aspectRatio = windowSize.x / windowSize.y;
     
+    //draw to the main frame buffer
     MainFrameBuffer->Bind();
     DrawDemoScene();
     MainFrameBuffer->Unbind();
 
+    // draw to the viewport frame buffer 
     ViewPortFrameBuffer->Bind();
     DrawMainScene();
     ViewPortFrameBuffer->Unbind();
@@ -47,7 +49,8 @@ void TestApp::OnAttach()
     auto viewport = RenderCommand::GetWindowSize();
     OrthographicProperties props;
     props.AspectRatio = viewport.x / viewport.y;
-    props.TranslationSpeed = 1.0f;
+    props.TranslationSpeed = 20.0f;
+    props.RotationSpeed = 15;
     props.Size = 10.0f;
 
     cameraController.SetupCamera(props);
@@ -76,6 +79,8 @@ void TestApp::OnWindowResizeEvent(FE::EVENTS::WindowResizeEvent& event)
 {
     float aspectRatio = event.GetWidth() / static_cast<float>(event.GetHeight());
     cameraController.SetAspectRatio(aspectRatio);
+    MainFrameBuffer->Resize(event.GetWidth(),event.GetHeight());
+    ViewPortFrameBuffer->Resize(event.GetWidth(), event.GetHeight());
 }
 
 void TestApp::OnRenderGUI()
@@ -145,10 +150,11 @@ void TestApp::OnRenderGUI()
 
 void TestApp::DrawDemoScene()
 {
+    // draw the demo scene wich excludes the review camera 
+
     using namespace FE;
     using namespace RENDERER;
     using namespace CORE;
-
 
     RenderCommand::ClearColor({ 0.1f, 0.1f, 0.15f, 1.0f });
     RenderCommand::Clear();
@@ -171,6 +177,7 @@ void TestApp::DrawDemoScene()
 
 void TestApp::DrawMainScene()
 {
+    // draw the main display with the rear view mirror
 	using namespace FE;
 	using namespace RENDERER;
 	using namespace CORE;

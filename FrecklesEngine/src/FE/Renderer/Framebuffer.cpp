@@ -53,6 +53,40 @@ namespace FE
 			}
 		}
 
+		void FrameBuffer::Resize(uint32_t width, uint32_t height)
+		{
+			// TODO: Check that we dont createa frame buffer that is out side of the max size;
+			Width = width;
+			Height = height;
+
+			Invalidate();
+		}
+		
+		void FrameBuffer::Invalidate()
+		{
+			//destroy the currrent frame buffer
+			glDeleteFramebuffers(1, &RenderID);
+			glDeleteRenderbuffers(1,&DepthStencilAttachmentRenderID);
+
+			//create a new frame buffer
+			glCreateFramebuffers(1,&RenderID);
+
+			//color attachments
+			ColorAttachment = Texture2D::Create(GLsizei(Width), GLsizei(Height));
+			ColorAttachment->Unbind();
+			glNamedFramebufferTexture(RenderID,GL_COLOR_ATTACHMENT0, ColorAttachment->GetRenderID(), 0);
+
+			// depth and stencil buffer as render buffer
+			glCreateRenderbuffers(1, &DepthStencilAttachmentRenderID);
+			glNamedRenderbufferStorage(DepthStencilAttachmentRenderID, GL_DEPTH24_STENCIL8, GLsizei(Width),GLsizei(Height));
+			glNamedFramebufferRenderbuffer(RenderID, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, DepthStencilAttachmentRenderID);
+
+			if (!Utils::CheckFramebufferStatus(RenderID))
+			{
+				LOG_CORE_ERROR ("Framebuffer is not complete after resize!");
+			}
+		}
+
 		FrameBuffer::~FrameBuffer()
 		{
 			glDeleteFramebuffers(1, &RenderID);
