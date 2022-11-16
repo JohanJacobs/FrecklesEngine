@@ -36,7 +36,7 @@ project "TestApp"
             "Glad",
             "ImGui"
         }
-        
+        linkoptions{"-ldl"}
         pic "On"
     
     filter "system:windows"

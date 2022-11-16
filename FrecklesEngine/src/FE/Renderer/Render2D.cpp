@@ -23,6 +23,7 @@ namespace FE
 			glm::vec2 TexCoord; // 2 * float = 8 bytes
 			int TexIndex;  		// 1 * uint32 = 4 bytes
 			int TilingFactor; 	// 1 * uint32 = 4 bytes
+			// unique ID for each object
 		};
 
 		struct Render2DData

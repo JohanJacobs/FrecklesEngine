@@ -187,9 +187,9 @@ void TestApp::DrawMainScene()
     //draw the framebuffer   
     RenderCommand::SetFlag(ContextRenderFlags::DepthTest, false);
 
-    GrayShader->Bind();    
-    GrayShader->SetUniform("u_Texture", 0);
-    MainFrameBuffer->GetColorAtachment()->Bind(0);
+    GrayShader->Bind();                                             // draw in grayscale   
+    GrayShader->SetUniform("u_Texture", 0);                         // set the texture????
+    MainFrameBuffer->GetColorAtachment()->Bind(0);                  
     RearviewVAO->Bind();
     RenderCommand::DrawIndexed(RearviewVAO, 6);
     RearviewVAO->Unbind();
