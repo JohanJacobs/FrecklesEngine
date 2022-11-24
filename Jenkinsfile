@@ -1,20 +1,28 @@
 pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-	echo 'downloading...'
-        git(url: 'https://github.com/JohanJacobs/FrecklesEngine', branch: 'main')
-	echo 'running premake'
-	premake5 gmake2
-	echo 'building'
-      }	  
-    }
-	stage('Test'){
-		steps{
-			echo 'No testing implemented'
+	agent any
+	
+	stages {
+		stage('downloading...') {
+			steps {	
+				git(url: 'https://github.com/JohanJacobs/FrecklesEngine', branch: 'main')
+			}
 		}
-	}
-
-  }
+    
+		stage('premake'){
+			steps{
+				premake5 gmake2
+			}
+		}
+		
+		stage('building'){
+			steps{
+				make
+			}
+		}
+		stage('Test'){
+			steps{
+				echo 'No testing implemented'
+			}
+		}
+    }
 }
