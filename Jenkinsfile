@@ -6,7 +6,7 @@ pipeline {
 	echo 'downloading...'
         git(url: 'https://github.com/JohanJacobs/FrecklesEngine', branch: 'main')
 	echo 'running premake'
-	premake5 gmake
+	premake5 gmake2
 	echo 'building'
       }	  
     }
