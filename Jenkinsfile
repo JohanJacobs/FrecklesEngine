@@ -10,13 +10,13 @@ pipeline {
     
 		stage('premake'){
 			steps{
-				premake5 gmake2
+				sh "premake5 gmake2"
 			}
 		}
 		
 		stage('building'){
 			steps{
-				make
+				sh "make"
 			}
 		}
 		stage('Test'){
